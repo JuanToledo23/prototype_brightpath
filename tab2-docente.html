@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrightPath — Tab 2 · Docente</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Reddit+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════
+   TOKENS BRIGHTPATH
+═══════════════════════ */
+:root {
+  --brand:#091540; --brand2:#3D518C;
+  --accent:#4C9BFD; --accent2:#3a8ae8; --accent-lt:#EBF4FF; --accent-md:#4C9BFD;
+  --teal:#46BAB5; --teal-bg:#E6F7F7;
+  --coral:#FF6F61; --coral-bg:#FFF0EF;
+  --bg:#F2F6FD; --bg2:#E8EEF8;
+  --border:#C8D5EC; --border2:#DDE6F5;
+  --text:#091540; --text2:#3D518C; --text3:#7A8BB5;
+  --green:#059669; --green-bg:#D1FAE5;
+  --amber:#D97706; --amber-bg:#FEF3C7;
+  --red:#DC2626; --red-bg:#FEE2E2;
+  --blue:#4C9BFD; --blue-bg:#EBF4FF;
+  --sh:0 1px 3px rgba(9,21,64,.08),0 4px 12px rgba(9,21,64,.04);
+  --sh-md:0 4px 16px rgba(9,21,64,.12),0 1px 4px rgba(9,21,64,.06);
+  --r:10px; --r-sm:6px; --r-lg:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:13px;line-height:1.5}
+
+/* ═══════════════════════
+   TOP NAV
+═══════════════════════ */
+.topnav{background:var(--brand);padding:0 20px;display:flex;align-items:center;height:48px;position:sticky;top:0;z-index:100}
+.brand{color:#fff;font-weight:700;font-size:14px;margin-right:24px;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.brand-accent{color:var(--accent-md)}
+.mtab{background:none;border:none;color:rgba(255,255,255,.55);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:0 14px;height:48px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s;text-decoration:none;display:inline-flex;align-items:center}
+.mtab:hover{color:#fff;background:rgba(255,255,255,.06)}
+.mtab.active{color:#fff;border-bottom-color:var(--accent-md)}
+.nav-badge{margin-left:auto;background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);font-size:11px;padding:3px 10px;border-radius:20px;white-space:nowrap}
+@media(max-width:768px){.topnav .mtab{display:none}.topnav .mob-select{display:block}}
+.mob-select{display:none;background:var(--brand2);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:12px;padding:4px 8px;margin-right:auto}
+
+/* ═══════════════════════
+   SUB-NAV (screen pills)
+═══════════════════════ */
+.subnav{background:var(--brand2);display:flex;align-items:center;height:38px;position:sticky;top:48px;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.2);padding:0}
+.subnav-track{display:flex;align-items:center;overflow-x:auto;flex:1;height:38px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:2px;padding:0 6px}
+.subnav-track::-webkit-scrollbar{display:none}
+.subnav-arrow{background:none;border:none;color:rgba(255,255,255,.4);font-size:20px;font-weight:700;cursor:pointer;padding:0 8px;height:38px;flex-shrink:0;transition:all .15s;display:flex;align-items:center}
+.subnav-arrow:hover{color:#fff}
+.subnav-arrow.hide{opacity:0;pointer-events:none;width:0;padding:0;overflow:hidden}
+.stab{background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.6);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:0 12px;height:28px;cursor:pointer;border-radius:14px;white-space:nowrap;transition:all .15s;flex-shrink:0}
+.stab:hover{color:#fff;background:rgba(255,255,255,.15)}
+.stab.active{background:var(--accent);color:#fff;font-weight:600}
+
+/* ═══════════════════════
+   SCREENS
+═══════════════════════ */
+.screen{display:none;padding:20px;min-height:calc(100vh - 86px)}
+.screen.active{display:block}
+.scr-label{display:inline-flex;align-items:center;gap:5px;background:var(--border2);color:var(--text3);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;padding:3px 10px;border-radius:20px;margin-bottom:6px}
+.pg-title{font-size:19px;font-weight:700;color:var(--brand);margin-bottom:3px}
+.pg-sub{color:var(--text2);font-size:12.5px;margin-bottom:16px}
+
+/* ═══════════════════════
+   ANOTACIONES
+═══════════════════════ */
+.ann-panel{background:#FFFBEB;border:2.5px solid #F59E0B;border-radius:var(--r-lg);overflow:hidden;margin-bottom:18px;box-shadow:0 4px 14px rgba(245,158,11,.15)}
+.ann-head{background:#F59E0B;padding:9px 14px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#fff}
+.ann-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;padding:12px}
+.ann-item{display:flex;gap:9px;align-items:flex-start;background:#fff;border-radius:6px;border:1px solid #FDE68A;padding:8px 10px}
+.ann-num{width:22px;height:22px;border-radius:50%;background:#F59E0B;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ann-txt{font-size:11.5px;color:#78350F;line-height:1.45}
+.ann-txt strong{color:#451A03}
+.ann-mk{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#F59E0B;color:#fff;font-size:10px;font-weight:800;border:2px solid #fff;box-shadow:0 2px 6px rgba(245,158,11,.4);position:absolute;z-index:5;cursor:help}
+
+/* ═══════════════════════
+   BROWSER CHROME
+═══════════════════════ */
+.browser{background:#fff;border:2px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.bbar{background:#E5E7EB;padding:7px 14px;display:flex;align-items:center;gap:7px;border-bottom:2px solid var(--border)}
+.bdot{width:11px;height:11px;border-radius:50%;display:inline-block;flex-shrink:0}
+.burl{flex:1;background:#fff;border-radius:20px;padding:3px 14px;font-size:11px;color:var(--text3);font-weight:500;max-width:320px;margin:0 auto;text-align:center;border:1px solid var(--border2)}
+.wf-badge{font-size:9.5px;color:#92400E;font-weight:800;text-transform:uppercase;letter-spacing:.6px;background:#FEF3C7;border:1px solid #FDE68A;padding:2px 8px;border-radius:4px;margin-left:auto}
+.bbody{padding:18px;background:var(--bg)}
+
+/* ═══════════════════════
+   CARDS
+═══════════════════════ */
+.card{background:#fff;border-radius:var(--r);border:1px solid var(--border2);box-shadow:var(--sh)}
+.card-head{padding:13px 15px 11px;border-bottom:1px solid var(--border2);display:flex;align-items:center;gap:8px}
+.card-head h3{font-size:13px;font-weight:600;color:var(--brand)}
+.card-body{padding:15px}
+
+/* ═══════════════════════
+   TABLA
+═══════════════════════ */
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl th{background:var(--bg2);color:var(--text2);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:9px 11px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer}
+.tbl th:hover{background:var(--border2)}
+.tbl td{padding:9px 11px;border-bottom:1px solid var(--border2);color:var(--text);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr.sel td{background:var(--accent-lt)}
+.tbl tr:hover td{background:var(--bg);cursor:pointer}
+
+/* ═══════════════════════
+   BADGES Y CHIPS
+═══════════════════════ */
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
+.bdg-brand{background:var(--accent-lt);color:var(--accent2)}
+.bdg-green{background:var(--green-bg);color:var(--green)}
+.bdg-amber{background:var(--amber-bg);color:var(--amber)}
+.bdg-red{background:var(--red-bg);color:var(--red)}
+.bdg-blue{background:var(--blue-bg);color:var(--blue)}
+.bdg-gray{background:var(--bg2);color:var(--text2);border:1px solid var(--border2)}
+.chip{display:inline-flex;align-items:center;gap:5px;background:var(--accent-lt);color:var(--accent2);padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:600}
+.ind-hi{background:var(--green-bg);color:var(--green);padding:2px 8px;border-radius:20px;font-size:10.5px;font-weight:700}
+.ind-md{background:var(--amber-bg);color:var(--amber);padding:2px 8px;border-radius:20px;font-size:10.5px;font-weight:700}
+.ind-lo{background:var(--red-bg);color:var(--red);padding:2px 8px;border-radius:20px;font-size:10.5px;font-weight:700}
+
+/* ═══════════════════════
+   BOTONES
+═══════════════════════ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:7px 13px;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;border:none;white-space:nowrap;transition:all .15s}
+.btn-p{background:var(--accent);color:#fff}.btn-p:hover{background:var(--accent2)}
+.btn-s{background:#fff;color:var(--text);border:1px solid var(--border)}.btn-s:hover{background:var(--bg)}
+.btn-g{background:none;color:var(--text2);border:1px solid var(--border2)}.btn-g:hover{background:var(--bg)}
+.btn-b{background:var(--brand);color:#fff;font-size:13px;padding:9px 18px}.btn-b:hover{background:var(--brand2)}
+.btn-d{background:var(--red-bg);color:var(--red);border:1px solid #FECACA}
+.btn-dis{background:var(--bg2);color:var(--text3);border:1px solid var(--border2);cursor:not-allowed;opacity:.7}
+
+/* ═══════════════════════
+   FORMULARIOS
+═══════════════════════ */
+.flbl{display:block;font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
+.finput,.fsel,.ftxt{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:12.5px;color:var(--text);background:#fff;transition:border-color .15s,box-shadow .15s}
+.finput:focus,.fsel:focus,.ftxt:focus{outline:none;border-color:var(--accent-md);box-shadow:0 0 0 3px rgba(76,155,253,.15)}
+.ftxt{resize:vertical;min-height:60px}
+
+/* ═══════════════════════
+   SLIDER
+═══════════════════════ */
+.sl-labels{display:flex;justify-content:space-between;font-size:10.5px;color:var(--text3);margin-bottom:3px}
+.sl-track{width:100%;height:4px;background:var(--border);border-radius:2px;position:relative;margin:5px 0;cursor:pointer}
+.sl-fill{position:absolute;height:100%;background:var(--accent);border-radius:2px}
+.sl-thumb{position:absolute;width:14px;height:14px;background:#fff;border:2px solid var(--accent);border-radius:50%;top:-5px;transform:translateX(-50%);box-shadow:0 1px 4px rgba(0,0,0,.15)}
+.sl-val{text-align:center;font-size:11px;font-weight:700;color:var(--accent);margin-top:1px}
+
+/* ═══════════════════════
+   METRICAS
+═══════════════════════ */
+.mrow{display:flex;gap:11px;margin-bottom:14px}
+.mc{flex:1;background:var(--accent-lt);border-radius:var(--r-sm);padding:10px 13px;border:1px solid var(--border2)}
+.mc-lbl{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
+.mc-val{font-size:18px;font-weight:700;color:var(--brand)}
+.mc-sub{font-size:10px;color:var(--text3);margin-top:1px}
+
+/* ═══════════════════════
+   SIDEBAR LAYOUT
+═══════════════════════ */
+.sb-layout{display:grid;grid-template-columns:276px 1fr;gap:14px}
+.sidebar{background:#fff;border-radius:var(--r);border:1px solid var(--border2);box-shadow:var(--sh);display:flex;flex-direction:column}
+.sb-head{padding:13px 15px;background:var(--brand);border-radius:var(--r) var(--r) 0 0;color:#fff}
+.sb-head h3{font-size:13px;font-weight:700}
+.sb-head p{font-size:11px;opacity:.65;margin-top:2px}
+.sb-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:13px}
+.sb-foot{padding:11px 14px;border-top:1px solid var(--border2);background:var(--bg);border-radius:0 0 var(--r) var(--r);display:flex;flex-direction:column;gap:7px}
+.main-col{display:flex;flex-direction:column;gap:14px}
+
+/* ═══════════════════════
+   MODAL
+═══════════════════════ */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1000;align-items:center;justify-content:center}
+.modal-ov.open{display:flex}
+.modal{background:#fff;border-radius:var(--r-lg);box-shadow:var(--sh-md);padding:24px;width:480px;max-width:95vw;max-height:88vh;overflow-y:auto}
+.modal-title{font-size:16px;font-weight:700;color:var(--brand);margin-bottom:4px}
+.modal-sub{font-size:12.5px;color:var(--text2);margin-bottom:20px}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px}
+
+/* ═══════════════════════
+   TOAST / TOOLTIP
+═══════════════════════ */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--brand);color:#fff;padding:12px 18px;border-radius:var(--r);font-size:13px;font-weight:500;box-shadow:var(--sh-md);z-index:2000;transform:translateY(80px);opacity:0;transition:all .3s ease;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-ok{background:var(--green)}
+.toast-err{background:var(--red)}
+#tooltip{display:none;position:fixed;background:#091540;color:#fff;padding:9px 13px;border-radius:7px;font-size:12px;line-height:1.5;width:260px;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:9999;pointer-events:none}
+
+/* ═══════════════════════
+   SKELETON
+═══════════════════════ */
+@keyframes shimmer{0%{background-position:-600px 0}100%{background-position:600px 0}}
+.skeleton{background:linear-gradient(90deg,var(--bg2) 25%,var(--border2) 50%,var(--bg2) 75%);background-size:600px 100%;animation:shimmer 1.4s infinite;border-radius:var(--r-sm)}
+
+/* ═══════════════════════
+   UTILES
+═══════════════════════ */
+.callout{padding:10px 13px;border-radius:var(--r-sm);font-size:12px;line-height:1.5;border-left:3px solid}
+.callout-ok{background:var(--green-bg);border-color:var(--green);color:#065F46}
+.callout-warn{background:var(--amber-bg);border-color:var(--amber);color:#78350F}
+.callout-info{background:var(--blue-bg);border-color:var(--blue);color:#1E3A5F}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;color:var(--text3);font-size:12.5px;line-height:1.5;background:var(--bg2);border-radius:var(--r-sm);border:1px dashed var(--border);padding:24px 16px}
+.slbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:7px}
+.divider{height:1px;background:var(--border2);margin:2px 0}
+.tag{display:inline-flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);padding:2px 7px;border-radius:4px;font-size:11px;font-weight:500}
+.flex{display:flex}.fxc{display:flex;align-items:center}.fxb{display:flex;align-items:center;justify-content:space-between}
+.g8{gap:8px}.g12{gap:12px}.mt8{margin-top:8px}.mt12{margin-top:12px}.mb8{margin-bottom:8px}.mb12{margin-bottom:12px}.wf{width:100%}
+.tmuted{color:var(--text3)}.tsm{font-size:11px}.tbold{font-weight:700}
+
+/* ═══════════════════════
+   TWO COLUMN LAYOUT
+═══════════════════════ */
+.two-col{display:grid;grid-template-columns:7fr 3fr;gap:14px}
+
+/* ═══════════════════════
+   DOCENTE SIDEBAR NAV
+═══════════════════════ */
+.sb-nav{list-style:none;padding:0;margin:0}
+.sb-nav li{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--r-sm);font-size:12.5px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .12s;margin-bottom:2px}
+.sb-nav li:hover{background:var(--accent-lt);color:var(--accent)}
+.sb-nav li.active{background:var(--accent-lt);color:var(--accent);font-weight:700}
+.sb-nav li.nav-sep{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);padding:12px 12px 4px;cursor:default;margin-bottom:0}
+.sb-nav li.nav-sep:hover{background:none;color:var(--text3)}
+.sb-nav li .nav-icon{width:18px;text-align:center;flex-shrink:0}
+
+/* ═══════════════════════
+   STEPPER
+═══════════════════════ */
+.stepper{display:flex;align-items:center;gap:0;margin-bottom:18px}
+.step{display:flex;align-items:center;gap:8px;flex:1}
+.step-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;border:2px solid var(--border);color:var(--text3);background:#fff;flex-shrink:0}
+.step.active .step-num{background:var(--accent);color:#fff;border-color:var(--accent)}
+.step.done .step-num{background:var(--green);color:#fff;border-color:var(--green)}
+.step-label{font-size:11px;color:var(--text3);font-weight:500;white-space:nowrap}
+.step.active .step-label{color:var(--accent);font-weight:700}
+.step.done .step-label{color:var(--green);font-weight:600}
+.step-line{flex:1;height:2px;background:var(--border2);margin:0 8px}
+.step-line.done{background:var(--green)}
+
+/* ═══════════════════════
+   PROGRESS BAR
+═══════════════════════ */
+.progress-bar{width:100%;height:8px;background:var(--border2);border-radius:4px;overflow:hidden;margin:6px 0}
+.progress-fill{height:100%;border-radius:4px;transition:width .4s ease}
+
+/* ═══════════════════════
+   LIKERT
+═══════════════════════ */
+.likert-row{display:flex;align-items:center;gap:8px;justify-content:center;margin:10px 0}
+.likert-opt{width:44px;height:44px;border-radius:50%;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text3);cursor:pointer;transition:all .15s}
+.likert-opt:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-lt)}
+.likert-opt.selected{border-color:var(--accent);background:var(--accent);color:#fff}
+.likert-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:2px}
+
+/* ═══════════════════════
+   TIMELINE
+═══════════════════════ */
+.timeline{position:relative;padding-left:20px}
+.timeline::before{content:'';position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--border2)}
+.tl-item{position:relative;padding:0 0 14px 12px}
+.tl-item::before{content:'';position:absolute;left:-17px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid #fff;box-shadow:0 0 0 2px var(--accent-lt)}
+.tl-item.tl-green::before{background:var(--green)}
+.tl-item.tl-amber::before{background:var(--amber)}
+.tl-item.tl-teal::before{background:var(--teal)}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════
+     TOP NAV
+═══════════════════════ -->
+<nav class="topnav">
+  <div class="brand">
+    <img src="logo_h.svg" alt="BrightPath" style="height:22px;filter:brightness(0) invert(1)">
+    <span style="font-size:10px;font-weight:400;opacity:.5;margin-left:2px">· Prototipo</span>
+  </div>
+  <a class="mtab" href="tab1-auth.html">1 · Auth</a>
+  <a class="mtab active" href="tab2-docente.html">2 · Docente</a>
+  <a class="mtab" href="tab3-director.html">3 · Director</a>
+  <a class="mtab" href="tab4-consultor.html">4 · Consultor</a>
+  <a class="mtab" href="tab5-reactivos.html">5 · Banco</a>
+  <a class="mtab" href="tab6-admin.html">6 · Admin</a>
+  <select class="mob-select" onchange="if(this.value)location.href=this.value">
+    <option value="">Navegar...</option>
+    <option value="tab1-auth.html">1 · Auth</option>
+    <option value="tab2-docente.html" selected>2 · Docente</option>
+    <option value="tab3-director.html">3 · Director</option>
+    <option value="tab4-consultor.html">4 · Consultor</option>
+    <option value="tab5-reactivos.html">5 · Banco</option>
+    <option value="tab6-admin.html">6 · Admin</option>
+  </select>
+  <span class="nav-badge">v1.0 · 11 pantallas</span>
+</nav>
+<nav class="subnav">
+  <button class="subnav-arrow subnav-left" onclick="scrollSubnav(-1)">&#8249;</button>
+  <div class="subnav-track">
+    <button class="stab active" onclick="go('s4')">2a · Bienvenida</button>
+    <button class="stab" onclick="go('s5')">2b · Dashboard (pendiente)</button>
+    <button class="stab" onclick="go('s5b')">2c · Dashboard (completado)</button>
+    <button class="stab" onclick="go('s6')">2d · Diagnóstico (en progreso)</button>
+    <button class="stab" onclick="go('s6b')">2e · Diagnóstico (modal pausar)</button>
+    <button class="stab" onclick="go('s6c')">2f · Diagnóstico (respondiendo)</button>
+    <button class="stab" onclick="go('s7')">2g · Resultados</button>
+    <button class="stab" onclick="go('s7b')">2h · Resultados (vista director)</button>
+    <button class="stab" onclick="go('s8')">2i · Ruta de Formación</button>
+    <button class="stab" onclick="go('s9')">2j · Portafolio</button>
+    <button class="stab" onclick="go('s9b')">2k · Portafolio (modal compartir)</button>
+  </div>
+  <button class="subnav-arrow subnav-right" onclick="scrollSubnav(1)">&#8250;</button>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s4 — BIENVENIDA DOCENTE
+════════════════════════════════════════════════════════ -->
+<div id="s4" class="screen active">
+  <div class="scr-label">👩‍🏫 1/6 · Docente</div>
+  <div class="pg-title">¡Hola, Ana Martínez!</div>
+  <div class="pg-sub">Configura tu perfil para comenzar tu camino de crecimiento.</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>3 pasos:</strong> Mínimo sin saturar — perfil, diagnóstico, resultados.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Framing beneficio:</strong> "Tu mapa de crecimiento", "Tu portafolio" — nunca evaluación.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Email personal:</strong> Tooltip explica que el correo personal permite que la cuenta siga al docente si cambia de colegio.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>Un solo CTA:</strong> Un botón claro de siguiente paso. Sin confusión.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/bienvenida-docente</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <!-- Sidebar docente -->
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">AM</div>
+              <div><h3>Ana Martínez</h3><p style="margin:0;opacity:.65;font-size:10px">Colegio Montessori Vallarta</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li class="active"><span class="nav-icon">🏠</span> Inicio</li>
+              <li><span class="nav-icon">👤</span> Perfil</li>
+              <li><span class="nav-icon">📋</span> Mi Diagnóstico</li>
+              <li><span class="nav-icon">🎓</span> Mis Cursos</li>
+              <li onclick="go('s9')"><span class="nav-icon">🌟</span> Mi Portafolio</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-col">
+          <!-- Stepper -->
+          <div style="position:relative">
+            <div class="ann-mk" data-tip="3 pasos — mínimo sin saturar. Perfil, diagnóstico, resultados." style="top:-5px;right:-5px">1</div>
+            <div class="stepper">
+              <div class="step active"><div class="step-num">1</div><div class="step-label">Tu perfil</div></div>
+              <div class="step-line"></div>
+              <div class="step"><div class="step-num">2</div><div class="step-label">Diagnóstico</div></div>
+              <div class="step-line"></div>
+              <div class="step"><div class="step-num">3</div><div class="step-label">Resultados</div></div>
+            </div>
+          </div>
+
+          <!-- Welcome callout -->
+          <div class="callout callout-info mb12">
+            <strong>👋 ¡Bienvenida al Colegio Montessori Vallarta!</strong> Tu director te ha invitado a BrightPath. Completa tu perfil para comenzar tu camino de crecimiento profesional.
+          </div>
+
+          <!-- What is BrightPath -->
+          <div class="card mb12" style="position:relative">
+            <div class="ann-mk" data-tip="Framing beneficio: 'Tu mapa de crecimiento', 'Tu portafolio' — nunca evaluación." style="top:-5px;right:-5px">2</div>
+            <div class="card-head"><h3>¿Qué es BrightPath para ti?</h3></div>
+            <div class="card-body">
+              <div style="display:flex;flex-direction:column;gap:8px;font-size:12.5px;color:var(--text2)">
+                <div>✦ <strong>Tu mapa de crecimiento</strong> — descubre tus fortalezas y áreas de desarrollo</div>
+                <div>✦ <strong>Tu ruta personalizada</strong> — cursos y recursos seleccionados para ti</div>
+                <div>✦ <strong>Tu portafolio profesional</strong> — evidencia verificada de tus competencias</div>
+                <div>✦ <strong>Tu historial</strong> — un activo que te acompaña toda tu carrera docente</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile form -->
+          <div class="card" style="position:relative">
+            <div class="card-head"><h3>Completa tu perfil</h3></div>
+            <div class="card-body">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div>
+                  <label class="flbl">Nombre completo</label>
+                  <input class="finput" type="text" value="Ana Martínez" readonly style="background:var(--bg)">
+                </div>
+                <div style="position:relative">
+                  <div class="ann-mk" data-tip="Email personal con tooltip: si cambias de colegio, tu cuenta te sigue." style="top:-9px;right:-9px">3</div>
+                  <label class="flbl" style="display:flex;align-items:center;gap:4px">
+                    Email personal
+                    <span title="Usa tu correo personal. Si cambias de colegio tu cuenta te sigue." style="cursor:help">ℹ️</span>
+                  </label>
+                  <input class="finput" type="email" value="ana.martinez@gmail.com">
+                </div>
+                <div>
+                  <label class="flbl">Nivel educativo</label>
+                  <select class="fsel"><option selected>Secundaria</option><option>Primaria</option><option>Preparatoria</option></select>
+                </div>
+                <div>
+                  <label class="flbl">Años de experiencia</label>
+                  <select class="fsel"><option>1-3 años</option><option>4-7 años</option><option selected>8-12 años</option><option>13+ años</option></select>
+                </div>
+              </div>
+              <div style="margin-top:16px;text-align:right;position:relative">
+                <div class="ann-mk" data-tip="Un solo CTA claro — sin confusión sobre qué hacer." style="top:-9px;right:90px">4</div>
+                <button class="btn btn-p" onclick="go('s5');showToast('✓ Perfil guardado','ok')">Continuar →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s5 — DASHBOARD DOCENTE
+════════════════════════════════════════════════════════ -->
+<div id="s5" class="screen">
+  <div class="scr-label">🏠 2/6 · Docente</div>
+  <div class="pg-title">Dashboard</div>
+  <div class="pg-sub">Hola de nuevo, Ana Martínez 👋</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Banner diagnóstico:</strong> Siempre visible al tope cuando hay diagnóstico pendiente o en curso.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Barra progreso 68%:</strong> Muestra avance general con módulo activo actual.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Métricas de logro:</strong> Framing positivo — certificados obtenidos, horas completadas.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>Ruta con estados:</strong> En Curso, Próximo y Completado para cada módulo de la ruta.</div></div>
+      <div class="ann-item"><div class="ann-num">5</div><div class="ann-txt"><strong>Sidebar scores:</strong> Perfil de competencias por dimensión siempre visible.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/inicio</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <!-- Sidebar docente -->
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">AM</div>
+              <div><h3>Ana Martínez</h3><p style="margin:0;opacity:.65;font-size:10px">Colegio Montessori Vallarta</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li class="active"><span class="nav-icon">🏠</span> Inicio</li>
+              <li><span class="nav-icon">👤</span> Perfil</li>
+              <li onclick="go('s7')"><span class="nav-icon">📋</span> Mi Diagnóstico</li>
+              <li onclick="go('s8')"><span class="nav-icon">🎓</span> Mis Cursos</li>
+              <li onclick="go('s9')"><span class="nav-icon">🌟</span> Mi Portafolio</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Main content — two columns 70/30 -->
+        <div style="display:grid;grid-template-columns:7fr 3fr;gap:14px">
+          <!-- Left column -->
+          <div class="main-col">
+            <!-- Banner diagnóstico -->
+            <div class="callout callout-info" style="position:relative">
+              <div class="ann-mk" data-tip="Banner diagnóstico siempre visible al tope cuando hay diagnóstico pendiente o en curso." style="top:-9px;right:-9px">1</div>
+              <strong>📋 Tu diagnóstico de fortalezas está listo.</strong> Responde cuando quieras — sin tiempo límite, puedes pausar y retomar.
+              <div style="margin-top:8px"><button class="btn btn-p" onclick="go('s6')">Comenzar diagnóstico →</button></div>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="card" style="position:relative">
+              <div class="ann-mk" data-tip="Barra progreso 68% con módulo activo actual." style="top:-5px;right:-5px">2</div>
+              <div class="card-body">
+                <div class="fxb mb8">
+                  <div><strong style="font-size:13px">Tu progreso general</strong></div>
+                  <span style="font-size:18px;font-weight:700;color:var(--accent)">68%</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" style="width:68%;background:linear-gradient(90deg,var(--accent),var(--teal))"></div></div>
+                <div class="fxb mt8" style="font-size:11px;color:var(--text3)">
+                  <span>Módulo activo: <strong style="color:var(--accent)">Uso de TIC en el Aula</strong></span>
+                  <span>
+                    <button class="btn btn-s" style="font-size:11px;padding:3px 8px" onclick="go('s8')">Ver ruta completa</button>
+                    <a href="#" style="color:var(--accent);margin-left:8px;font-size:11px" onclick="event.preventDefault();go('s7')">Ver resultados</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Metrics row -->
+            <div class="mrow" style="position:relative">
+              <div class="ann-mk" data-tip="Métricas de logro positivas — certificados, horas, cursos." style="top:-9px;right:-9px">3</div>
+              <div class="mc"><div class="mc-lbl">Cursos activos</div><div class="mc-val">3</div><div class="mc-sub">de 8 en tu ruta</div></div>
+              <div class="mc"><div class="mc-lbl">Horas completadas</div><div class="mc-val">24</div><div class="mc-sub">este semestre</div></div>
+              <div class="mc"><div class="mc-lbl">Certificados</div><div class="mc-val">2</div><div class="mc-sub">verificados</div></div>
+              <div class="mc"><div class="mc-lbl">Confianza</div><div class="mc-val" style="color:var(--green)">91%</div><div class="mc-sub">de tu diagnóstico</div></div>
+            </div>
+
+            <!-- Courses -->
+            <div style="position:relative">
+              <div class="ann-mk" data-tip="Ruta con estados: En Curso/Próximo/Completado para cada módulo." style="top:-5px;right:-5px">4</div>
+              <div class="slbl">Tu ruta de formación</div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <!-- Course 1: Completed -->
+                <div class="card">
+                  <div class="card-body" style="padding:12px 15px">
+                    <div class="fxb">
+                      <div class="fxc g8">
+                        <span class="badge bdg-green">Completado</span>
+                        <strong style="font-size:12.5px">Metodologías Activas: Fundamentos</strong>
+                      </div>
+                      <span class="tmuted tsm">Google for Education · 8h</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- Course 2: In Progress -->
+                <div class="card" style="border-left:3px solid var(--accent)">
+                  <div class="card-body" style="padding:12px 15px">
+                    <div class="fxb">
+                      <div class="fxc g8">
+                        <span class="badge bdg-blue">En Curso</span>
+                        <strong style="font-size:12.5px">Uso de TIC en el Aula</strong>
+                      </div>
+                      <span class="tmuted tsm">INTEF · 12h</span>
+                    </div>
+                    <div class="progress-bar mt8" style="height:4px"><div class="progress-fill" style="width:45%;background:var(--accent)"></div></div>
+                  </div>
+                </div>
+                <!-- Course 3: Next -->
+                <div class="card" style="opacity:.7">
+                  <div class="card-body" style="padding:12px 15px">
+                    <div class="fxb">
+                      <div class="fxc g8">
+                        <span class="badge bdg-gray">Próximo</span>
+                        <strong style="font-size:12.5px">Gestión Socioemocional en Secundaria</strong>
+                      </div>
+                      <span class="tmuted tsm">Coursera · 10h</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right column -->
+          <div class="main-col">
+            <!-- Diagnosis scores -->
+            <div class="card" style="position:relative">
+              <div class="ann-mk" data-tip="Sidebar con scores por dimensión — perfil de competencias resumido." style="top:-5px;right:-5px">5</div>
+              <div class="card-head"><h3>Tu perfil de competencias</h3></div>
+              <div class="card-body">
+                <div style="margin-bottom:10px">
+                  <div class="fxb mb8" style="font-size:11px"><span style="font-weight:600;color:var(--teal)">MA · Metodologías Activas</span><span class="tbold">72%</span></div>
+                  <div class="progress-bar" style="height:6px"><div class="progress-fill" style="width:72%;background:var(--teal)"></div></div>
+                  <div style="font-size:10px;color:var(--text3);margin-top:2px">Profundización</div>
+                </div>
+                <div style="margin-bottom:10px">
+                  <div class="fxb mb8" style="font-size:11px"><span style="font-weight:600;color:var(--coral)">TEC · Uso de TIC</span><span class="tbold">48%</span></div>
+                  <div class="progress-bar" style="height:6px"><div class="progress-fill" style="width:48%;background:var(--coral)"></div></div>
+                  <div style="font-size:10px;color:var(--text3);margin-top:2px">Fundamentos</div>
+                </div>
+                <div>
+                  <div class="fxb mb8" style="font-size:11px"><span style="font-weight:600;color:var(--accent)">GSE · Gestión Socioemocional</span><span class="tbold">85%</span></div>
+                  <div class="progress-bar" style="height:6px"><div class="progress-fill" style="width:85%;background:var(--accent)"></div></div>
+                  <div style="font-size:10px;color:var(--text3);margin-top:2px">Implementación</div>
+                </div>
+                <div style="margin-top:12px;text-align:center">
+                  <button class="btn btn-s wf" style="font-size:11px" onclick="go('s7')">Ver resultados completos →</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Upcoming -->
+            <div class="card">
+              <div class="card-head"><h3>Próximos pasos</h3></div>
+              <div class="card-body" style="font-size:12px;color:var(--text2)">
+                <div style="padding:6px 0;border-bottom:1px solid var(--border2)">📋 Completar diagnóstico de fortalezas</div>
+                <div style="padding:6px 0;border-bottom:1px solid var(--border2)">🎓 Terminar módulo TIC (55% restante)</div>
+                <div style="padding:6px 0">🌟 Actualizar portafolio profesional</div>
+              </div>
+            </div>
+
+            <!-- Resources -->
+            <div class="card">
+              <div class="card-head"><h3>Recursos rápidos</h3></div>
+              <div class="card-body" style="font-size:12px;color:var(--text2)">
+                <div style="padding:5px 0"><a href="#" style="color:var(--accent);text-decoration:none" onclick="event.preventDefault()">📄 Guía de diagnóstico</a></div>
+                <div style="padding:5px 0"><a href="#" style="color:var(--accent);text-decoration:none" onclick="event.preventDefault()">🎥 Video: ¿Cómo funciona BrightPath?</a></div>
+                <div style="padding:5px 0"><a href="#" style="color:var(--accent);text-decoration:none" onclick="event.preventDefault();go('s9')">🌟 Mi portafolio profesional</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s6 — DIAGNÓSTICO ACTIVO
+════════════════════════════════════════════════════════ -->
+<div id="s6" class="screen">
+  <div class="scr-label">📋 3/6 · Docente</div>
+  <div class="pg-title">Tu Diagnóstico de Fortalezas</div>
+  <div class="pg-sub">Responde con calma — no hay respuestas correctas ni incorrectas.</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Sin cronómetro:</strong> Sin presión de tiempo — el docente responde a su ritmo.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Guardado automático:</strong> Callout que elimina ansiedad — "tus respuestas se guardan automáticamente".</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Pregunta COMPOSITE:</strong> Escenario en card azul con sub-preguntas Likert y múltiple.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>Círculos Likert 44px:</strong> Táctiles con labels descriptivos — diseñados para móvil.</div></div>
+      <div class="ann-item"><div class="ann-num">5</div><div class="ann-txt"><strong>Botón pausar:</strong> Siempre visible con modal positivo — "tu progreso está guardado".</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/diagnostico/activo</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <!-- Sticky progress bar -->
+      <div class="fxb mb12" style="position:sticky;top:0;background:var(--bg);padding:8px 0;z-index:10">
+        <div style="flex:1;margin-right:14px;position:relative">
+          <div class="ann-mk" data-tip="Sin cronómetro — sin presión de tiempo." style="top:-12px;left:-5px">1</div>
+          <div class="fxb" style="font-size:11px;color:var(--text3);margin-bottom:3px">
+            <span>Pregunta 8 de 28</span><span style="font-weight:700;color:var(--accent)">28%</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:28%;background:var(--accent)"></div></div>
+        </div>
+        <div style="position:relative">
+          <div class="ann-mk" data-tip="Botón pausar siempre visible con modal positivo." style="top:-12px;right:-5px">5</div>
+          <button class="btn btn-s" onclick="openModal('modal-pausar')">⏸ Pausar</button>
+        </div>
+      </div>
+
+      <!-- Auto-save callout -->
+      <div class="callout callout-info mb12" style="position:relative">
+        <div class="ann-mk" data-tip="Callout guardado automático elimina ansiedad." style="top:-9px;right:-9px">2</div>
+        💾 <strong>Guardado automático:</strong> Tus respuestas se guardan en tiempo real. Puedes pausar y retomar cuando quieras.
+      </div>
+
+      <!-- Question label -->
+      <div style="margin-bottom:12px">
+        <span style="font-size:11px;font-weight:700;color:var(--coral);letter-spacing:.5px">REACTIVO 3 ─── 28%</span>
+      </div>
+
+      <!-- Scenario card -->
+      <div class="card mb12" style="border:2px solid var(--accent);position:relative">
+        <div class="ann-mk" data-tip="Pregunta COMPOSITE: escenario en card azul con sub-preguntas." style="top:-9px;right:-9px">3</div>
+        <div class="card-body" style="background:var(--accent-lt)">
+          <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">📖 Escenario</div>
+          <p style="font-size:13px;color:var(--text);line-height:1.6">
+            Ana trabaja con un grupo de 2.° de secundaria. Uno de sus estudiantes muestra frustración constante cuando las actividades involucran trabajo en equipo. En lugar de participar, se aísla y responde de manera hostil cuando sus compañeros intentan incluirlo.
+          </p>
+        </div>
+      </div>
+
+      <!-- Sub-question 1: Likert -->
+      <div class="card mb12" style="position:relative">
+        <div class="card-body">
+          <p style="font-size:12.5px;font-weight:600;color:var(--brand);margin-bottom:10px">3.1 — ¿Qué tan preparada te sientes para abordar esta situación con estrategias socioemocionales?</p>
+          <div class="ann-mk" data-tip="Círculos Likert 44px táctiles con labels." style="top:-5px;right:-5px">4</div>
+          <div class="likert-row">
+            <div class="likert-opt" onclick="this.parentElement.querySelectorAll('.likert-opt').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')">1</div>
+            <div class="likert-opt" onclick="this.parentElement.querySelectorAll('.likert-opt').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')">2</div>
+            <div class="likert-opt selected" onclick="this.parentElement.querySelectorAll('.likert-opt').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')">3</div>
+            <div class="likert-opt" onclick="this.parentElement.querySelectorAll('.likert-opt').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')">4</div>
+            <div class="likert-opt" onclick="this.parentElement.querySelectorAll('.likert-opt').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')">5</div>
+          </div>
+          <div class="likert-labels"><span>Nada preparada</span><span>Muy preparada</span></div>
+        </div>
+      </div>
+
+      <div class="divider mb12"></div>
+
+      <!-- Sub-question 2: Multiple choice -->
+      <div class="card mb12">
+        <div class="card-body">
+          <p style="font-size:12.5px;font-weight:600;color:var(--brand);margin-bottom:12px">3.2 — ¿Cuál sería tu primera acción al observar esta conducta?</p>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <label style="display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border:1px solid var(--border2);border-radius:var(--r-sm);cursor:pointer;transition:all .12s;font-size:12.5px" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--accent-lt)'" onmouseout="this.style.borderColor='var(--border2)';this.style.background='#fff'">
+              <input type="radio" name="q32" style="margin-top:2px">
+              <span>Hablar con el estudiante en privado para entender qué le sucede</span>
+            </label>
+            <label style="display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border:1px solid var(--border2);border-radius:var(--r-sm);cursor:pointer;transition:all .12s;font-size:12.5px" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--accent-lt)'" onmouseout="this.style.borderColor='var(--border2)';this.style.background='#fff'">
+              <input type="radio" name="q32" style="margin-top:2px">
+              <span>Cambiar al estudiante a trabajo individual para evitar conflictos</span>
+            </label>
+            <label style="display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border:1px solid var(--border2);border-radius:var(--r-sm);cursor:pointer;transition:all .12s;font-size:12.5px" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--accent-lt)'" onmouseout="this.style.borderColor='var(--border2)';this.style.background='#fff'">
+              <input type="radio" name="q32" style="margin-top:2px">
+              <span>Implementar una dinámica de roles rotativos para facilitar la integración</span>
+            </label>
+            <label style="display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border:1px solid var(--border2);border-radius:var(--r-sm);cursor:pointer;transition:all .12s;font-size:12.5px" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--accent-lt)'" onmouseout="this.style.borderColor='var(--border2)';this.style.background='#fff'">
+              <input type="radio" name="q32" style="margin-top:2px">
+              <span>Reportar la situación al departamento de orientación</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="fxb mt12">
+        <button class="btn btn-s" onclick="showToast('← Pregunta anterior')">← Anterior</button>
+        <button class="btn btn-p" onclick="go('s7');showToast('✓ Diagnóstico completado. ¡Excelente trabajo!','ok')">Siguiente →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s7 — RESULTADOS
+════════════════════════════════════════════════════════ -->
+<div id="s7" class="screen">
+  <div class="scr-label">🎯 4/6 · Docente</div>
+  <div class="pg-title">Tu Perfil de Competencias</div>
+  <div class="pg-sub">Resultados de tu diagnóstico de fortalezas — Ana Martínez</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Privacidad:</strong> "Solo tú ves esto" — el director podrá ver datos agregados en 48h.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Niveles cualitativos:</strong> Fundamentos, Profundización, Implementación — no solo números.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Fortalezas primero:</strong> Áreas de crecimiento — nunca "deficiencias".</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>Radar SVG:</strong> Visualización de 3 dimensiones con colores BrightPath.</div></div>
+      <div class="ann-item"><div class="ann-num">5</div><div class="ann-txt"><strong>Narrativa IA:</strong> Texto personalizado generado por IA sobre el perfil de Ana.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/diagnostico/resultados</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">AM</div>
+              <div><h3>Ana Martínez</h3><p style="margin:0;opacity:.65;font-size:10px">Colegio Montessori Vallarta</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li onclick="go('s5')"><span class="nav-icon">🏠</span> Inicio</li>
+              <li><span class="nav-icon">👤</span> Perfil</li>
+              <li class="active"><span class="nav-icon">📋</span> Mi Diagnóstico</li>
+              <li onclick="go('s8')"><span class="nav-icon">🎓</span> Mis Cursos</li>
+              <li onclick="go('s9')"><span class="nav-icon">🌟</span> Mi Portafolio</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="main-col">
+          <!-- Privacy callout -->
+          <div class="callout" style="background:#F0F9FF;border-color:var(--accent);color:var(--brand);position:relative">
+            <div class="ann-mk" data-tip="'Solo tú ves esto' — director accede a datos agregados en 48h." style="top:-9px;right:-9px">1</div>
+            🔒 <strong>Solo tú ves estos resultados.</strong> Tu director podrá consultar datos agregados de tu colegio después de 48 horas.
+          </div>
+
+          <!-- Confidence callout -->
+          <div class="callout callout-ok">
+            <strong>✓ Diagnóstico completado</strong> — Confianza del resultado: <strong>91%</strong> (alta). Tus respuestas fueron consistentes.
+          </div>
+
+          <!-- 3 dimension cards -->
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;position:relative">
+            <div class="ann-mk" data-tip="Niveles cualitativos: Fundamentos, Profundización, Implementación — no solo números." style="top:-9px;right:-9px">2</div>
+            <div class="card" style="border-top:3px solid var(--teal)">
+              <div class="card-body" style="text-align:center">
+                <div style="font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">MA · Metodologías Activas</div>
+                <div style="font-size:28px;font-weight:700;color:var(--brand)">72%</div>
+                <span class="badge bdg-amber" style="margin-top:4px">Profundización</span>
+              </div>
+            </div>
+            <div class="card" style="border-top:3px solid var(--coral)">
+              <div class="card-body" style="text-align:center">
+                <div style="font-size:11px;font-weight:700;color:var(--coral);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">TEC · Uso de TIC</div>
+                <div style="font-size:28px;font-weight:700;color:var(--brand)">48%</div>
+                <span class="badge bdg-red" style="margin-top:4px">Fundamentos</span>
+              </div>
+            </div>
+            <div class="card" style="border-top:3px solid var(--accent)">
+              <div class="card-body" style="text-align:center">
+                <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">GSE · Gestión Socioemocional</div>
+                <div style="font-size:28px;font-weight:700;color:var(--brand)">85%</div>
+                <span class="badge bdg-green" style="margin-top:4px">Implementación</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Radar SVG -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Radar SVG 3 dimensiones con colores BrightPath." style="top:-5px;right:-5px">4</div>
+            <div class="card-body" style="display:flex;justify-content:center;padding:20px">
+              <svg width="260" height="230" viewBox="0 0 260 230">
+                <!-- Grid lines -->
+                <polygon points="130,20 230,170 30,170" fill="none" stroke="var(--border2)" stroke-width="1"/>
+                <polygon points="130,55 197,148 63,148" fill="none" stroke="var(--border2)" stroke-width="1"/>
+                <polygon points="130,90 163,125 97,125" fill="none" stroke="var(--border2)" stroke-width="1"/>
+                <!-- Data polygon -->
+                <polygon points="130,48 208,155 47,142" fill="var(--accent)" fill-opacity="0.15" stroke="var(--accent)" stroke-width="2"/>
+                <!-- Data points -->
+                <circle cx="130" cy="48" r="5" fill="var(--teal)"/><!-- MA 72% -->
+                <circle cx="208" cy="155" r="5" fill="var(--coral)"/><!-- TEC 48% -->
+                <circle cx="47" cy="142" r="5" fill="var(--accent)"/><!-- GSE 85% -->
+                <!-- Labels -->
+                <text x="130" y="12" text-anchor="middle" font-size="11" font-weight="700" fill="var(--teal)">MA · 72%</text>
+                <text x="245" y="180" text-anchor="end" font-size="11" font-weight="700" fill="var(--coral)">TEC · 48%</text>
+                <text x="15" y="180" text-anchor="start" font-size="11" font-weight="700" fill="var(--accent)">GSE · 85%</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Strengths & Growth areas -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;position:relative">
+            <div class="ann-mk" data-tip="Fortalezas y 'Áreas de crecimiento' — nunca 'deficiencias'." style="top:-9px;right:-9px">3</div>
+            <div class="card" style="background:var(--teal-bg);border-color:var(--teal)">
+              <div class="card-head" style="border-color:rgba(70,186,181,.2)"><h3 style="color:var(--teal)">💪 Tus fortalezas</h3></div>
+              <div class="card-body" style="font-size:12.5px;color:var(--text)">
+                <div style="margin-bottom:6px">✦ Gestión socioemocional a nivel <strong>Implementación</strong></div>
+                <div style="margin-bottom:6px">✦ Alta empatía y manejo de conflictos en el aula</div>
+                <div>✦ Consistencia en respuestas (confianza 91%)</div>
+              </div>
+            </div>
+            <div class="card" style="background:var(--coral-bg);border-color:var(--coral)">
+              <div class="card-head" style="border-color:rgba(255,111,97,.2)"><h3 style="color:var(--coral)">🌱 Áreas de crecimiento</h3></div>
+              <div class="card-body" style="font-size:12.5px;color:var(--text)">
+                <div style="margin-bottom:6px">✦ Uso de TIC en <strong>Fundamentos</strong> — oportunidad de desarrollo rápido</div>
+                <div style="margin-bottom:6px">✦ Integración de herramientas digitales en clase</div>
+                <div>✦ Colaboración digital con otros docentes</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI narrative -->
+          <div class="card" style="background:var(--bg2);position:relative">
+            <div class="ann-mk" data-tip="Narrativa IA personalizada para Ana." style="top:-5px;right:-5px">5</div>
+            <div class="card-head"><h3>🤖 Narrativa personalizada</h3><span class="badge bdg-blue" style="margin-left:auto">Generada por IA</span></div>
+            <div class="card-body" style="font-size:12.5px;color:var(--text2);line-height:1.7">
+              Ana, tu perfil muestra una <strong>sólida base en gestión socioemocional</strong> que te posiciona como referente en tu colegio. Tu capacidad para abordar conflictos y construir ambientes de aprendizaje seguros está en nivel de Implementación (85%).
+              <br><br>
+              Tu área de mayor oportunidad está en <strong>Uso de TIC</strong>, donde te encuentras en Fundamentos (48%). La buena noticia es que docentes con tu perfil socioemocional suelen adoptar herramientas digitales con rapidez cuando tienen la guía adecuada.
+              <br><br>
+              Te recomendamos comenzar con cursos de TIC básico y luego integrar herramientas de colaboración digital que potencien tu fortaleza en trabajo en equipo.
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="fxc g8">
+            <button class="btn btn-p" onclick="go('s8')">Ver mi ruta de formación →</button>
+            <button class="btn btn-s" onclick="go('s9')">Mi portafolio profesional</button>
+            <button class="btn btn-g" onclick="go('s5')">← Volver al dashboard</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s8 — RUTA DE FORMACIÓN
+════════════════════════════════════════════════════════ -->
+<div id="s8" class="screen">
+  <div class="scr-label">🎓 5/6 · Docente</div>
+  <div class="pg-title">Tu Ruta de Formación Personalizada</div>
+  <div class="pg-sub">Cursos y recursos seleccionados según tu diagnóstico — Ana Martínez</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Personalizada:</strong> Generada por diagnóstico — cada docente tiene su propia ruta.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Desbloqueo progresivo:</strong> Los módulos se desbloquean al completar el anterior.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Plataformas reconocidas:</strong> Google, INTEF, Coursera, edX — contenido de calidad.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>Certificado final:</strong> Meta tangible al completar la ruta completa.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/ruta</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">AM</div>
+              <div><h3>Ana Martínez</h3><p style="margin:0;opacity:.65;font-size:10px">Colegio Montessori Vallarta</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li onclick="go('s5')"><span class="nav-icon">🏠</span> Inicio</li>
+              <li><span class="nav-icon">👤</span> Perfil</li>
+              <li onclick="go('s7')"><span class="nav-icon">📋</span> Mi Diagnóstico</li>
+              <li class="active"><span class="nav-icon">🎓</span> Mis Cursos</li>
+              <li onclick="go('s9')"><span class="nav-icon">🌟</span> Mi Portafolio</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="main-col">
+          <!-- Callout -->
+          <div class="callout callout-info" style="position:relative">
+            <div class="ann-mk" data-tip="Personalizada: generada por diagnóstico — cada docente tiene su propia ruta." style="top:-9px;right:-9px">1</div>
+            📚 <strong>Ruta generada a partir de tu diagnóstico.</strong> Los recursos se seleccionaron para fortalecer tus áreas de crecimiento y profundizar tus fortalezas.
+          </div>
+
+          <!-- Progress -->
+          <div class="card mb12">
+            <div class="card-body">
+              <div class="fxb"><strong>Progreso general de la ruta</strong><span style="font-size:18px;font-weight:700;color:var(--accent)">32%</span></div>
+              <div class="progress-bar mt8"><div class="progress-fill" style="width:32%;background:linear-gradient(90deg,var(--accent),var(--teal))"></div></div>
+            </div>
+          </div>
+
+          <!-- DIMENSION 1: TEC (priority area) -->
+          <div class="slbl" style="color:var(--coral)">🔴 TEC · Uso de TIC — Fundamentos (prioridad)</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;position:relative">
+            <div class="ann-mk" data-tip="Desbloqueo progresivo: módulos se desbloquean al completar el anterior." style="top:-5px;right:-5px">2</div>
+            <div class="card" style="border-left:3px solid var(--accent)">
+              <div class="card-body" style="padding:11px 14px">
+                <div class="fxb">
+                  <div class="fxc g8">
+                    <span class="badge bdg-blue">En Curso</span>
+                    <strong style="font-size:12.5px">Introducción al Uso de TIC en el Aula</strong>
+                  </div>
+                  <span class="tmuted tsm" style="position:relative">INTEF · 12h
+                    <span class="ann-mk" data-tip="Plataformas reconocidas: Google, INTEF, Coursera, edX." style="top:-12px;right:-18px">3</span>
+                  </span>
+                </div>
+                <div class="progress-bar mt8" style="height:4px"><div class="progress-fill" style="width:45%;background:var(--accent)"></div></div>
+                <div class="tmuted tsm mt8">45% completado · Estimado: 6h restantes</div>
+              </div>
+            </div>
+            <div class="card" style="opacity:.65">
+              <div class="card-body" style="padding:11px 14px">
+                <div class="fxb">
+                  <div class="fxc g8">
+                    <span class="badge bdg-gray">🔒 Bloqueado</span>
+                    <strong style="font-size:12.5px">Herramientas Digitales para Colaboración</strong>
+                  </div>
+                  <span class="tmuted tsm">Google · 8h</span>
+                </div>
+                <div class="tmuted tsm mt8">Se desbloquea al completar el módulo anterior</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DIMENSION 2: MA -->
+          <div class="slbl" style="color:var(--teal)">🟡 MA · Metodologías Activas — Profundización</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px">
+            <div class="card">
+              <div class="card-body" style="padding:11px 14px">
+                <div class="fxb">
+                  <div class="fxc g8">
+                    <span class="badge bdg-green">Completado ✓</span>
+                    <strong style="font-size:12.5px">Metodologías Activas: Fundamentos</strong>
+                  </div>
+                  <span class="tmuted tsm">Google for Education · 8h</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body" style="padding:11px 14px">
+                <div class="fxb">
+                  <div class="fxc g8">
+                    <span class="badge bdg-gray">Disponible</span>
+                    <strong style="font-size:12.5px">Aprendizaje Basado en Proyectos Avanzado</strong>
+                  </div>
+                  <span class="tmuted tsm">Coursera · 15h</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DIMENSION 3: GSE -->
+          <div class="slbl" style="color:var(--accent)">🟢 GSE · Gestión Socioemocional — Implementación</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px">
+            <div class="card">
+              <div class="card-body" style="padding:11px 14px">
+                <div class="fxb">
+                  <div class="fxc g8">
+                    <span class="badge bdg-green">Completado ✓</span>
+                    <strong style="font-size:12.5px">Inteligencia Emocional en el Aula</strong>
+                  </div>
+                  <span class="tmuted tsm">edX · 10h</span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body" style="padding:11px 14px">
+                <div class="fxb">
+                  <div class="fxc g8">
+                    <span class="badge bdg-gray">Disponible</span>
+                    <strong style="font-size:12.5px">Liderazgo Socioemocional para Docentes</strong>
+                  </div>
+                  <span class="tmuted tsm">Coursera · 12h</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Certificate card -->
+          <div class="card" style="background:var(--teal-bg);border:2px solid var(--teal);position:relative">
+            <div class="ann-mk" data-tip="Certificado como meta tangible al completar la ruta." style="top:-5px;right:-5px">4</div>
+            <div class="card-body" style="text-align:center;padding:20px">
+              <div style="font-size:28px;margin-bottom:6px">🏅</div>
+              <div style="font-size:14px;font-weight:700;color:var(--brand);margin-bottom:4px">Certificado BrightPath</div>
+              <p style="font-size:12px;color:var(--text2);margin-bottom:10px">Al completar tu ruta recibirás un certificado verificado que se agrega a tu portafolio profesional.</p>
+              <div class="progress-bar" style="max-width:200px;margin:0 auto"><div class="progress-fill" style="width:32%;background:var(--teal)"></div></div>
+              <div class="tmuted tsm mt8">32% completado · 5 módulos restantes</div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="fxc g8">
+            <button class="btn btn-g" onclick="go('s5')">← Dashboard</button>
+            <button class="btn btn-s" onclick="go('s7')">Ver resultados</button>
+            <button class="btn btn-s" onclick="go('s9')">Mi portafolio →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s9 — PORTAFOLIO PROFESIONAL
+════════════════════════════════════════════════════════ -->
+<div id="s9" class="screen">
+  <div class="scr-label">🌟 6/6 · Docente</div>
+  <div class="pg-title">Tu Portafolio Profesional</div>
+  <div class="pg-sub">Evidencia verificada de tus competencias docentes — Ana Martínez</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Verificado:</strong> Badge "Verificado por BrightPath" — diferencia del CV tradicional.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Link compartible:</strong> Token único con vigencia configurable — control del docente.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Historial trayectoria:</strong> Timeline del crecimiento — el activo más valioso.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>FutureHiring:</strong> Oportunidades laborales marcado "Próximamente" — feature futura.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/portafolio</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">AM</div>
+              <div><h3>Ana Martínez</h3><p style="margin:0;opacity:.65;font-size:10px">Colegio Montessori Vallarta</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li onclick="go('s5')"><span class="nav-icon">🏠</span> Inicio</li>
+              <li><span class="nav-icon">👤</span> Perfil</li>
+              <li onclick="go('s7')"><span class="nav-icon">📋</span> Mi Diagnóstico</li>
+              <li onclick="go('s8')"><span class="nav-icon">🎓</span> Mis Cursos</li>
+              <li class="active"><span class="nav-icon">🌟</span> Mi Portafolio</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="main-col">
+          <!-- Header card -->
+          <div class="card" style="background:linear-gradient(135deg,var(--accent-lt) 0%,var(--teal-bg) 100%);border:none;position:relative">
+            <div class="ann-mk" data-tip="Badge 'Verificado por BrightPath' — diferencia del CV tradicional." style="top:8px;right:8px">1</div>
+            <div class="card-body" style="padding:24px;display:flex;align-items:center;gap:18px">
+              <div style="width:64px;height:64px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;flex-shrink:0;box-shadow:var(--sh)">AM</div>
+              <div style="flex:1">
+                <div style="font-size:18px;font-weight:700;color:var(--brand)">Ana Martínez</div>
+                <div style="font-size:12px;color:var(--text2)">Docente de Secundaria · 8 años de experiencia</div>
+                <div style="font-size:12px;color:var(--text3)">Colegio Montessori Vallarta · Puerto Vallarta, Jalisco</div>
+              </div>
+              <div style="text-align:right">
+                <span class="badge bdg-green" style="font-size:12px;padding:4px 12px">✓ Verificado por BrightPath</span>
+                <div style="margin-top:8px">
+                  <button class="btn btn-p" onclick="openModal('modal-compartir')">🔗 Compartir portafolio</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Competency levels -->
+          <div class="card">
+            <div class="card-head"><h3>Niveles de competencia verificados</h3></div>
+            <div class="card-body">
+              <div style="margin-bottom:10px">
+                <div class="fxb mb8" style="font-size:12px"><span><strong style="color:var(--teal)">MA</strong> · Metodologías Activas</span><span class="badge bdg-amber">Profundización · 72%</span></div>
+                <div class="progress-bar" style="height:8px"><div class="progress-fill" style="width:72%;background:var(--teal)"></div></div>
+              </div>
+              <div style="margin-bottom:10px">
+                <div class="fxb mb8" style="font-size:12px"><span><strong style="color:var(--coral)">TEC</strong> · Uso de TIC</span><span class="badge bdg-red">Fundamentos · 48%</span></div>
+                <div class="progress-bar" style="height:8px"><div class="progress-fill" style="width:48%;background:var(--coral)"></div></div>
+              </div>
+              <div>
+                <div class="fxb mb8" style="font-size:12px"><span><strong style="color:var(--accent)">GSE</strong> · Gestión Socioemocional</span><span class="badge bdg-green">Implementación · 85%</span></div>
+                <div class="progress-bar" style="height:8px"><div class="progress-fill" style="width:85%;background:var(--accent)"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Timeline del crecimiento — el activo más valioso del docente." style="top:-5px;right:-5px">3</div>
+            <div class="card-head"><h3>Trayectoria profesional</h3></div>
+            <div class="card-body">
+              <div class="timeline">
+                <div class="tl-item tl-green">
+                  <div style="font-size:12.5px;font-weight:600;color:var(--brand)">Certificado: Inteligencia Emocional en el Aula</div>
+                  <div class="tmuted tsm">edX · 10 horas · Marzo 2026</div>
+                </div>
+                <div class="tl-item tl-teal">
+                  <div style="font-size:12.5px;font-weight:600;color:var(--brand)">Diagnóstico BrightPath completado</div>
+                  <div class="tmuted tsm">Confianza 91% · Febrero 2026</div>
+                </div>
+                <div class="tl-item">
+                  <div style="font-size:12.5px;font-weight:600;color:var(--brand)">Certificado: Metodologías Activas Fundamentos</div>
+                  <div class="tmuted tsm">Google for Education · 8 horas · Enero 2026</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Certificates -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Link compartible con token único y vigencia." style="top:-5px;right:-5px">2</div>
+            <div class="card-head"><h3>Certificados obtenidos</h3></div>
+            <div class="card-body">
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div class="fxb" style="padding:8px 12px;background:var(--green-bg);border-radius:var(--r-sm)">
+                  <div class="fxc g8">
+                    <span style="font-size:18px">🏅</span>
+                    <div>
+                      <div style="font-size:12.5px;font-weight:600">Inteligencia Emocional en el Aula</div>
+                      <div class="tmuted tsm">edX · Completado Mar 2026</div>
+                    </div>
+                  </div>
+                  <span class="badge bdg-green">Verificado</span>
+                </div>
+                <div class="fxb" style="padding:8px 12px;background:var(--green-bg);border-radius:var(--r-sm)">
+                  <div class="fxc g8">
+                    <span style="font-size:18px">🏅</span>
+                    <div>
+                      <div style="font-size:12.5px;font-weight:600">Metodologías Activas: Fundamentos</div>
+                      <div class="tmuted tsm">Google for Education · Completado Ene 2026</div>
+                    </div>
+                  </div>
+                  <span class="badge bdg-green">Verificado</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Future hiring -->
+          <div class="card" style="opacity:.6;position:relative">
+            <div class="ann-mk" data-tip="Oportunidades laborales — Próximamente. Feature futura." style="top:-5px;right:-5px">4</div>
+            <div class="card-head fxb">
+              <h3>Oportunidades laborales</h3>
+              <span class="badge bdg-gray">Próximamente</span>
+            </div>
+            <div class="card-body">
+              <div class="empty-state">
+                <span style="font-size:24px">💼</span>
+                Colegios que buscan tu perfil podrán encontrarte aquí.
+                <button class="btn btn-dis">Próximamente</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="fxc g8">
+            <button class="btn btn-g" onclick="go('s5')">← Dashboard</button>
+            <button class="btn btn-s" onclick="go('s7')">Ver diagnóstico</button>
+            <button class="btn btn-s" onclick="go('s8')">Ver ruta</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s5b — DASHBOARD (DIAGNÓSTICO COMPLETADO)
+════════════════════════════════════════════════════════ -->
+<div id="s5b" class="screen">
+  <div class="scr-label">🏠 2c/11 · Docente</div>
+  <div class="pg-title">Dashboard</div>
+  <div class="pg-sub">Hola de nuevo, Ana Martínez 👋</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — estado: diagnóstico completado</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Banner completado:</strong> El callout azul de "pendiente" se reemplaza por callout verde de "completado".</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Scores reales:</strong> MA 72%, TEC 48%, GSE 85% — resultados de Ana visibles en sidebar.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Progreso 68%:</strong> Barra de progreso de ruta refleja avance real.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/inicio</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <!-- Sidebar docente -->
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">AM</div>
+              <div><h3>Ana Martínez</h3><p style="margin:0;opacity:.65;font-size:10px">Colegio Montessori Vallarta</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li class="active"><span class="nav-icon">🏠</span> Inicio</li>
+              <li><span class="nav-icon">👤</span> Perfil</li>
+              <li onclick="go('s7')"><span class="nav-icon">📋</span> Mi Diagnóstico</li>
+              <li onclick="go('s8')"><span class="nav-icon">🎓</span> Mis Cursos</li>
+              <li onclick="go('s9')"><span class="nav-icon">🌟</span> Mi Portafolio</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Main content — two columns 70/30 -->
+        <div style="display:grid;grid-template-columns:7fr 3fr;gap:14px">
+          <!-- Left column -->
+          <div class="main-col">
+            <!-- Banner diagnóstico COMPLETADO -->
+            <div class="callout callout-ok" style="position:relative">
+              <div class="ann-mk" data-tip="Banner cambia de azul (pendiente) a verde (completado)." style="top:-9px;right:-9px">1</div>
+              <strong>✓ Diagnóstico completado.</strong> Tu perfil de competencias está listo. Confianza del resultado: <strong>91%</strong>.
+              <div style="margin-top:8px"><button class="btn btn-p" onclick="go('s7')">Ver resultados →</button></div>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="card" style="position:relative">
+              <div class="ann-mk" data-tip="Barra progreso 68% con módulo activo actual." style="top:-5px;right:-5px">3</div>
+              <div class="card-body">
+                <div class="fxb mb8">
+                  <div><strong style="font-size:13px">Tu progreso general</strong></div>
+                  <span style="font-size:18px;font-weight:700;color:var(--accent)">68%</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" style="width:68%;background:linear-gradient(90deg,var(--accent),var(--teal))"></div></div>
+                <div class="fxb mt8" style="font-size:11px;color:var(--text3)">
+                  <span>Módulo activo: <strong style="color:var(--accent)">Uso de TIC en el Aula</strong></span>
+                  <span>
+                    <button class="btn btn-s" style="font-size:11px;padding:3px 8px" onclick="go('s8')">Ver ruta completa</button>
+                    <a href="#" style="color:var(--accent);margin-left:8px;font-size:11px" onclick="event.preventDefault();go('s7')">Ver resultados</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Metrics row -->
+            <div class="mrow">
+              <div class="mc"><div class="mc-lbl">Cursos activos</div><div class="mc-val">3</div><div class="mc-sub">de 8 en tu ruta</div></div>
+              <div class="mc"><div class="mc-lbl">Horas completadas</div><div class="mc-val">24</div><div class="mc-sub">este semestre</div></div>
+              <div class="mc"><div class="mc-lbl">Certificados</div><div class="mc-val">2</div><div class="mc-sub">verificados</div></div>
+              <div class="mc"><div class="mc-lbl">Confianza</div><div class="mc-val" style="color:var(--green)">91%</div><div class="mc-sub">de tu diagnóstico</div></div>
+            </div>
+
+            <!-- Courses -->
+            <div>
+              <div class="slbl">Tu ruta de formación</div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div class="card">
+                  <div class="card-body" style="padding:12px 15px">
+                    <div class="fxb">
+                      <div class="fxc g8">
+                        <span class="badge bdg-green">Completado</span>
+                        <strong style="font-size:12.5px">Metodologías Activas: Fundamentos</strong>
+                      </div>
+                      <span class="tmuted tsm">Google for Education · 8h</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="card" style="border-left:3px solid var(--accent)">
+                  <div class="card-body" style="padding:12px 15px">
+                    <div class="fxb">
+                      <div class="fxc g8">
+                        <span class="badge bdg-blue">En Curso</span>
+                        <strong style="font-size:12.5px">Uso de TIC en el Aula</strong>
+                      </div>
+                      <span class="tmuted tsm">INTEF · 12h</span>
+                    </div>
+                    <div class="progress-bar mt8" style="height:4px"><div class="progress-fill" style="width:45%;background:var(--accent)"></div></div>
+                  </div>
+                </div>
+                <div class="card" style="opacity:.7">
+                  <div class="card-body" style="padding:12px 15px">
+                    <div class="fxb">
+                      <div class="fxc g8">
+                        <span class="badge bdg-gray">Próximo</span>
+                        <strong style="font-size:12.5px">Gestión Socioemocional en Secundaria</strong>
+                      </div>
+                      <span class="tmuted tsm">Coursera · 10h</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right column -->
+          <div class="main-col">
+            <!-- Diagnosis scores -->
+            <div class="card" style="position:relative">
+              <div class="ann-mk" data-tip="Scores reales de Ana visibles: MA 72%, TEC 48%, GSE 85%." style="top:-5px;right:-5px">2</div>
+              <div class="card-head"><h3>Tu perfil de competencias</h3></div>
+              <div class="card-body">
+                <div style="margin-bottom:10px">
+                  <div class="fxb mb8" style="font-size:11px"><span style="font-weight:600;color:var(--teal)">MA · Metodologías Activas</span><span class="tbold">72%</span></div>
+                  <div class="progress-bar" style="height:6px"><div class="progress-fill" style="width:72%;background:var(--teal)"></div></div>
+                  <div style="font-size:10px;color:var(--text3);margin-top:2px">Profundización</div>
+                </div>
+                <div style="margin-bottom:10px">
+                  <div class="fxb mb8" style="font-size:11px"><span style="font-weight:600;color:var(--coral)">TEC · Uso de TIC</span><span class="tbold">48%</span></div>
+                  <div class="progress-bar" style="height:6px"><div class="progress-fill" style="width:48%;background:var(--coral)"></div></div>
+                  <div style="font-size:10px;color:var(--text3);margin-top:2px">Fundamentos</div>
+                </div>
+                <div>
+                  <div class="fxb mb8" style="font-size:11px"><span style="font-weight:600;color:var(--accent)">GSE · Gestión Socioemocional</span><span class="tbold">85%</span></div>
+                  <div class="progress-bar" style="height:6px"><div class="progress-fill" style="width:85%;background:var(--accent)"></div></div>
+                  <div style="font-size:10px;color:var(--text3);margin-top:2px">Implementación</div>
+                </div>
+                <div style="margin-top:12px;text-align:center">
+                  <button class="btn btn-s wf" style="font-size:11px" onclick="go('s7')">Ver resultados completos →</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Upcoming -->
+            <div class="card">
+              <div class="card-head"><h3>Próximos pasos</h3></div>
+              <div class="card-body" style="font-size:12px;color:var(--text2)">
+                <div style="padding:6px 0;border-bottom:1px solid var(--border2)">🎓 Terminar módulo TIC (55% restante)</div>
+                <div style="padding:6px 0;border-bottom:1px solid var(--border2)">🌟 Actualizar portafolio profesional</div>
+                <div style="padding:6px 0">📄 Descargar certificado de diagnóstico</div>
+              </div>
+            </div>
+
+            <!-- Resources -->
+            <div class="card">
+              <div class="card-head"><h3>Recursos rápidos</h3></div>
+              <div class="card-body" style="font-size:12px;color:var(--text2)">
+                <div style="padding:5px 0"><a href="#" style="color:var(--accent);text-decoration:none" onclick="event.preventDefault();go('s7')">📊 Ver resultados completos</a></div>
+                <div style="padding:5px 0"><a href="#" style="color:var(--accent);text-decoration:none" onclick="event.preventDefault()">🎥 Video: ¿Cómo funciona BrightPath?</a></div>
+                <div style="padding:5px 0"><a href="#" style="color:var(--accent);text-decoration:none" onclick="event.preventDefault();go('s9')">🌟 Mi portafolio profesional</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s6b — DIAGNÓSTICO (MODAL PAUSAR VISIBLE)
+════════════════════════════════════════════════════════ -->
+<div id="s6b" class="screen">
+  <div class="scr-label">📋 2e/11 · Docente</div>
+  <div class="pg-title">Tu Diagnóstico de Fortalezas</div>
+  <div class="pg-sub">Responde con calma — no hay respuestas correctas ni incorrectas.</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — estado: modal pausar visible</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Modal abierto:</strong> El modal de pausa se muestra inmediatamente — sin interacción.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Overlay oscuro:</strong> El fondo se oscurece para centrar la atención en el modal.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Progreso guardado:</strong> Refuerza que no pierde nada al pausar — pregunta 8 de 28.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/diagnostico/activo</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody" style="position:relative;min-height:500px">
+      <!-- Background: diagnostic in progress (dimmed) -->
+      <div style="opacity:.3;pointer-events:none">
+        <div class="fxb mb12" style="padding:8px 0">
+          <div style="flex:1;margin-right:14px">
+            <div class="fxb" style="font-size:11px;color:var(--text3);margin-bottom:3px">
+              <span>Pregunta 8 de 28</span><span style="font-weight:700;color:var(--accent)">28%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width:28%;background:var(--accent)"></div></div>
+          </div>
+          <button class="btn btn-s">⏸ Pausar</button>
+        </div>
+        <div class="callout callout-info mb12">
+          💾 <strong>Guardado automático:</strong> Tus respuestas se guardan en tiempo real.
+        </div>
+        <div class="card mb12" style="border:2px solid var(--accent)">
+          <div class="card-body" style="background:var(--accent-lt)">
+            <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">📖 Escenario</div>
+            <p style="font-size:13px;color:var(--text);line-height:1.6">
+              Ana trabaja con un grupo de 2.° de secundaria. Uno de sus estudiantes muestra frustración constante cuando las actividades involucran trabajo en equipo...
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal pausar INLINE (siempre visible) -->
+      <div style="position:absolute;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;border-radius:var(--r-sm);z-index:10">
+        <div class="modal" style="position:relative">
+          <div class="ann-mk" data-tip="Modal abierto desde el inicio — sin necesidad de click." style="top:-9px;right:-9px">1</div>
+          <div class="modal-title">⏸ ¿Pausar diagnóstico?</div>
+          <div class="modal-sub">No te preocupes — tu progreso está guardado.</div>
+          <div class="callout callout-info mb12" style="font-size:12px;position:relative">
+            <div class="ann-mk" data-tip="Refuerza que no pierde nada al pausar." style="top:-9px;right:-9px">3</div>
+            💾 <strong>Progreso guardado:</strong> Pregunta 8 de 28 completadas. Puedes retomar en cualquier momento desde donde te quedaste.
+          </div>
+          <p style="font-size:12.5px;color:var(--text2);margin-bottom:8px">Tu diagnóstico estará disponible en tu dashboard cuando quieras continuar.</p>
+          <div class="modal-actions">
+            <button class="btn btn-g" onclick="go('s6')">Continuar respondiendo</button>
+            <button class="btn btn-p" onclick="go('s5');showToast('⏸ Diagnóstico pausado. Retoma cuando quieras.','ok')">Pausar y salir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s6c — DIAGNÓSTICO (RESPONDIENDO)
+════════════════════════════════════════════════════════ -->
+<div id="s6c" class="screen">
+  <div class="scr-label">📋 2f/11 · Docente</div>
+  <div class="pg-title">Tu Diagnóstico de Fortalezas</div>
+  <div class="pg-sub">Responde con calma — no hay respuestas correctas ni incorrectas.</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — estado: respondiendo activamente</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Likert seleccionado:</strong> Opción 4 "Casi siempre" con círculo filled accent.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Opción C seleccionada:</strong> Radio button de "Implementar dinámica de roles rotativos" marcado con highlight.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Botón Siguiente activo:</strong> Se destaca como acción principal una vez respondidas ambas sub-preguntas.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/diagnostico/activo</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <!-- Sticky progress bar -->
+      <div class="fxb mb12" style="position:sticky;top:0;background:var(--bg);padding:8px 0;z-index:10">
+        <div style="flex:1;margin-right:14px">
+          <div class="fxb" style="font-size:11px;color:var(--text3);margin-bottom:3px">
+            <span>Pregunta 8 de 28</span><span style="font-weight:700;color:var(--accent)">28%</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:28%;background:var(--accent)"></div></div>
+        </div>
+        <button class="btn btn-s" onclick="go('s6b')">⏸ Pausar</button>
+      </div>
+
+      <!-- Auto-save callout -->
+      <div class="callout callout-info mb12">
+        💾 <strong>Guardado automático:</strong> Tus respuestas se guardan en tiempo real. Puedes pausar y retomar cuando quieras.
+      </div>
+
+      <!-- Question label -->
+      <div style="margin-bottom:12px">
+        <span style="font-size:11px;font-weight:700;color:var(--coral);letter-spacing:.5px">REACTIVO 3 ─── 28%</span>
+      </div>
+
+      <!-- Scenario card -->
+      <div class="card mb12" style="border:2px solid var(--accent)">
+        <div class="card-body" style="background:var(--accent-lt)">
+          <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">📖 Escenario</div>
+          <p style="font-size:13px;color:var(--text);line-height:1.6">
+            Ana trabaja con un grupo de 2.° de secundaria. Uno de sus estudiantes muestra frustración constante cuando las actividades involucran trabajo en equipo. En lugar de participar, se aísla y responde de manera hostil cuando sus compañeros intentan incluirlo.
+          </p>
+        </div>
+      </div>
+
+      <!-- Sub-question 1: Likert — opción 4 SELECCIONADA -->
+      <div class="card mb12" style="position:relative">
+        <div class="card-body">
+          <p style="font-size:12.5px;font-weight:600;color:var(--brand);margin-bottom:10px">3.1 — ¿Qué tan preparada te sientes para abordar esta situación con estrategias socioemocionales?</p>
+          <div class="ann-mk" data-tip="Likert: opción 4 'Casi siempre' seleccionada con filled accent." style="top:-5px;right:-5px">1</div>
+          <div class="likert-row">
+            <div class="likert-opt">1</div>
+            <div class="likert-opt">2</div>
+            <div class="likert-opt">3</div>
+            <div class="likert-opt selected">4</div>
+            <div class="likert-opt">5</div>
+          </div>
+          <div class="likert-labels"><span>Nada preparada</span><span>Muy preparada</span></div>
+        </div>
+      </div>
+
+      <div class="divider mb12"></div>
+
+      <!-- Sub-question 2: Multiple choice — opción C SELECCIONADA -->
+      <div class="card mb12" style="position:relative">
+        <div class="ann-mk" data-tip="Opción C seleccionada con highlight visual." style="top:-5px;right:-5px">2</div>
+        <div class="card-body">
+          <p style="font-size:12.5px;font-weight:600;color:var(--brand);margin-bottom:12px">3.2 — ¿Cuál sería tu primera acción al observar esta conducta?</p>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <label style="display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border:1px solid var(--border2);border-radius:var(--r-sm);font-size:12.5px;background:#fff">
+              <input type="radio" name="q32c" style="margin-top:2px">
+              <span>Hablar con el estudiante en privado para entender qué le sucede</span>
+            </label>
+            <label style="display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border:1px solid var(--border2);border-radius:var(--r-sm);font-size:12.5px;background:#fff">
+              <input type="radio" name="q32c" style="margin-top:2px">
+              <span>Cambiar al estudiante a trabajo individual para evitar conflictos</span>
+            </label>
+            <label style="display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border:2px solid var(--accent);border-radius:var(--r-sm);font-size:12.5px;background:var(--accent-lt);font-weight:600">
+              <input type="radio" name="q32c" style="margin-top:2px" checked>
+              <span>Implementar una dinámica de roles rotativos para facilitar la integración</span>
+            </label>
+            <label style="display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border:1px solid var(--border2);border-radius:var(--r-sm);font-size:12.5px;background:#fff">
+              <input type="radio" name="q32c" style="margin-top:2px">
+              <span>Reportar la situación al departamento de orientación</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation — Siguiente DESTACADO -->
+      <div class="fxb mt12" style="position:relative">
+        <button class="btn btn-s" onclick="showToast('← Pregunta anterior')">← Anterior</button>
+        <div style="position:relative">
+          <div class="ann-mk" data-tip="Botón Siguiente activo y destacado tras responder ambas sub-preguntas." style="top:-12px;right:-5px">3</div>
+          <button class="btn btn-b" style="font-size:13px;padding:10px 24px;box-shadow:0 4px 12px rgba(76,155,253,.4)" onclick="go('s7');showToast('✓ Diagnóstico completado. ¡Excelente trabajo!','ok')">Siguiente →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s7b — RESULTADOS (VISTA DIRECTOR — DESPUÉS DE 48H)
+════════════════════════════════════════════════════════ -->
+<div id="s7b" class="screen">
+  <div class="scr-label">🎯 2h/11 · Docente</div>
+  <div class="pg-title">Perfil de Competencias — Ana Martínez</div>
+  <div class="pg-sub">Vista del director — resultados visibles después de 48 horas</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — estado: vista director (post 48h)</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Sin privacidad:</strong> El callout "Solo tú ves esto" desaparece — reemplazado por contexto de visibilidad.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Fecha visible:</strong> "Visibles desde el 17 de marzo" — comunica cuándo el director obtuvo acceso.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Mismos datos:</strong> Scores idénticos (MA 72%, TEC 48%, GSE 85%) — solo cambia el contexto visual.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/director/docente/ana-martinez/perfil</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">AM</div>
+              <div><h3>Ana Martínez</h3><p style="margin:0;opacity:.65;font-size:10px">Colegio Montessori Vallarta</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li onclick="go('s5')"><span class="nav-icon">🏠</span> Inicio</li>
+              <li><span class="nav-icon">👤</span> Perfil</li>
+              <li class="active"><span class="nav-icon">📋</span> Mi Diagnóstico</li>
+              <li onclick="go('s8')"><span class="nav-icon">🎓</span> Mis Cursos</li>
+              <li onclick="go('s9')"><span class="nav-icon">🌟</span> Mi Portafolio</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="main-col">
+          <!-- Director visibility callout (replaces privacy callout) -->
+          <div class="callout callout-info" style="position:relative">
+            <div class="ann-mk" data-tip="Reemplaza 'Solo tú ves esto' — ahora el director tiene acceso." style="top:-9px;right:-9px">1</div>
+            📊 <strong>Resultados del perfil de Ana Martínez</strong> — visibles desde el 17 de marzo.
+            <div style="font-size:11px;color:var(--text3);margin-top:4px">Los resultados individuales se comparten con el director después de 48 horas para permitir que el docente los revise primero.</div>
+          </div>
+
+          <!-- Confidence callout -->
+          <div class="callout callout-ok">
+            <strong>✓ Diagnóstico completado</strong> — Confianza del resultado: <strong>91%</strong> (alta). Las respuestas fueron consistentes.
+          </div>
+
+          <!-- 3 dimension cards -->
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;position:relative">
+            <div class="ann-mk" data-tip="Mismos datos que ve Ana — solo cambia contexto visual." style="top:-9px;right:-9px">3</div>
+            <div class="card" style="border-top:3px solid var(--teal)">
+              <div class="card-body" style="text-align:center">
+                <div style="font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">MA · Metodologías Activas</div>
+                <div style="font-size:28px;font-weight:700;color:var(--brand)">72%</div>
+                <span class="badge bdg-amber" style="margin-top:4px">Profundización</span>
+              </div>
+            </div>
+            <div class="card" style="border-top:3px solid var(--coral)">
+              <div class="card-body" style="text-align:center">
+                <div style="font-size:11px;font-weight:700;color:var(--coral);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">TEC · Uso de TIC</div>
+                <div style="font-size:28px;font-weight:700;color:var(--brand)">48%</div>
+                <span class="badge bdg-red" style="margin-top:4px">Fundamentos</span>
+              </div>
+            </div>
+            <div class="card" style="border-top:3px solid var(--accent)">
+              <div class="card-body" style="text-align:center">
+                <div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">GSE · Gestión Socioemocional</div>
+                <div style="font-size:28px;font-weight:700;color:var(--brand)">85%</div>
+                <span class="badge bdg-green" style="margin-top:4px">Implementación</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Radar SVG -->
+          <div class="card">
+            <div class="card-body" style="display:flex;justify-content:center;padding:20px">
+              <svg width="260" height="230" viewBox="0 0 260 230">
+                <polygon points="130,20 230,170 30,170" fill="none" stroke="var(--border2)" stroke-width="1"/>
+                <polygon points="130,55 197,148 63,148" fill="none" stroke="var(--border2)" stroke-width="1"/>
+                <polygon points="130,90 163,125 97,125" fill="none" stroke="var(--border2)" stroke-width="1"/>
+                <polygon points="130,48 208,155 47,142" fill="var(--accent)" fill-opacity="0.15" stroke="var(--accent)" stroke-width="2"/>
+                <circle cx="130" cy="48" r="5" fill="var(--teal)"/>
+                <circle cx="208" cy="155" r="5" fill="var(--coral)"/>
+                <circle cx="47" cy="142" r="5" fill="var(--accent)"/>
+                <text x="130" y="12" text-anchor="middle" font-size="11" font-weight="700" fill="var(--teal)">MA · 72%</text>
+                <text x="245" y="180" text-anchor="end" font-size="11" font-weight="700" fill="var(--coral)">TEC · 48%</text>
+                <text x="15" y="180" text-anchor="start" font-size="11" font-weight="700" fill="var(--accent)">GSE · 85%</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Strengths & Growth areas -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="card" style="background:var(--teal-bg);border-color:var(--teal)">
+              <div class="card-head" style="border-color:rgba(70,186,181,.2)"><h3 style="color:var(--teal)">💪 Fortalezas</h3></div>
+              <div class="card-body" style="font-size:12.5px;color:var(--text)">
+                <div style="margin-bottom:6px">✦ Gestión socioemocional a nivel <strong>Implementación</strong></div>
+                <div style="margin-bottom:6px">✦ Alta empatía y manejo de conflictos en el aula</div>
+                <div>✦ Consistencia en respuestas (confianza 91%)</div>
+              </div>
+            </div>
+            <div class="card" style="background:var(--coral-bg);border-color:var(--coral)">
+              <div class="card-head" style="border-color:rgba(255,111,97,.2)"><h3 style="color:var(--coral)">🌱 Áreas de crecimiento</h3></div>
+              <div class="card-body" style="font-size:12.5px;color:var(--text)">
+                <div style="margin-bottom:6px">✦ Uso de TIC en <strong>Fundamentos</strong> — oportunidad de desarrollo rápido</div>
+                <div style="margin-bottom:6px">✦ Integración de herramientas digitales en clase</div>
+                <div>✦ Colaboración digital con otros docentes</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI narrative -->
+          <div class="card" style="background:var(--bg2)">
+            <div class="card-head"><h3>🤖 Narrativa personalizada</h3><span class="badge bdg-blue" style="margin-left:auto">Generada por IA</span></div>
+            <div class="card-body" style="font-size:12.5px;color:var(--text2);line-height:1.7">
+              Ana muestra una <strong>sólida base en gestión socioemocional</strong> que la posiciona como referente en su colegio. Su capacidad para abordar conflictos y construir ambientes de aprendizaje seguros está en nivel de Implementación (85%).
+              <br><br>
+              Su área de mayor oportunidad está en <strong>Uso de TIC</strong>, donde se encuentra en Fundamentos (48%). Docentes con su perfil socioemocional suelen adoptar herramientas digitales con rapidez cuando tienen la guía adecuada.
+              <br><br>
+              Se recomienda comenzar con cursos de TIC básico y luego integrar herramientas de colaboración digital que potencien su fortaleza en trabajo en equipo.
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="fxc g8">
+            <button class="btn btn-p" onclick="go('s8')">Ver ruta de formación →</button>
+            <button class="btn btn-s" onclick="go('s9')">Ver portafolio</button>
+            <button class="btn btn-g" onclick="go('s7')">← Ver como docente</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s9b — PORTAFOLIO (MODAL COMPARTIR ABIERTO)
+════════════════════════════════════════════════════════ -->
+<div id="s9b" class="screen">
+  <div class="scr-label">🌟 2k/11 · Docente</div>
+  <div class="pg-title">Tu Portafolio Profesional</div>
+  <div class="pg-sub">Evidencia verificada de tus competencias docentes — Ana Martínez</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — estado: modal compartir abierto</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Modal abierto:</strong> El modal de compartir se muestra inmediatamente — sin interacción.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Token único:</strong> Link brightpath.mx/p/ana-martinez-3f8k2 con vigencia configurable.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Contexto de uso:</strong> El docente elige para qué comparte — empleo, evaluación, red profesional.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/portafolio</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody" style="position:relative;min-height:500px">
+      <!-- Background: portfolio (dimmed) -->
+      <div style="opacity:.3;pointer-events:none">
+        <div class="card" style="background:linear-gradient(135deg,var(--accent-lt) 0%,var(--teal-bg) 100%);border:none">
+          <div class="card-body" style="padding:24px;display:flex;align-items:center;gap:18px">
+            <div style="width:64px;height:64px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;flex-shrink:0">AM</div>
+            <div style="flex:1">
+              <div style="font-size:18px;font-weight:700;color:var(--brand)">Ana Martínez</div>
+              <div style="font-size:12px;color:var(--text2)">Docente de Secundaria · 8 años de experiencia</div>
+              <div style="font-size:12px;color:var(--text3)">Colegio Montessori Vallarta · Puerto Vallarta, Jalisco</div>
+            </div>
+            <div style="text-align:right">
+              <span class="badge bdg-green" style="font-size:12px;padding:4px 12px">✓ Verificado por BrightPath</span>
+            </div>
+          </div>
+        </div>
+        <div class="card mt12">
+          <div class="card-head"><h3>Niveles de competencia verificados</h3></div>
+          <div class="card-body">
+            <div style="margin-bottom:10px">
+              <div class="fxb mb8" style="font-size:12px"><span><strong style="color:var(--teal)">MA</strong> · Metodologías Activas</span><span class="badge bdg-amber">Profundización · 72%</span></div>
+              <div class="progress-bar" style="height:8px"><div class="progress-fill" style="width:72%;background:var(--teal)"></div></div>
+            </div>
+            <div style="margin-bottom:10px">
+              <div class="fxb mb8" style="font-size:12px"><span><strong style="color:var(--coral)">TEC</strong> · Uso de TIC</span><span class="badge bdg-red">Fundamentos · 48%</span></div>
+              <div class="progress-bar" style="height:8px"><div class="progress-fill" style="width:48%;background:var(--coral)"></div></div>
+            </div>
+            <div>
+              <div class="fxb mb8" style="font-size:12px"><span><strong style="color:var(--accent)">GSE</strong> · Gestión Socioemocional</span><span class="badge bdg-green">Implementación · 85%</span></div>
+              <div class="progress-bar" style="height:8px"><div class="progress-fill" style="width:85%;background:var(--accent)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal compartir INLINE (siempre visible) -->
+      <div style="position:absolute;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;border-radius:var(--r-sm);z-index:10">
+        <div class="modal" style="position:relative">
+          <div class="ann-mk" data-tip="Modal abierto desde el inicio — sin necesidad de click." style="top:-9px;right:-9px">1</div>
+          <div class="modal-title">🔗 Compartir portafolio</div>
+          <div class="modal-sub">Genera un link seguro para compartir tu portafolio profesional.</div>
+          <div style="margin-bottom:12px;position:relative">
+            <div class="ann-mk" data-tip="Contexto de uso: empleo, evaluación, red profesional." style="top:-9px;right:-9px">3</div>
+            <label class="flbl">Contexto de uso</label>
+            <select class="fsel">
+              <option>Solicitud de empleo</option>
+              <option>Evaluación institucional</option>
+              <option>Red profesional</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div style="margin-bottom:12px">
+            <label class="flbl">Vigencia del link</label>
+            <select class="fsel">
+              <option>7 días</option>
+              <option selected>30 días</option>
+              <option>90 días</option>
+              <option>Sin vencimiento</option>
+            </select>
+          </div>
+          <div style="margin-bottom:12px;position:relative">
+            <div class="ann-mk" data-tip="Token único con vigencia configurable — control del docente." style="top:-9px;right:-9px">2</div>
+            <label class="flbl">Preview del link</label>
+            <div style="display:flex;align-items:center;gap:8px">
+              <input class="finput" type="text" value="brightpath.mx/p/ana-martinez-3f8k2" readonly style="background:var(--bg);font-size:11px;flex:1">
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button class="btn btn-g" onclick="go('s9')">Cancelar</button>
+            <button class="btn btn-p" onclick="go('s9');showToast('✓ Link copiado al portapapeles','ok')">📋 Copiar link</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════
+     MODAL PAUSAR DIAGNÓSTICO
+═══════════════════════ -->
+<div id="modal-pausar" class="modal-ov">
+  <div class="modal">
+    <div class="modal-title">⏸ ¿Pausar diagnóstico?</div>
+    <div class="modal-sub">No te preocupes — tu progreso está guardado.</div>
+    <div class="callout callout-info mb12" style="font-size:12px">
+      💾 <strong>Progreso guardado:</strong> Pregunta 8 de 28 completadas. Puedes retomar en cualquier momento desde donde te quedaste.
+    </div>
+    <p style="font-size:12.5px;color:var(--text2);margin-bottom:8px">Tu diagnóstico estará disponible en tu dashboard cuando quieras continuar.</p>
+    <div class="modal-actions">
+      <button class="btn btn-g" onclick="closeModal('modal-pausar')">Continuar respondiendo</button>
+      <button class="btn btn-p" onclick="closeModal('modal-pausar');go('s5');showToast('⏸ Diagnóstico pausado. Retoma cuando quieras.','ok')">Pausar y salir</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════
+     MODAL COMPARTIR PORTAFOLIO
+═══════════════════════ -->
+<div id="modal-compartir" class="modal-ov">
+  <div class="modal">
+    <div class="modal-title">🔗 Compartir portafolio</div>
+    <div class="modal-sub">Genera un link seguro para compartir tu portafolio profesional.</div>
+    <div style="margin-bottom:12px">
+      <label class="flbl">Contexto de uso</label>
+      <select class="fsel">
+        <option>Solicitud de empleo</option>
+        <option>Evaluación institucional</option>
+        <option>Red profesional</option>
+        <option>Otro</option>
+      </select>
+    </div>
+    <div style="margin-bottom:12px">
+      <label class="flbl">Vigencia del link</label>
+      <select class="fsel">
+        <option>7 días</option>
+        <option selected>30 días</option>
+        <option>90 días</option>
+        <option>Sin vencimiento</option>
+      </select>
+    </div>
+    <div style="margin-bottom:12px">
+      <label class="flbl">Preview del link</label>
+      <div style="display:flex;align-items:center;gap:8px">
+        <input class="finput" type="text" value="brightpath.mx/p/ana-martinez-3f8k2" readonly style="background:var(--bg);font-size:11px;flex:1">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-g" onclick="closeModal('modal-compartir')">Cancelar</button>
+      <button class="btn btn-p" onclick="closeModal('modal-compartir');showToast('✓ Link copiado al portapapeles','ok')">📋 Copiar link</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════
+     MODAL FEEDBACK
+═══════════════════════ -->
+<div id="modal-feedback" class="modal-ov">
+  <div class="modal">
+    <div class="modal-title">Enviar Feedback</div>
+    <div class="modal-sub">Tu opinión nos ayuda a mejorar BrightPath</div>
+    <div style="margin:12px 0"><label class="flbl">Tipo</label>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px">
+      <label><input type="radio" name="fbt" checked> 💡 Feedback</label>
+      <label><input type="radio" name="fbt"> 🔧 Bug</label>
+      <label><input type="radio" name="fbt"> 💬 Sugerencia</label>
+      <label><input type="radio" name="fbt"> ❓ Pregunta</label>
+    </div></div>
+    <textarea class="ftxt" placeholder="Cuéntanos qué encontraste..." style="margin-bottom:10px"></textarea>
+    <div class="callout callout-info" style="font-size:11px;margin-bottom:12px">Se adjuntarán: tu rol, página actual y hora.</div>
+    <div class="modal-actions">
+      <button class="btn btn-g" onclick="closeModal('modal-feedback')">Cancelar</button>
+      <button class="btn btn-p" onclick="closeModal('modal-feedback');showToast('✓ Reporte enviado. Te responderemos pronto.','ok')">Enviar</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Botón flotante feedback (se oculta en s6) -->
+<button id="fab-feedback" onclick="openModal('modal-feedback')" style="position:fixed;bottom:20px;right:20px;width:48px;height:48px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;box-shadow:var(--sh-md);z-index:200">💬</button>
+
+
+<!-- Toast y tooltip globales -->
+<div id="toast" class="toast"></div>
+<div id="tooltip"></div>
+
+
+<script>
+// ── Navegación ──────────────────────────────────────────
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById(id);
+  if(el) el.classList.add('active');
+  // Highlight sub-nav pill
+  const tabMap = {s4:0, s5:1, s5b:2, s6:3, s6b:4, s6c:5, s7:6, s7b:7, s8:8, s9:9, s9b:10};
+  const pills = document.querySelectorAll('.subnav-track .stab');
+  pills.forEach(b=>b.classList.remove('active'));
+  const idx = tabMap[id];
+  if(idx!==undefined && pills[idx]) {
+    pills[idx].classList.add('active');
+    pills[idx].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  }
+  const fab=document.getElementById('fab-feedback');
+  if(fab) fab.style.display = (id==='s6'||id==='s6b'||id==='s6c') ? 'none' : '';
+  window.scrollTo(0,0);
+}
+// ── Sub-nav scroll ─────────────────────────────────────
+function scrollSubnav(dir) {
+  document.querySelector('.subnav-track')?.scrollBy({left:dir*200,behavior:'smooth'});
+}
+function updateArrows() {
+  const t=document.querySelector('.subnav-track');if(!t)return;
+  const l=document.querySelector('.subnav-left'),r=document.querySelector('.subnav-right');
+  if(l) l.classList.toggle('hide',t.scrollLeft<=0);
+  if(r) r.classList.toggle('hide',t.scrollLeft+t.clientWidth>=t.scrollWidth-1);
+}
+document.querySelector('.subnav-track')?.addEventListener('scroll',updateArrows);
+window.addEventListener('resize',updateArrows);
+
+// ── Modal ───────────────────────────────────────────────
+function openModal(id) { document.getElementById(id)?.classList.add('open'); bindTips(); }
+function closeModal(id) { document.getElementById(id)?.classList.remove('open'); }
+document.addEventListener('click', e => { if(e.target.classList.contains('modal-ov')) e.target.classList.remove('open'); });
+
+// ── Toast ───────────────────────────────────────────────
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (type ? ' toast-'+type : '');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── Selección de fila ───────────────────────────────────
+function selRow(row, cb) {
+  row.closest('table').querySelectorAll('tr').forEach(r => r.classList.remove('sel'));
+  row.classList.add('sel');
+  document.querySelectorAll('.btn-dis[id]').forEach(b => {
+    b.classList.remove('btn-dis');
+    b.classList.add('btn-s');
+  });
+  if (typeof cb === 'function') cb(row);
+}
+
+// ── Tooltips ────────────────────────────────────────────
+const tt = document.getElementById('tooltip');
+function bindTips() {
+  document.querySelectorAll('.ann-mk[data-tip]').forEach(el => {
+    if (el._tip) return;
+    el._tip = true;
+    el.addEventListener('mouseenter', e => { tt.textContent = el.dataset.tip; tt.style.display='block'; pos(e); });
+    el.addEventListener('mousemove', pos);
+    el.addEventListener('mouseleave', () => tt.style.display='none');
+  });
+}
+function pos(e) {
+  const pad=14, w=260, h=tt.offsetHeight||60;
+  let x=e.clientX+pad, y=e.clientY-h/2;
+  if(x+w>window.innerWidth-pad) x=e.clientX-w-pad;
+  if(y<pad) y=pad;
+  if(y+h>window.innerHeight-pad) y=window.innerHeight-h-pad;
+  tt.style.left=x+'px'; tt.style.top=y+'px';
+}
+
+// ── Skeleton ────────────────────────────────────────────
+function showSkeleton(id, rows=5) {
+  const c = document.getElementById(id);
+  if(!c) return;
+  c.innerHTML = Array(rows).fill(0).map(()=>`
+    <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border2)">
+      <div class="skeleton" style="width:30%;height:14px;border-radius:4px"></div>
+      <div class="skeleton" style="width:15%;height:14px;border-radius:4px"></div>
+      <div class="skeleton" style="width:20%;height:14px;border-radius:4px"></div>
+    </div>`).join('');
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{ bindTips(); updateArrows(); });
+</script>
+
+</body>
+</html>

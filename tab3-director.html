@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrightPath — Tab 3 · Director</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Reddit+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════
+   TOKENS BRIGHTPATH
+═══════════════════════ */
+:root {
+  --brand:#091540; --brand2:#3D518C;
+  --accent:#4C9BFD; --accent2:#3a8ae8; --accent-lt:#EBF4FF; --accent-md:#4C9BFD;
+  --teal:#46BAB5; --teal-bg:#E6F7F7;
+  --coral:#FF6F61; --coral-bg:#FFF0EF;
+  --bg:#F2F6FD; --bg2:#E8EEF8;
+  --border:#C8D5EC; --border2:#DDE6F5;
+  --text:#091540; --text2:#3D518C; --text3:#7A8BB5;
+  --green:#059669; --green-bg:#D1FAE5;
+  --amber:#D97706; --amber-bg:#FEF3C7;
+  --red:#DC2626; --red-bg:#FEE2E2;
+  --blue:#4C9BFD; --blue-bg:#EBF4FF;
+  --sh:0 1px 3px rgba(9,21,64,.08),0 4px 12px rgba(9,21,64,.04);
+  --sh-md:0 4px 16px rgba(9,21,64,.12),0 1px 4px rgba(9,21,64,.06);
+  --r:10px; --r-sm:6px; --r-lg:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:13px;line-height:1.5}
+
+/* ═══════════════════════
+   TOP NAV
+═══════════════════════ */
+.topnav{background:var(--brand);padding:0 20px;display:flex;align-items:center;height:48px;position:sticky;top:0;z-index:100}
+.brand{color:#fff;font-weight:700;font-size:14px;margin-right:24px;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.brand-accent{color:var(--accent-md)}
+.mtab{background:none;border:none;color:rgba(255,255,255,.55);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:0 14px;height:48px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s;text-decoration:none;display:inline-flex;align-items:center}
+.mtab:hover{color:#fff;background:rgba(255,255,255,.06)}
+.mtab.active{color:#fff;border-bottom-color:var(--accent-md)}
+.nav-badge{margin-left:auto;background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);font-size:11px;padding:3px 10px;border-radius:20px;white-space:nowrap}
+@media(max-width:768px){.topnav .mtab{display:none}.topnav .mob-select{display:block}}
+.mob-select{display:none;background:var(--brand2);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:12px;padding:4px 8px;margin-right:auto}
+/* ═══════════════════════
+   SUB-NAV
+═══════════════════════ */
+.subnav{background:var(--brand2);display:flex;align-items:center;height:38px;position:sticky;top:48px;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.2);padding:0}
+.subnav-track{display:flex;align-items:center;overflow-x:auto;flex:1;height:38px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:2px;padding:0 6px}
+.subnav-track::-webkit-scrollbar{display:none}
+.subnav-arrow{background:none;border:none;color:rgba(255,255,255,.4);font-size:20px;font-weight:700;cursor:pointer;padding:0 8px;height:38px;flex-shrink:0;transition:all .15s;display:flex;align-items:center}
+.subnav-arrow:hover{color:#fff}
+.subnav-arrow.hide{opacity:0;pointer-events:none;width:0;padding:0;overflow:hidden}
+.stab{background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.6);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:0 12px;height:28px;cursor:pointer;border-radius:14px;white-space:nowrap;transition:all .15s;flex-shrink:0}
+.stab:hover{color:#fff;background:rgba(255,255,255,.15)}
+.stab.active{background:var(--accent);color:#fff;font-weight:600}
+
+/* ═══════════════════════
+   SCREENS
+═══════════════════════ */
+.screen{display:none;padding:20px;min-height:calc(100vh - 86px)}
+.screen.active{display:block}
+.scr-label{display:inline-flex;align-items:center;gap:5px;background:var(--border2);color:var(--text3);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;padding:3px 10px;border-radius:20px;margin-bottom:6px}
+.pg-title{font-size:19px;font-weight:700;color:var(--brand);margin-bottom:3px}
+.pg-sub{color:var(--text2);font-size:12.5px;margin-bottom:16px}
+
+/* ═══════════════════════
+   ANOTACIONES
+═══════════════════════ */
+.ann-panel{background:#FFFBEB;border:2.5px solid #F59E0B;border-radius:var(--r-lg);overflow:hidden;margin-bottom:18px;box-shadow:0 4px 14px rgba(245,158,11,.15)}
+.ann-head{background:#F59E0B;padding:9px 14px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#fff}
+.ann-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;padding:12px}
+.ann-item{display:flex;gap:9px;align-items:flex-start;background:#fff;border-radius:6px;border:1px solid #FDE68A;padding:8px 10px}
+.ann-num{width:22px;height:22px;border-radius:50%;background:#F59E0B;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ann-txt{font-size:11.5px;color:#78350F;line-height:1.45}
+.ann-txt strong{color:#451A03}
+.ann-mk{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#F59E0B;color:#fff;font-size:10px;font-weight:800;border:2px solid #fff;box-shadow:0 2px 6px rgba(245,158,11,.4);position:absolute;z-index:5;cursor:help}
+
+/* ═══════════════════════
+   BROWSER CHROME
+═══════════════════════ */
+.browser{background:#fff;border:2px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.bbar{background:#E5E7EB;padding:7px 14px;display:flex;align-items:center;gap:7px;border-bottom:2px solid var(--border)}
+.bdot{width:11px;height:11px;border-radius:50%;display:inline-block;flex-shrink:0}
+.burl{flex:1;background:#fff;border-radius:20px;padding:3px 14px;font-size:11px;color:var(--text3);font-weight:500;max-width:320px;margin:0 auto;text-align:center;border:1px solid var(--border2)}
+.wf-badge{font-size:9.5px;color:#92400E;font-weight:800;text-transform:uppercase;letter-spacing:.6px;background:#FEF3C7;border:1px solid #FDE68A;padding:2px 8px;border-radius:4px;margin-left:auto}
+.bbody{padding:18px;background:var(--bg)}
+
+/* ═══════════════════════
+   CARDS
+═══════════════════════ */
+.card{background:#fff;border-radius:var(--r);border:1px solid var(--border2);box-shadow:var(--sh)}
+.card-head{padding:13px 15px 11px;border-bottom:1px solid var(--border2);display:flex;align-items:center;gap:8px}
+.card-head h3{font-size:13px;font-weight:600;color:var(--brand)}
+.card-body{padding:15px}
+
+/* ═══════════════════════
+   TABLA
+═══════════════════════ */
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl th{background:var(--bg2);color:var(--text2);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:9px 11px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer}
+.tbl th:hover{background:var(--border2)}
+.tbl td{padding:9px 11px;border-bottom:1px solid var(--border2);color:var(--text);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr.sel td{background:var(--accent-lt)}
+.tbl tr:hover td{background:var(--bg);cursor:pointer}
+
+/* ═══════════════════════
+   BADGES Y CHIPS
+═══════════════════════ */
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
+.bdg-brand{background:var(--accent-lt);color:var(--accent2)}
+.bdg-green{background:var(--green-bg);color:var(--green)}
+.bdg-amber{background:var(--amber-bg);color:var(--amber)}
+.bdg-red{background:var(--red-bg);color:var(--red)}
+.bdg-blue{background:var(--blue-bg);color:var(--blue)}
+.bdg-gray{background:var(--bg2);color:var(--text2);border:1px solid var(--border2)}
+.chip{display:inline-flex;align-items:center;gap:5px;background:var(--accent-lt);color:var(--accent2);padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:600}
+.ind-hi{background:var(--green-bg);color:var(--green);padding:2px 8px;border-radius:20px;font-size:10.5px;font-weight:700}
+.ind-md{background:var(--amber-bg);color:var(--amber);padding:2px 8px;border-radius:20px;font-size:10.5px;font-weight:700}
+.ind-lo{background:var(--red-bg);color:var(--red);padding:2px 8px;border-radius:20px;font-size:10.5px;font-weight:700}
+
+/* ═══════════════════════
+   BOTONES
+═══════════════════════ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:7px 13px;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;border:none;white-space:nowrap;transition:all .15s}
+.btn-p{background:var(--accent);color:#fff}.btn-p:hover{background:var(--accent2)}
+.btn-s{background:#fff;color:var(--text);border:1px solid var(--border)}.btn-s:hover{background:var(--bg)}
+.btn-g{background:none;color:var(--text2);border:1px solid var(--border2)}.btn-g:hover{background:var(--bg)}
+.btn-b{background:var(--brand);color:#fff;font-size:13px;padding:9px 18px}.btn-b:hover{background:var(--brand2)}
+.btn-d{background:var(--red-bg);color:var(--red);border:1px solid #FECACA}
+.btn-dis{background:var(--bg2);color:var(--text3);border:1px solid var(--border2);cursor:not-allowed;opacity:.7}
+
+/* ═══════════════════════
+   FORMULARIOS
+═══════════════════════ */
+.flbl{display:block;font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
+.finput,.fsel,.ftxt{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:12.5px;color:var(--text);background:#fff;transition:border-color .15s,box-shadow .15s}
+.finput:focus,.fsel:focus,.ftxt:focus{outline:none;border-color:var(--accent-md);box-shadow:0 0 0 3px rgba(76,155,253,.15)}
+.ftxt{resize:vertical;min-height:60px}
+
+/* ═══════════════════════
+   SLIDER
+═══════════════════════ */
+.sl-labels{display:flex;justify-content:space-between;font-size:10.5px;color:var(--text3);margin-bottom:3px}
+.sl-track{width:100%;height:4px;background:var(--border);border-radius:2px;position:relative;margin:5px 0;cursor:pointer}
+.sl-fill{position:absolute;height:100%;background:var(--accent);border-radius:2px}
+.sl-thumb{position:absolute;width:14px;height:14px;background:#fff;border:2px solid var(--accent);border-radius:50%;top:-5px;transform:translateX(-50%);box-shadow:0 1px 4px rgba(0,0,0,.15)}
+.sl-val{text-align:center;font-size:11px;font-weight:700;color:var(--accent);margin-top:1px}
+
+/* ═══════════════════════
+   METRICAS
+═══════════════════════ */
+.mrow{display:flex;gap:11px;margin-bottom:14px}
+.mc{flex:1;background:var(--accent-lt);border-radius:var(--r-sm);padding:10px 13px;border:1px solid var(--border2)}
+.mc-lbl{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
+.mc-val{font-size:18px;font-weight:700;color:var(--brand)}
+.mc-sub{font-size:10px;color:var(--text3);margin-top:1px}
+
+/* ═══════════════════════
+   SIDEBAR LAYOUT
+═══════════════════════ */
+.sb-layout{display:grid;grid-template-columns:276px 1fr;gap:14px}
+.sidebar{background:#fff;border-radius:var(--r);border:1px solid var(--border2);box-shadow:var(--sh);display:flex;flex-direction:column}
+.sb-head{padding:13px 15px;background:var(--brand);border-radius:var(--r) var(--r) 0 0;color:#fff}
+.sb-head h3{font-size:13px;font-weight:700}
+.sb-head p{font-size:11px;opacity:.65;margin-top:2px}
+.sb-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:13px}
+.sb-foot{padding:11px 14px;border-top:1px solid var(--border2);background:var(--bg);border-radius:0 0 var(--r) var(--r);display:flex;flex-direction:column;gap:7px}
+.main-col{display:flex;flex-direction:column;gap:14px}
+
+/* ═══════════════════════
+   MODAL
+═══════════════════════ */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1000;align-items:center;justify-content:center}
+.modal-ov.open{display:flex}
+.modal{background:#fff;border-radius:var(--r-lg);box-shadow:var(--sh-md);padding:24px;width:480px;max-width:95vw;max-height:88vh;overflow-y:auto}
+.modal-title{font-size:16px;font-weight:700;color:var(--brand);margin-bottom:4px}
+.modal-sub{font-size:12.5px;color:var(--text2);margin-bottom:20px}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px}
+
+/* ═══════════════════════
+   TOAST / TOOLTIP
+═══════════════════════ */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--brand);color:#fff;padding:12px 18px;border-radius:var(--r);font-size:13px;font-weight:500;box-shadow:var(--sh-md);z-index:2000;transform:translateY(80px);opacity:0;transition:all .3s ease;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-ok{background:var(--green)}
+.toast-err{background:var(--red)}
+#tooltip{display:none;position:fixed;background:#091540;color:#fff;padding:9px 13px;border-radius:7px;font-size:12px;line-height:1.5;width:260px;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:9999;pointer-events:none}
+
+/* ═══════════════════════
+   SKELETON
+═══════════════════════ */
+@keyframes shimmer{0%{background-position:-600px 0}100%{background-position:600px 0}}
+.skeleton{background:linear-gradient(90deg,var(--bg2) 25%,var(--border2) 50%,var(--bg2) 75%);background-size:600px 100%;animation:shimmer 1.4s infinite;border-radius:var(--r-sm)}
+
+/* ═══════════════════════
+   UTILES
+═══════════════════════ */
+.callout{padding:10px 13px;border-radius:var(--r-sm);font-size:12px;line-height:1.5;border-left:3px solid}
+.callout-ok{background:var(--green-bg);border-color:var(--green);color:#065F46}
+.callout-warn{background:var(--amber-bg);border-color:var(--amber);color:#78350F}
+.callout-info{background:var(--blue-bg);border-color:var(--blue);color:#1E3A5F}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;color:var(--text3);font-size:12.5px;line-height:1.5;background:var(--bg2);border-radius:var(--r-sm);border:1px dashed var(--border);padding:24px 16px}
+.slbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:7px}
+.divider{height:1px;background:var(--border2);margin:2px 0}
+.tag{display:inline-flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);padding:2px 7px;border-radius:4px;font-size:11px;font-weight:500}
+.flex{display:flex}.fxc{display:flex;align-items:center}.fxb{display:flex;align-items:center;justify-content:space-between}
+.g8{gap:8px}.g12{gap:12px}.mt8{margin-top:8px}.mt12{margin-top:12px}.mb8{margin-bottom:8px}.mb12{margin-bottom:12px}.wf{width:100%}
+.tmuted{color:var(--text3)}.tsm{font-size:11px}.tbold{font-weight:700}
+
+/* ═══════════════════════
+   TWO COLUMN LAYOUT
+═══════════════════════ */
+.two-col{display:grid;grid-template-columns:7fr 3fr;gap:14px}
+
+/* ═══════════════════════
+   DOCENTE SIDEBAR NAV
+═══════════════════════ */
+.sb-nav{list-style:none;padding:0;margin:0}
+.sb-nav li{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--r-sm);font-size:12.5px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .12s;margin-bottom:2px}
+.sb-nav li:hover{background:var(--accent-lt);color:var(--accent)}
+.sb-nav li.active{background:var(--accent-lt);color:var(--accent);font-weight:700}
+.sb-nav li.nav-sep{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);padding:12px 12px 4px;cursor:default;margin-bottom:0}
+.sb-nav li.nav-sep:hover{background:none;color:var(--text3)}
+.sb-nav li .nav-icon{width:18px;text-align:center;flex-shrink:0}
+
+/* ═══════════════════════
+   STEPPER
+═══════════════════════ */
+.stepper{display:flex;align-items:center;gap:0;margin-bottom:18px}
+.step{display:flex;align-items:center;gap:8px;flex:1}
+.step-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;border:2px solid var(--border);color:var(--text3);background:#fff;flex-shrink:0}
+.step.active .step-num{background:var(--accent);color:#fff;border-color:var(--accent)}
+.step.done .step-num{background:var(--green);color:#fff;border-color:var(--green)}
+.step-label{font-size:11px;color:var(--text3);font-weight:500;white-space:nowrap}
+.step.active .step-label{color:var(--accent);font-weight:700}
+.step.done .step-label{color:var(--green);font-weight:600}
+.step-line{flex:1;height:2px;background:var(--border2);margin:0 8px}
+.step-line.done{background:var(--green)}
+
+/* ═══════════════════════
+   PROGRESS BAR
+═══════════════════════ */
+.progress-bar{width:100%;height:8px;background:var(--border2);border-radius:4px;overflow:hidden;margin:6px 0}
+.progress-fill{height:100%;border-radius:4px;transition:width .4s ease}
+
+/* ═══════════════════════
+   LIKERT
+═══════════════════════ */
+.likert-row{display:flex;align-items:center;gap:8px;justify-content:center;margin:10px 0}
+.likert-opt{width:44px;height:44px;border-radius:50%;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text3);cursor:pointer;transition:all .15s}
+.likert-opt:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-lt)}
+.likert-opt.selected{border-color:var(--accent);background:var(--accent);color:#fff}
+.likert-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:2px}
+
+/* ═══════════════════════
+   TIMELINE
+═══════════════════════ */
+.timeline{position:relative;padding-left:20px}
+.timeline::before{content:'';position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--border2)}
+.tl-item{position:relative;padding:0 0 14px 12px}
+.tl-item::before{content:'';position:absolute;left:-17px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid #fff;box-shadow:0 0 0 2px var(--accent-lt)}
+.tl-item.tl-green::before{background:var(--green)}
+.tl-item.tl-amber::before{background:var(--amber)}
+.tl-item.tl-teal::before{background:var(--teal)}
+
+/* HEATMAP */
+.heat-cell{padding:6px 10px;border-radius:4px;font-size:11px;font-weight:600;text-align:center}
+.heat-fund{background:var(--red-bg);color:var(--red)}
+.heat-prof{background:var(--amber-bg);color:var(--amber)}
+.heat-impl{background:var(--green-bg);color:var(--green)}
+
+/* INVITE TABS */
+.inv-tabs{display:flex;gap:0;border-bottom:2px solid var(--border2);margin-bottom:14px}
+.inv-tab{padding:8px 16px;font-size:12px;font-weight:600;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .12s}
+.inv-tab:hover{color:var(--text)}
+.inv-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════
+     TOP NAV
+═══════════════════════ -->
+<nav class="topnav">
+  <div class="brand">
+    <img src="logo_h.svg" alt="BrightPath" style="height:22px;filter:brightness(0) invert(1)">
+    <span style="font-size:10px;font-weight:400;opacity:.5;margin-left:2px">· Prototipo</span>
+  </div>
+  <a class="mtab" href="tab1-auth.html">1 · Auth</a>
+  <a class="mtab" href="tab2-docente.html">2 · Docente</a>
+  <a class="mtab active" href="tab3-director.html">3 · Director</a>
+  <a class="mtab" href="tab4-consultor.html">4 · Consultor</a>
+  <a class="mtab" href="tab5-reactivos.html">5 · Banco</a>
+  <a class="mtab" href="tab6-admin.html">6 · Admin</a>
+  <select class="mob-select" onchange="if(this.value)location.href=this.value">
+    <option value="">Navegar...</option>
+    <option value="tab1-auth.html">1 · Auth</option>
+    <option value="tab2-docente.html">2 · Docente</option>
+    <option value="tab3-director.html" selected>3 · Director</option>
+    <option value="tab4-consultor.html">4 · Consultor</option>
+    <option value="tab5-reactivos.html">5 · Banco</option>
+    <option value="tab6-admin.html">6 · Admin</option>
+  </select>
+  <span class="nav-badge">v1.0 · 7 pantallas</span>
+</nav>
+<nav class="subnav">
+  <button class="subnav-arrow subnav-left" onclick="scrollSubnav(-1)">&#8249;</button>
+  <div class="subnav-track">
+    <button class="stab active" onclick="go('s10')">3a · Onboarding</button>
+    <button class="stab" onclick="go('s11')">3b · Dashboard (activo)</button>
+    <button class="stab" onclick="go('s11b')">3c · Dashboard (vacío)</button>
+    <button class="stab" onclick="go('s11c')">3d · Dashboard (completado)</button>
+    <button class="stab" onclick="go('s12')">3e · Mis Docentes</button>
+    <button class="stab" onclick="go('s13')">3f · Re-diagnóstico</button>
+    <button class="stab" onclick="go('s14')">3g · Reportes</button>
+  </div>
+  <button class="subnav-arrow subnav-right" onclick="scrollSubnav(1)">&#8250;</button>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s10 — ONBOARDING DIRECTOR
+════════════════════════════════════════════════════════ -->
+<div id="s10" class="screen active">
+  <div class="scr-label">🏫 1/5 · Director</div>
+  <div class="pg-title">¡Bienvenido, Director Ramírez!</div>
+  <div class="pg-sub">Configura tu colegio en BrightPath en menos de 10 minutos.</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>5 pasos:</strong> "menos de 10 minutos" — stepper da sensación de control y progreso.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Sin selección plan:</strong> Billing OFF — todos acceden a plan GUÍA completo.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Teléfono para WhatsApp:</strong> Canal de comunicación principal con docentes.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>Stepper:</strong> Da sensación de control y progreso al director.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/director/bienvenida</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <!-- Sidebar Director -->
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">JR</div>
+              <div><h3>Director Ramírez</h3><p style="margin:0;opacity:.65;font-size:10px">Colegio Montessori Vallarta</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li class="active" onclick="go('s11')"><span class="nav-icon">📊</span> Dashboard</li>
+              <li onclick="go('s12')"><span class="nav-icon">👥</span> Mis Docentes</li>
+              <li onclick="go('s13')"><span class="nav-icon">🔄</span> Re-diagnóstico</li>
+              <li onclick="go('s14')"><span class="nav-icon">📄</span> Reportes</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-col">
+          <!-- Stepper -->
+          <div style="position:relative">
+            <div class="ann-mk" data-tip="5 pasos — menos de 10 minutos. Stepper da sensación de control y progreso." style="top:-5px;right:-5px">1</div>
+            <div class="stepper">
+              <div class="step active"><div class="step-num">1</div><div class="step-label">Datos del colegio</div></div>
+              <div class="step-line"></div>
+              <div class="step"><div class="step-num">2</div><div class="step-label">Invitar docentes</div></div>
+              <div class="step-line"></div>
+              <div class="step"><div class="step-num">3</div><div class="step-label">Configurar diagnóstico</div></div>
+              <div class="step-line"></div>
+              <div class="step"><div class="step-num">4</div><div class="step-label">Revisar plan</div></div>
+              <div class="step-line"></div>
+              <div class="step"><div class="step-num">5</div><div class="step-label">¡Listo!</div></div>
+            </div>
+          </div>
+
+          <!-- Form card -->
+          <div class="card" style="position:relative">
+            <div class="card-head"><h3>Datos del colegio</h3></div>
+            <div class="card-body">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div>
+                  <label class="flbl">Nombre del colegio</label>
+                  <input class="finput" type="text" value="Colegio Montessori Vallarta" readonly style="background:var(--bg)">
+                </div>
+                <div>
+                  <label class="flbl">Email institucional</label>
+                  <input class="finput" type="email" value="director.ramirez@montessori.edu.mx">
+                </div>
+                <div style="position:relative">
+                  <div class="ann-mk" data-tip="Teléfono para WhatsApp — canal de comunicación principal." style="top:-9px;right:-9px">3</div>
+                  <label class="flbl">Teléfono (WhatsApp)</label>
+                  <input class="finput" type="tel" value="+52 322 123 4567">
+                </div>
+                <div>
+                  <label class="flbl">Número de docentes</label>
+                  <select class="fsel">
+                    <option>1-10</option>
+                    <option selected>11-25</option>
+                    <option>26-50</option>
+                    <option>51+</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="flbl">Estado</label>
+                  <select class="fsel">
+                    <option selected>Jalisco</option>
+                    <option>Ciudad de México</option>
+                    <option>Nuevo León</option>
+                    <option>Estado de México</option>
+                  </select>
+                </div>
+                <div style="position:relative">
+                  <div class="ann-mk" data-tip="Stepper da sensación de control y progreso." style="top:-9px;right:-9px">4</div>
+                  <label class="flbl">Niveles educativos</label>
+                  <div style="display:flex;flex-direction:column;gap:6px;font-size:12.5px">
+                    <label style="display:flex;align-items:center;gap:6px"><input type="checkbox"> Primaria</label>
+                    <label style="display:flex;align-items:center;gap:6px"><input type="checkbox" checked> Secundaria</label>
+                    <label style="display:flex;align-items:center;gap:6px"><input type="checkbox"> Preparatoria</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Plan callout -->
+              <div class="callout callout-info mt12" style="position:relative">
+                <div class="ann-mk" data-tip="Sin selección plan — billing OFF, todos acceden a GUÍA." style="top:-9px;right:-9px">2</div>
+                <strong>Plan activo: GUÍA Completo</strong> — Todos los colegios acceden al plan completo sin costo adicional durante el piloto.
+              </div>
+
+              <div style="margin-top:16px;text-align:right">
+                <button class="btn btn-p" onclick="go('s11');showToast('✓ Datos guardados','ok')">Continuar →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s11 — DASHBOARD DIRECTOR
+════════════════════════════════════════════════════════ -->
+<div id="s11" class="screen">
+  <div class="scr-label">📊 2/5 · Director</div>
+  <div class="pg-title">Dashboard Institucional</div>
+  <div class="pg-sub">Panel de control del Colegio Montessori Vallarta</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Next Actions:</strong> Qué hacer hoy sin revisar cada sección.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Heatmap semáforo:</strong> Por dimensión/nivel — rojo, ámbar, verde.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Tracker con recordatorio:</strong> WhatsApp en 1 click para docentes pendientes.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>Narrativa IA co-branded:</strong> Texto institucional generado por IA.</div></div>
+      <div class="ann-item"><div class="ann-num">5</div><div class="ann-txt"><strong>Header co-branding:</strong> BrightPath + Colegio Montessori en un solo espacio.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/director</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <!-- Sidebar Director -->
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">JR</div>
+              <div><h3>Director Ramírez</h3><p style="margin:0;opacity:.65;font-size:10px">Colegio Montessori Vallarta</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li class="active" onclick="go('s11')"><span class="nav-icon">📊</span> Dashboard</li>
+              <li onclick="go('s12')"><span class="nav-icon">👥</span> Mis Docentes</li>
+              <li onclick="go('s13')"><span class="nav-icon">🔄</span> Re-diagnóstico</li>
+              <li onclick="go('s14')"><span class="nav-icon">📄</span> Reportes</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-col">
+          <!-- Co-branding header -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Header co-branding BrightPath + Colegio Montessori." style="top:-5px;right:-5px">5</div>
+            <div class="card-body" style="padding:12px 16px">
+              <div class="fxb">
+                <div class="fxc g8">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L14 9L21 7L16 12L21 17L14 15L12 22L10 15L3 17L8 12L3 7L10 9Z" fill="#4C9BFD" opacity="0.9"/>
+                  </svg>
+                  <strong style="font-size:13px;color:var(--brand)">BrightPath</strong>
+                  <span style="color:var(--border);margin:0 4px">|</span>
+                  <span style="font-size:12.5px;color:var(--text2)">Colegio Montessori Vallarta · Plan GUÍA</span>
+                </div>
+                <span class="badge bdg-green">Piloto activo</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Next Actions -->
+          <div class="callout callout-warn" style="position:relative">
+            <div class="ann-mk" data-tip="Next Actions — qué hacer hoy sin revisar cada sección." style="top:-9px;right:-9px">1</div>
+            <strong>⚡ 2 acciones pendientes:</strong>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px;font-size:12px">
+              <div class="fxb">
+                <span>(1) 4 docentes no han iniciado diagnóstico</span>
+                <button class="btn btn-s" style="font-size:11px;padding:3px 10px" onclick="showToast('✓ Recordatorio enviado por WhatsApp a 4 docentes','ok')">Enviar recordatorio</button>
+              </div>
+              <div class="fxb">
+                <span>(2) 3 diagnósticos completados sin revisar</span>
+                <button class="btn btn-s" style="font-size:11px;padding:3px 10px" onclick="go('s12')">Ver resultados</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Metrics row -->
+          <div class="mrow">
+            <div class="mc"><div class="mc-lbl">Docentes</div><div class="mc-val">22</div></div>
+            <div class="mc"><div class="mc-lbl">Diagnósticos completados</div><div class="mc-val">16/22</div></div>
+            <div class="mc"><div class="mc-lbl">Promedio general</div><div class="mc-val">68%</div></div>
+            <div class="mc"><div class="mc-lbl">NPS docentes</div><div class="mc-val" style="color:var(--green)">8.4</div></div>
+          </div>
+
+          <!-- Heatmap -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Heatmap semáforo por dimensión/nivel — rojo, ámbar, verde." style="top:-5px;right:-5px">2</div>
+            <div class="card-head"><h3>Heatmap de competencias</h3></div>
+            <div class="card-body" style="padding:0">
+              <table class="tbl">
+                <thead>
+                  <tr>
+                    <th>Dimensión</th>
+                    <th>Primaria</th>
+                    <th>Secundaria</th>
+                    <th>Promedio</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>MA</strong> · Metodologías Activas</td>
+                    <td><span class="heat-cell heat-prof">67%</span></td>
+                    <td><span class="heat-cell heat-prof">72%</span></td>
+                    <td><span class="heat-cell heat-prof">70%</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>TEC</strong> · Uso de TIC</td>
+                    <td><span class="heat-cell heat-fund">42%</span></td>
+                    <td><span class="heat-cell heat-fund">48%</span></td>
+                    <td><span class="heat-cell heat-fund">45%</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>GSE</strong> · Gestión Socioemocional</td>
+                    <td><span class="heat-cell heat-impl">78%</span></td>
+                    <td><span class="heat-cell heat-impl">85%</span></td>
+                    <td><span class="heat-cell heat-impl">82%</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- AI Narrative -->
+          <div class="card" style="background:var(--bg2);border-left:3px solid var(--teal);position:relative">
+            <div class="ann-mk" data-tip="Narrativa IA co-branded — texto institucional generado por IA." style="top:-5px;right:-5px">4</div>
+            <div class="card-head"><h3>🤖 Narrativa IA Institucional</h3><span class="badge bdg-blue" style="margin-left:auto">Generada por IA</span></div>
+            <div class="card-body" style="font-size:12.5px;color:var(--text2);line-height:1.7">
+              El Colegio Montessori Vallarta presenta un perfil de competencias docentes con <strong>fortaleza institucional en Gestión Socioemocional (82%)</strong>, lo que refleja una cultura de cuidado y acompañamiento bien establecida. El <strong>área prioritaria de desarrollo es Uso de TIC (45%)</strong>, donde la mayoría de docentes se encuentran en nivel Fundamentos.
+              <br><br>
+              Se recomienda <strong>priorizar la formación tecnológica en docentes de secundaria</strong>, donde el gap es más pronunciado (48%), y aprovechar la fortaleza socioemocional como base para la adopción de herramientas digitales colaborativas.
+            </div>
+          </div>
+
+          <!-- Completación tracker -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Tracker con recordatorio WhatsApp en 1 click." style="top:-5px;right:-5px">3</div>
+            <div class="card-head"><h3>Completación de diagnósticos</h3></div>
+            <div class="card-body" style="padding:0">
+              <div style="display:flex;flex-direction:column">
+                <div class="fxb" style="padding:10px 15px;border-bottom:1px solid var(--border2)">
+                  <div class="fxc g8">
+                    <span style="color:var(--green)">✓</span>
+                    <span style="font-size:12.5px;font-weight:500">Ana Martínez</span>
+                  </div>
+                  <span class="badge bdg-green">Completado</span>
+                </div>
+                <div class="fxb" style="padding:10px 15px;border-bottom:1px solid var(--border2)">
+                  <div class="fxc g8">
+                    <span style="color:var(--green)">✓</span>
+                    <span style="font-size:12.5px;font-weight:500">Carlos López</span>
+                  </div>
+                  <span class="badge bdg-green">Completado</span>
+                </div>
+                <div class="fxb" style="padding:10px 15px;border-bottom:1px solid var(--border2)">
+                  <div class="fxc g8">
+                    <span style="color:var(--green)">✓</span>
+                    <span style="font-size:12.5px;font-weight:500">María González</span>
+                  </div>
+                  <span class="badge bdg-green">Completado</span>
+                </div>
+                <div class="fxb" style="padding:10px 15px;border-bottom:1px solid var(--border2)">
+                  <div class="fxc g8">
+                    <span style="color:var(--amber)">⏳</span>
+                    <span style="font-size:12.5px;font-weight:500">Pedro Sánchez</span>
+                  </div>
+                  <span class="badge bdg-amber">En progreso 60%</span>
+                </div>
+                <div class="fxb" style="padding:10px 15px;border-bottom:1px solid var(--border2)">
+                  <div class="fxc g8">
+                    <span style="color:var(--amber)">⏳</span>
+                    <span style="font-size:12.5px;font-weight:500">Laura Torres</span>
+                  </div>
+                  <span class="badge bdg-red">Pendiente</span>
+                </div>
+              </div>
+              <div style="padding:10px 15px;text-align:center">
+                <a href="#" style="color:var(--accent);font-size:12px;text-decoration:none;font-weight:600" onclick="event.preventDefault();go('s12')">Ver todos los docentes →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s12 — MIS DOCENTES
+════════════════════════════════════════════════════════ -->
+<div id="s12" class="screen">
+  <div class="scr-label">👥 3/5 · Director</div>
+  <div class="pg-title">Mis Docentes</div>
+  <div class="pg-sub">Gestión y seguimiento del equipo docente</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Link WhatsApp:</strong> Más rápido para invitar masivamente.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Filtros:</strong> Para encontrar rápidamente quién falta.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Detalle expandible:</strong> Inline al hacer click en una fila.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>Privacidad:</strong> Solo visible si pasaron 48h desde el diagnóstico.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/director/docentes</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <!-- Sidebar Director -->
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">JR</div>
+              <div><h3>Director Ramírez</h3><p style="margin:0;opacity:.65;font-size:10px">Colegio Montessori Vallarta</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li onclick="go('s11')"><span class="nav-icon">📊</span> Dashboard</li>
+              <li class="active" onclick="go('s12')"><span class="nav-icon">👥</span> Mis Docentes</li>
+              <li onclick="go('s13')"><span class="nav-icon">🔄</span> Re-diagnóstico</li>
+              <li onclick="go('s14')"><span class="nav-icon">📄</span> Reportes</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-col">
+          <!-- Toolbar -->
+          <div class="fxb g8" style="flex-wrap:wrap;position:relative">
+            <div class="ann-mk" data-tip="Filtros para encontrar rápidamente quién falta." style="top:-9px;left:100px">2</div>
+            <select class="fsel" style="width:160px;flex:none">
+              <option>Todos los estados</option>
+              <option>Completado</option>
+              <option>En progreso</option>
+              <option>Pendiente</option>
+            </select>
+            <select class="fsel" style="width:130px;flex:none">
+              <option>Todos los niveles</option>
+              <option>Primaria</option>
+              <option>Secundaria</option>
+            </select>
+            <input class="finput" type="text" placeholder="Buscar docente..." style="width:180px;flex:none">
+            <div style="margin-left:auto;position:relative">
+              <div class="ann-mk" data-tip="Link WhatsApp más rápido para invitar masivamente." style="top:-9px;right:-9px">1</div>
+              <button class="btn btn-p" onclick="openModal('modal-invitar')">+ Invitar docente</button>
+            </div>
+          </div>
+
+          <!-- Metrics -->
+          <div class="mrow">
+            <div class="mc"><div class="mc-lbl">Total</div><div class="mc-val">22</div></div>
+            <div class="mc"><div class="mc-lbl">Completados</div><div class="mc-val" style="color:var(--green)">16</div></div>
+            <div class="mc"><div class="mc-lbl">Pendientes</div><div class="mc-val" style="color:var(--red)">6</div></div>
+          </div>
+
+          <!-- Table -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Detalle expandible inline al hacer click en una fila." style="top:-5px;right:-5px">3</div>
+            <div class="card-body" style="padding:0;overflow-x:auto">
+              <table class="tbl" id="tbl-docentes">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Nivel</th>
+                    <th>Estado</th>
+                    <th>Diagnóstico</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr onclick="selRow(this)">
+                    <td><strong>Ana Martínez</strong></td>
+                    <td class="tmuted tsm">ana.martinez@gmail.com</td>
+                    <td>Secundaria</td>
+                    <td><span class="badge bdg-green">Completado</span></td>
+                    <td class="tsm">72% MA / 48% TEC / 85% GSE</td>
+                    <td><a href="#" onclick="event.preventDefault();event.stopPropagation()" style="color:var(--accent);font-size:12px;text-decoration:none;font-weight:600">Ver →</a></td>
+                  </tr>
+                  <tr onclick="selRow(this)">
+                    <td><strong>Carlos López</strong></td>
+                    <td class="tmuted tsm">carlos.lopez@gmail.com</td>
+                    <td>Secundaria</td>
+                    <td><span class="badge bdg-green">Completado</span></td>
+                    <td class="tsm">68% / 55% / 79%</td>
+                    <td><a href="#" onclick="event.preventDefault();event.stopPropagation()" style="color:var(--accent);font-size:12px;text-decoration:none;font-weight:600">Ver →</a></td>
+                  </tr>
+                  <tr onclick="selRow(this)">
+                    <td><strong>María González</strong></td>
+                    <td class="tmuted tsm">maria.gonzalez@gmail.com</td>
+                    <td>Primaria</td>
+                    <td><span class="badge bdg-green">Completado</span></td>
+                    <td class="tsm">75% / 62% / 81%</td>
+                    <td><a href="#" onclick="event.preventDefault();event.stopPropagation()" style="color:var(--accent);font-size:12px;text-decoration:none;font-weight:600">Ver →</a></td>
+                  </tr>
+                  <tr onclick="selRow(this)">
+                    <td><strong>Pedro Sánchez</strong></td>
+                    <td class="tmuted tsm">pedro.sanchez@gmail.com</td>
+                    <td>Secundaria</td>
+                    <td><span class="badge bdg-amber">En progreso</span></td>
+                    <td class="tsm">60% completado</td>
+                    <td>—</td>
+                  </tr>
+                  <tr onclick="selRow(this)">
+                    <td><strong>Laura Torres</strong></td>
+                    <td class="tmuted tsm">laura.torres@gmail.com</td>
+                    <td>Primaria</td>
+                    <td><span class="badge bdg-red">Pendiente</span></td>
+                    <td class="tsm">—</td>
+                    <td><button class="btn btn-s" style="font-size:11px;padding:3px 8px" onclick="event.stopPropagation();showToast('✓ Recordatorio enviado a Laura Torres','ok')">Recordar</button></td>
+                  </tr>
+                  <tr onclick="selRow(this)">
+                    <td><strong>Roberto Díaz</strong></td>
+                    <td class="tmuted tsm">roberto.diaz@gmail.com</td>
+                    <td>Secundaria</td>
+                    <td><span class="badge bdg-green">Completado</span></td>
+                    <td class="tsm">70% / 51% / 77%</td>
+                    <td><a href="#" onclick="event.preventDefault();event.stopPropagation()" style="color:var(--accent);font-size:12px;text-decoration:none;font-weight:600">Ver →</a></td>
+                  </tr>
+                  <tr onclick="selRow(this)">
+                    <td><strong>Sofia Morales</strong></td>
+                    <td class="tmuted tsm">sofia.morales@gmail.com</td>
+                    <td>Primaria</td>
+                    <td><span class="badge bdg-green">Completado</span></td>
+                    <td class="tsm">73% / 59% / 83%</td>
+                    <td><a href="#" onclick="event.preventDefault();event.stopPropagation()" style="color:var(--accent);font-size:12px;text-decoration:none;font-weight:600">Ver →</a></td>
+                  </tr>
+                  <tr onclick="selRow(this)">
+                    <td><strong>Javier Ruiz</strong></td>
+                    <td class="tmuted tsm">javier.ruiz@gmail.com</td>
+                    <td>Secundaria</td>
+                    <td><span class="badge bdg-amber">En progreso</span></td>
+                    <td class="tsm">40% completado</td>
+                    <td>—</td>
+                  </tr>
+                  <tr onclick="selRow(this)">
+                    <td><strong>Carmen Flores</strong></td>
+                    <td class="tmuted tsm">carmen.flores@gmail.com</td>
+                    <td>Primaria</td>
+                    <td><span class="badge bdg-red">Pendiente</span></td>
+                    <td class="tsm">—</td>
+                    <td><button class="btn btn-s" style="font-size:11px;padding:3px 8px" onclick="event.stopPropagation();showToast('✓ Recordatorio enviado a Carmen Flores','ok')">Recordar</button></td>
+                  </tr>
+                  <tr onclick="selRow(this)">
+                    <td><strong>Miguel Herrera</strong></td>
+                    <td class="tmuted tsm">miguel.herrera@gmail.com</td>
+                    <td>Secundaria</td>
+                    <td><span class="badge bdg-green">Completado</span></td>
+                    <td class="tsm">71% / 53% / 80%</td>
+                    <td><a href="#" onclick="event.preventDefault();event.stopPropagation()" style="color:var(--accent);font-size:12px;text-decoration:none;font-weight:600">Ver →</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Detail panel (hidden, shown on row click) -->
+          <div id="detail-docente" class="card" style="display:none;border-left:3px solid var(--accent);position:relative">
+            <div class="ann-mk" data-tip="Privacidad: solo visible si pasaron 48h desde el diagnóstico." style="top:-5px;right:-5px">4</div>
+            <div class="card-head fxb">
+              <h3 id="detail-nombre">Detalle del docente</h3>
+              <button class="btn btn-g" style="font-size:11px;padding:3px 8px" onclick="document.getElementById('detail-docente').style.display='none'">✕ Cerrar</button>
+            </div>
+            <div class="card-body">
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
+                <div>
+                  <div class="fxb mb8" style="font-size:11px"><span style="font-weight:600;color:var(--teal)">MA · Metodologías Activas</span><span class="tbold">72%</span></div>
+                  <div class="progress-bar" style="height:6px"><div class="progress-fill" style="width:72%;background:var(--teal)"></div></div>
+                  <div style="font-size:10px;color:var(--text3);margin-top:2px">Profundización</div>
+                </div>
+                <div>
+                  <div class="fxb mb8" style="font-size:11px"><span style="font-weight:600;color:var(--coral)">TEC · Uso de TIC</span><span class="tbold">48%</span></div>
+                  <div class="progress-bar" style="height:6px"><div class="progress-fill" style="width:48%;background:var(--coral)"></div></div>
+                  <div style="font-size:10px;color:var(--text3);margin-top:2px">Fundamentos</div>
+                </div>
+                <div>
+                  <div class="fxb mb8" style="font-size:11px"><span style="font-weight:600;color:var(--accent)">GSE · Gestión Socioemocional</span><span class="tbold">85%</span></div>
+                  <div class="progress-bar" style="height:6px"><div class="progress-fill" style="width:85%;background:var(--accent)"></div></div>
+                  <div style="font-size:10px;color:var(--text3);margin-top:2px">Implementación</div>
+                </div>
+              </div>
+              <div class="callout callout-info" style="font-size:11px">
+                🔒 Datos individuales visibles después de 48h. Último diagnóstico: hace 5 días.
+              </div>
+              <div style="margin-top:10px" class="fxc g8">
+                <button class="btn btn-s" style="font-size:11px" onclick="showToast('✓ Ruta de formación abierta','ok')">Ver ruta de formación</button>
+                <button class="btn btn-s" style="font-size:11px" onclick="showToast('✓ Recordatorio enviado','ok')">Enviar recordatorio</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s13 — RE-DIAGNÓSTICO
+════════════════════════════════════════════════════════ -->
+<div id="s13" class="screen">
+  <div class="scr-label">🔄 4/5 · Director</div>
+  <div class="pg-title">Activar Re-diagnóstico</div>
+  <div class="pg-sub">Mide el avance de tus docentes después de la formación</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Selección individual o masiva:</strong> Checkboxes para elegir docentes.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Fecha límite configurable:</strong> El director controla el plazo.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>WhatsApp automático:</strong> Al activar se envía notificación automática.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>Comparativa automática:</strong> Antes/después generada al completar re-diagnóstico.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/director/rediagnostico</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <!-- Sidebar Director -->
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">JR</div>
+              <div><h3>Director Ramírez</h3><p style="margin:0;opacity:.65;font-size:10px">Colegio Montessori Vallarta</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li onclick="go('s11')"><span class="nav-icon">📊</span> Dashboard</li>
+              <li onclick="go('s12')"><span class="nav-icon">👥</span> Mis Docentes</li>
+              <li class="active" onclick="go('s13')"><span class="nav-icon">🔄</span> Re-diagnóstico</li>
+              <li onclick="go('s14')"><span class="nav-icon">📄</span> Reportes</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-col">
+          <!-- Info callout -->
+          <div class="callout callout-info" style="position:relative">
+            <div class="ann-mk" data-tip="Comparativa antes/después automática al completar re-diagnóstico." style="top:-9px;right:-9px">4</div>
+            El re-diagnóstico permite medir el avance de tus docentes después de completar su ruta de formación. Se recomienda aplicar cada semestre.
+          </div>
+
+          <!-- Selection card -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Selección individual o masiva con checkboxes." style="top:-5px;right:-5px">1</div>
+            <div class="card-head"><h3>Selección de docentes</h3></div>
+            <div class="card-body">
+              <div style="display:flex;flex-direction:column;gap:8px;font-size:12.5px">
+                <label style="display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--border2);border-radius:var(--r-sm);cursor:pointer">
+                  <input type="radio" name="rediag-sel"> Todos los docentes (22)
+                </label>
+                <label style="display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--accent);border-radius:var(--r-sm);cursor:pointer;background:var(--accent-lt)">
+                  <input type="radio" name="rediag-sel" checked> Solo quienes completaron diagnóstico (16)
+                </label>
+                <label style="display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--border2);border-radius:var(--r-sm);cursor:pointer">
+                  <input type="radio" name="rediag-sel"> Selección manual
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Configuration card -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Fecha límite configurable — el director controla el plazo." style="top:-5px;right:-5px">2</div>
+            <div class="card-head"><h3>Configuración</h3></div>
+            <div class="card-body">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div>
+                  <label class="flbl">Fecha límite</label>
+                  <input class="finput" type="date" value="2026-06-30">
+                </div>
+                <div>
+                  <label class="flbl">Recordatorios</label>
+                  <select class="fsel">
+                    <option selected>Cada 3 días</option>
+                    <option>Semanal</option>
+                    <option>Sin recordatorio</option>
+                  </select>
+                </div>
+              </div>
+              <div style="margin-top:12px">
+                <label class="flbl">Mensaje personalizado (opcional)</label>
+                <textarea class="ftxt" placeholder="Hola [nombre], te invitamos a completar tu re-diagnóstico..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- WhatsApp callout -->
+          <div class="callout callout-warn" style="position:relative">
+            <div class="ann-mk" data-tip="WhatsApp automático al activar — notificación instantánea." style="top:-9px;right:-9px">3</div>
+            📱 Se enviarán notificaciones automáticas por WhatsApp al número registrado de cada docente.
+          </div>
+
+          <!-- Action button -->
+          <div style="text-align:right">
+            <button class="btn btn-p" onclick="openModal('modal-confirm-rediag')">Activar para 16 docentes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s14 — REPORTES
+════════════════════════════════════════════════════════ -->
+<div id="s14" class="screen">
+  <div class="scr-label">📄 5/5 · Director</div>
+  <div class="pg-title">Reportes Institucionales</div>
+  <div class="pg-sub">Genera y descarga reportes de tu colegio</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Co-branding automático:</strong> Director lo comparte como suyo — BrightPath + Colegio.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Datos institucionales:</strong> Solo datos agregados — privacidad docente protegida.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Preview antes de descargar:</strong> El director ve el reporte antes de generar PDF.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>Comparativa semestral:</strong> Deshabilitada hasta completar re-diagnóstico.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/director/reportes</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <!-- Sidebar Director -->
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">JR</div>
+              <div><h3>Director Ramírez</h3><p style="margin:0;opacity:.65;font-size:10px">Colegio Montessori Vallarta</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li onclick="go('s11')"><span class="nav-icon">📊</span> Dashboard</li>
+              <li onclick="go('s12')"><span class="nav-icon">👥</span> Mis Docentes</li>
+              <li onclick="go('s13')"><span class="nav-icon">🔄</span> Re-diagnóstico</li>
+              <li class="active" onclick="go('s14')"><span class="nav-icon">📄</span> Reportes</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-col">
+          <!-- Report type card -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Comparativa semestral deshabilitada hasta completar re-diagnóstico." style="top:-5px;right:-5px">4</div>
+            <div class="card-head"><h3>Tipo de reporte</h3></div>
+            <div class="card-body">
+              <div style="display:flex;flex-direction:column;gap:8px;font-size:12.5px;margin-bottom:14px">
+                <label style="display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--accent);border-radius:var(--r-sm);cursor:pointer;background:var(--accent-lt)">
+                  <input type="radio" name="report-type" checked> Diagnóstico General
+                </label>
+                <label style="display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--border2);border-radius:var(--r-sm);cursor:pointer">
+                  <input type="radio" name="report-type"> Competencias por Nivel
+                </label>
+                <label style="display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--border2);border-radius:var(--r-sm);cursor:not-allowed;opacity:.6">
+                  <input type="radio" name="report-type" disabled> Comparativa Semestral <span class="badge bdg-gray" style="margin-left:8px">Requiere re-diagnóstico</span>
+                </label>
+              </div>
+              <div style="display:flex;gap:12px;align-items:flex-end">
+                <div style="flex:1">
+                  <label class="flbl">Período</label>
+                  <select class="fsel">
+                    <option selected>Semestre Ene-Jun 2026</option>
+                    <option>Semestre Jul-Dic 2025</option>
+                  </select>
+                </div>
+                <button class="btn btn-p" onclick="showToast('✓ Reporte generado','ok')">Generar reporte</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preview card -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Preview antes de descargar — el director ve el reporte primero." style="top:-5px;right:-5px">3</div>
+            <div class="card-head"><h3>Preview del reporte</h3></div>
+            <div class="card-body">
+              <!-- Report header -->
+              <div style="background:var(--brand);color:#fff;padding:16px 20px;border-radius:var(--r-sm);margin-bottom:14px;position:relative">
+                <div class="ann-mk" data-tip="Co-branding automático — director lo comparte como suyo." style="top:-5px;right:-5px">1</div>
+                <div class="fxb">
+                  <div class="fxc g8">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 2L14 9L21 7L16 12L21 17L14 15L12 22L10 15L3 17L8 12L3 7L10 9Z" fill="#4C9BFD" opacity="0.9"/>
+                    </svg>
+                    <strong style="font-size:13px">BrightPath</strong>
+                    <span style="opacity:.5;margin:0 4px">|</span>
+                    <span style="font-size:12px;opacity:.8">Colegio Montessori Vallarta</span>
+                  </div>
+                  <span style="font-size:11px;opacity:.65">Abril 2026</span>
+                </div>
+              </div>
+
+              <!-- Executive summary -->
+              <div style="margin-bottom:14px;position:relative">
+                <div class="ann-mk" data-tip="Solo datos institucionales — privacidad docente protegida." style="top:-5px;right:-5px">2</div>
+                <div class="slbl">Resumen ejecutivo</div>
+                <p style="font-size:12.5px;color:var(--text2);line-height:1.6">
+                  El Colegio Montessori Vallarta presenta un perfil de competencias docentes con fortaleza institucional en Gestión Socioemocional (82%) y un área prioritaria de desarrollo en Uso de TIC (45%). Se recomienda priorizar la formación tecnológica en docentes de secundaria.
+                </p>
+              </div>
+
+              <!-- Progress bars -->
+              <div style="margin-bottom:14px">
+                <div class="slbl">Competencias por dimensión</div>
+                <div style="margin-bottom:10px">
+                  <div class="fxb mb8" style="font-size:12px"><span><strong style="color:var(--teal)">MA</strong> · Metodologías Activas</span><span class="tbold">70%</span></div>
+                  <div class="progress-bar" style="height:10px"><div class="progress-fill" style="width:70%;background:var(--teal)"></div></div>
+                </div>
+                <div style="margin-bottom:10px">
+                  <div class="fxb mb8" style="font-size:12px"><span><strong style="color:var(--coral)">TEC</strong> · Uso de TIC</span><span class="tbold">45%</span></div>
+                  <div class="progress-bar" style="height:10px"><div class="progress-fill" style="width:45%;background:var(--coral)"></div></div>
+                </div>
+                <div>
+                  <div class="fxb mb8" style="font-size:12px"><span><strong style="color:var(--accent)">GSE</strong> · Gestión Socioemocional</span><span class="tbold">82%</span></div>
+                  <div class="progress-bar" style="height:10px"><div class="progress-fill" style="width:82%;background:var(--accent)"></div></div>
+                </div>
+              </div>
+
+              <!-- Footer -->
+              <div style="border-top:1px solid var(--border2);padding-top:10px;font-size:10.5px;color:var(--text3);text-align:center">
+                Generado por BrightPath · Abril 2026 · Datos agregados — no incluye información individual de docentes
+              </div>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="fxc g8">
+            <button class="btn btn-s" onclick="showToast('📥 Descargando reporte...','ok')">📥 Descargar PDF</button>
+            <button class="btn btn-s" onclick="showToast('📤 Link copiado','ok')">📤 Compartir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s11b — DASHBOARD DIRECTOR (ESTADO VACÍO)
+════════════════════════════════════════════════════════ -->
+<div id="s11b" class="screen">
+  <div class="scr-label">📊 3c/7 · Director</div>
+  <div class="pg-title">Dashboard Institucional</div>
+  <div class="pg-sub">Panel de control del Colegio Montessori Vallarta</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — estado: vacío, sin diagnósticos completados</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Sin datos:</strong> Ningún docente ha completado diagnóstico aún — dashboard en estado inicial.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Heatmap vacío:</strong> Celdas con guiones — sin datos para mostrar.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>CTA invitar:</strong> Callout principal guía al director a invitar docentes.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/director</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">JR</div>
+              <div><h3>Director Ramírez</h3><p style="margin:0;opacity:.65;font-size:10px">Colegio Montessori Vallarta</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li class="active" onclick="go('s11b')"><span class="nav-icon">📊</span> Dashboard</li>
+              <li onclick="go('s12')"><span class="nav-icon">👥</span> Mis Docentes</li>
+              <li onclick="go('s13')"><span class="nav-icon">🔄</span> Re-diagnóstico</li>
+              <li onclick="go('s14')"><span class="nav-icon">📄</span> Reportes</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="main-col">
+          <!-- Co-branding header -->
+          <div class="card">
+            <div class="card-body" style="padding:12px 16px">
+              <div class="fxb">
+                <div class="fxc g8">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L14 9L21 7L16 12L21 17L14 15L12 22L10 15L3 17L8 12L3 7L10 9Z" fill="#4C9BFD" opacity="0.9"/></svg>
+                  <strong style="font-size:13px;color:var(--brand)">BrightPath</strong>
+                  <span style="color:var(--border);margin:0 4px">|</span>
+                  <span style="font-size:12.5px;color:var(--text2)">Colegio Montessori Vallarta · Plan GUÍA</span>
+                </div>
+                <span class="badge bdg-green">Piloto activo</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA invitar -->
+          <div class="callout callout-info" style="position:relative">
+            <div class="ann-mk" data-tip="CTA principal: invitar docentes para comenzar." style="top:-9px;right:-9px">3</div>
+            <strong>👋 Invita a tus docentes para comenzar.</strong> Una vez que completen su diagnóstico, verás aquí el panorama de competencias de tu colegio.
+            <div style="margin-top:8px"><button class="btn btn-p" onclick="openModal('modal-invitar')">+ Invitar docentes</button></div>
+          </div>
+
+          <!-- Metrics row (empty) -->
+          <div class="mrow">
+            <div class="mc"><div class="mc-lbl">Docentes</div><div class="mc-val">0</div></div>
+            <div class="mc"><div class="mc-lbl">Diagnósticos completados</div><div class="mc-val">0/0</div></div>
+            <div class="mc"><div class="mc-lbl">Promedio general</div><div class="mc-val">—</div></div>
+            <div class="mc"><div class="mc-lbl">NPS docentes</div><div class="mc-val">—</div></div>
+          </div>
+
+          <!-- Heatmap vacío -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Heatmap sin datos — celdas con guiones." style="top:-5px;right:-5px">2</div>
+            <div class="card-head"><h3>Heatmap de competencias</h3></div>
+            <div class="card-body" style="padding:0">
+              <table class="tbl">
+                <thead>
+                  <tr><th>Dimensión</th><th>Primaria</th><th>Secundaria</th><th>Promedio</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>MA</strong> · Metodologías Activas</td><td><span style="color:var(--text3)">—</span></td><td><span style="color:var(--text3)">—</span></td><td><span style="color:var(--text3)">—</span></td></tr>
+                  <tr><td><strong>TEC</strong> · Uso de TIC</td><td><span style="color:var(--text3)">—</span></td><td><span style="color:var(--text3)">—</span></td><td><span style="color:var(--text3)">—</span></td></tr>
+                  <tr><td><strong>GSE</strong> · Gestión Socioemocional</td><td><span style="color:var(--text3)">—</span></td><td><span style="color:var(--text3)">—</span></td><td><span style="color:var(--text3)">—</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Completación tracker (vacío) -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Todos los docentes en estado Pendiente." style="top:-5px;right:-5px">1</div>
+            <div class="card-head"><h3>Completación de diagnósticos</h3></div>
+            <div class="card-body">
+              <div class="empty-state">
+                <span style="font-size:24px">📋</span>
+                Aún no hay docentes registrados. Invita a tu equipo para comenzar.
+                <button class="btn btn-p" onclick="openModal('modal-invitar')">+ Invitar docentes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s11c — DASHBOARD DIRECTOR (TODOS COMPLETADOS)
+════════════════════════════════════════════════════════ -->
+<div id="s11c" class="screen">
+  <div class="scr-label">📊 3d/7 · Director</div>
+  <div class="pg-title">Dashboard Institucional</div>
+  <div class="pg-sub">Panel de control del Colegio Montessori Vallarta</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — estado: todos los diagnósticos completados</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>24/24 completados:</strong> Badge verde — 100% de completación.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Heatmap completo:</strong> Todas las celdas con colores — datos de todos los docentes.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Next Actions vacío:</strong> No hay acciones pendientes — todo al día.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/director</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">JR</div>
+              <div><h3>Director Ramírez</h3><p style="margin:0;opacity:.65;font-size:10px">Colegio Montessori Vallarta</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li class="active" onclick="go('s11c')"><span class="nav-icon">📊</span> Dashboard</li>
+              <li onclick="go('s12')"><span class="nav-icon">👥</span> Mis Docentes</li>
+              <li onclick="go('s13')"><span class="nav-icon">🔄</span> Re-diagnóstico</li>
+              <li onclick="go('s14')"><span class="nav-icon">📄</span> Reportes</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="main-col">
+          <!-- Co-branding header -->
+          <div class="card">
+            <div class="card-body" style="padding:12px 16px">
+              <div class="fxb">
+                <div class="fxc g8">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L14 9L21 7L16 12L21 17L14 15L12 22L10 15L3 17L8 12L3 7L10 9Z" fill="#4C9BFD" opacity="0.9"/></svg>
+                  <strong style="font-size:13px;color:var(--brand)">BrightPath</strong>
+                  <span style="color:var(--border);margin:0 4px">|</span>
+                  <span style="font-size:12.5px;color:var(--text2)">Colegio Montessori Vallarta · Plan GUÍA</span>
+                </div>
+                <div class="fxc g8">
+                  <span class="badge bdg-green" style="font-size:12px;padding:4px 12px;position:relative">
+                    <div class="ann-mk" data-tip="24/24 completados — 100% de completación." style="top:-12px;right:-12px">1</div>
+                    ✓ 24/24 completados
+                  </span>
+                  <span class="badge bdg-green">Piloto activo</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- No actions callout -->
+          <div class="callout callout-ok" style="position:relative">
+            <div class="ann-mk" data-tip="No hay acciones pendientes — todo al día." style="top:-9px;right:-9px">3</div>
+            <strong>✓ Todo al día.</strong> Los 24 docentes han completado su diagnóstico. No hay acciones pendientes.
+          </div>
+
+          <!-- Metrics row -->
+          <div class="mrow">
+            <div class="mc"><div class="mc-lbl">Docentes</div><div class="mc-val">24</div></div>
+            <div class="mc"><div class="mc-lbl">Diagnósticos completados</div><div class="mc-val" style="color:var(--green)">24/24</div></div>
+            <div class="mc"><div class="mc-lbl">Promedio general</div><div class="mc-val">68%</div></div>
+            <div class="mc"><div class="mc-lbl">NPS docentes</div><div class="mc-val" style="color:var(--green)">8.4</div></div>
+          </div>
+
+          <!-- Heatmap completo -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Heatmap completo con colores — datos de todos los docentes." style="top:-5px;right:-5px">2</div>
+            <div class="card-head"><h3>Heatmap de competencias</h3></div>
+            <div class="card-body" style="padding:0">
+              <table class="tbl">
+                <thead>
+                  <tr><th>Dimensión</th><th>Primaria</th><th>Secundaria</th><th>Promedio</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>MA</strong> · Metodologías Activas</td>
+                    <td><span class="heat-cell heat-prof">67%</span></td>
+                    <td><span class="heat-cell heat-prof">72%</span></td>
+                    <td><span class="heat-cell heat-prof">70%</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>TEC</strong> · Uso de TIC</td>
+                    <td><span class="heat-cell heat-fund">42%</span></td>
+                    <td><span class="heat-cell heat-fund">48%</span></td>
+                    <td><span class="heat-cell heat-fund">45%</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>GSE</strong> · Gestión Socioemocional</td>
+                    <td><span class="heat-cell heat-impl">78%</span></td>
+                    <td><span class="heat-cell heat-impl">85%</span></td>
+                    <td><span class="heat-cell heat-impl">82%</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- AI Narrative -->
+          <div class="card" style="background:var(--bg2);border-left:3px solid var(--teal)">
+            <div class="card-head"><h3>🤖 Narrativa IA Institucional</h3><span class="badge bdg-blue" style="margin-left:auto">Generada por IA</span></div>
+            <div class="card-body" style="font-size:12.5px;color:var(--text2);line-height:1.7">
+              El Colegio Montessori Vallarta presenta un perfil de competencias docentes con <strong>fortaleza institucional en Gestión Socioemocional (82%)</strong>. El <strong>área prioritaria de desarrollo es Uso de TIC (45%)</strong>. Con el 100% de diagnósticos completados, la ruta de formación personalizada está disponible para los 24 docentes.
+            </div>
+          </div>
+
+          <!-- Next Actions empty -->
+          <div class="card">
+            <div class="card-head"><h3>Próximas acciones</h3></div>
+            <div class="card-body">
+              <div class="empty-state" style="padding:16px">
+                <span style="font-size:20px">✓</span>
+                No hay acciones pendientes. Todos los diagnósticos están completados.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════
+     MODAL INVITAR DOCENTES
+═══════════════════════ -->
+<div id="modal-invitar" class="modal-ov">
+  <div class="modal" style="width:540px">
+    <div class="modal-title">Invitar Docentes</div>
+    <div class="modal-sub">Elige cómo quieres invitar a tus docentes a BrightPath</div>
+    <div class="inv-tabs">
+      <div class="inv-tab active" onclick="switchInvTab(0)">🔗 Link único</div>
+      <div class="inv-tab" onclick="switchInvTab(1)">📧 Lista de emails</div>
+      <div class="inv-tab" onclick="switchInvTab(2)">📄 Archivo CSV</div>
+    </div>
+    <div id="inv-content-0">
+      <p style="font-size:12px;color:var(--text2);margin-bottom:10px">Comparte este link con tus docentes. Al abrirlo, se registran directamente en tu colegio.</p>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input class="finput" type="text" value="brightpath.mx/join/montessori-vallarta-x8k2" readonly style="background:var(--bg);font-size:11px;flex:1">
+        <button class="btn btn-p" onclick="closeModal('modal-invitar');showToast('✓ Link copiado al portapapeles','ok')">Copiar</button>
+      </div>
+    </div>
+    <div id="inv-content-1" style="display:none">
+      <p style="font-size:12px;color:var(--text2);margin-bottom:10px">Pega los correos de tus docentes, uno por línea.</p>
+      <textarea class="ftxt" placeholder="docente1@email.com&#10;docente2@email.com&#10;docente3@email.com" style="min-height:100px"></textarea>
+      <div style="margin-top:10px;text-align:right"><button class="btn btn-p" onclick="closeModal('modal-invitar');showToast('✓ 3 invitaciones enviadas','ok')">Enviar invitaciones</button></div>
+    </div>
+    <div id="inv-content-2" style="display:none">
+      <div class="empty-state" style="min-height:100px;border:2px dashed var(--border)">
+        <span style="font-size:24px">📁</span>
+        Arrastra un archivo CSV aquí o haz click para seleccionar
+        <div class="tmuted tsm">Formato: nombre, email (máx 100 filas)</div>
+      </div>
+      <div style="margin-top:10px;text-align:right"><button class="btn btn-dis">Subir y enviar</button></div>
+    </div>
+    <div class="modal-actions" style="margin-top:14px">
+      <button class="btn btn-g" onclick="closeModal('modal-invitar')">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════
+     MODAL CONFIRMAR RE-DIAGNÓSTICO
+═══════════════════════ -->
+<div id="modal-confirm-rediag" class="modal-ov">
+  <div class="modal">
+    <div class="modal-title">Confirmar Re-diagnóstico</div>
+    <div class="modal-sub">Revisa los detalles antes de activar</div>
+    <div style="font-size:12.5px;color:var(--text2);display:flex;flex-direction:column;gap:6px;margin-bottom:12px">
+      <div class="fxb"><span>Docentes seleccionados:</span><strong>16</strong></div>
+      <div class="fxb"><span>Fecha límite:</span><strong>30 Jun 2026</strong></div>
+      <div class="fxb"><span>Recordatorios:</span><strong>Cada 3 días</strong></div>
+      <div class="fxb"><span>Notificación:</span><strong>WhatsApp + Email</strong></div>
+    </div>
+    <div class="callout callout-info" style="font-size:11px">Los docentes recibirán una notificación por WhatsApp y email con el link al re-diagnóstico.</div>
+    <div class="modal-actions">
+      <button class="btn btn-g" onclick="closeModal('modal-confirm-rediag')">Cancelar</button>
+      <button class="btn btn-p" onclick="closeModal('modal-confirm-rediag');showToast('✓ Re-diagnóstico activado. 16 notificaciones enviadas.','ok');setTimeout(()=>go('s11'),500)">Activar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════
+     MODAL FEEDBACK
+═══════════════════════ -->
+<div id="modal-feedback" class="modal-ov">
+  <div class="modal">
+    <div class="modal-title">Enviar Feedback</div>
+    <div class="modal-sub">Tu opinión nos ayuda a mejorar BrightPath</div>
+    <div style="margin:12px 0"><label class="flbl">Tipo</label>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px">
+      <label><input type="radio" name="fbt" checked> 💡 Feedback</label>
+      <label><input type="radio" name="fbt"> 🔧 Bug</label>
+      <label><input type="radio" name="fbt"> 💬 Sugerencia</label>
+      <label><input type="radio" name="fbt"> ❓ Pregunta</label>
+    </div></div>
+    <textarea class="ftxt" placeholder="Cuéntanos qué encontraste..." style="margin-bottom:10px"></textarea>
+    <div class="callout callout-info" style="font-size:11px;margin-bottom:12px">Se adjuntarán: tu rol, página actual y hora.</div>
+    <div class="modal-actions">
+      <button class="btn btn-g" onclick="closeModal('modal-feedback')">Cancelar</button>
+      <button class="btn btn-p" onclick="closeModal('modal-feedback');showToast('✓ Reporte enviado. Te responderemos pronto.','ok')">Enviar</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Botón flotante feedback -->
+<button id="fab-feedback" onclick="openModal('modal-feedback')" style="position:fixed;bottom:20px;right:20px;width:48px;height:48px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;box-shadow:var(--sh-md);z-index:200">💬</button>
+
+
+<!-- Toast y tooltip globales -->
+<div id="toast" class="toast"></div>
+<div id="tooltip"></div>
+
+
+<script>
+// ── Navegación ──────────────────────────────────────────
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById(id);
+  if(el) el.classList.add('active');
+  const tabMap = {s10:0, s11:1, s11b:2, s11c:3, s12:4, s13:5, s14:6};
+  const pills = document.querySelectorAll('.subnav-track .stab');
+  pills.forEach(b=>b.classList.remove('active'));
+  const idx = tabMap[id];
+  if(idx!==undefined && pills[idx]) {
+    pills[idx].classList.add('active');
+    pills[idx].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  }
+  window.scrollTo(0,0);
+  bindTips();
+}
+function scrollSubnav(dir) {
+  document.querySelector('.subnav-track')?.scrollBy({left:dir*200,behavior:'smooth'});
+}
+function updateArrows() {
+  const t=document.querySelector('.subnav-track');if(!t)return;
+  const l=document.querySelector('.subnav-left'),r=document.querySelector('.subnav-right');
+  if(l) l.classList.toggle('hide',t.scrollLeft<=0);
+  if(r) r.classList.toggle('hide',t.scrollLeft+t.clientWidth>=t.scrollWidth-1);
+}
+document.querySelector('.subnav-track')?.addEventListener('scroll',updateArrows);
+window.addEventListener('resize',updateArrows);
+
+// ── Invite tabs ─────────────────────────────────────────
+function switchInvTab(idx) {
+  document.querySelectorAll('.inv-tab').forEach((t,i)=>{
+    t.classList.toggle('active',i===idx);
+  });
+  for(let i=0;i<3;i++){
+    const el=document.getElementById('inv-content-'+i);
+    if(el) el.style.display=i===idx?'block':'none';
+  }
+}
+
+// ── Modal ───────────────────────────────────────────────
+function openModal(id) { document.getElementById(id)?.classList.add('open'); bindTips(); }
+function closeModal(id) { document.getElementById(id)?.classList.remove('open'); }
+document.addEventListener('click', e => { if(e.target.classList.contains('modal-ov')) e.target.classList.remove('open'); });
+
+// ── Toast ───────────────────────────────────────────────
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (type ? ' toast-'+type : '');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── Selección de fila ───────────────────────────────────
+function selRow(row) {
+  row.closest('table').querySelectorAll('tr').forEach(r => r.classList.remove('sel'));
+  row.classList.add('sel');
+  // Show detail panel
+  const detail = document.getElementById('detail-docente');
+  if(detail) {
+    detail.style.display = 'block';
+    const name = row.querySelector('td strong');
+    if(name) {
+      document.getElementById('detail-nombre').textContent = 'Detalle — ' + name.textContent;
+    }
+  }
+}
+
+// ── Tooltips ────────────────────────────────────────────
+const tt = document.getElementById('tooltip');
+function bindTips() {
+  document.querySelectorAll('.ann-mk[data-tip]').forEach(el => {
+    if (el._tip) return;
+    el._tip = true;
+    el.addEventListener('mouseenter', e => { tt.textContent = el.dataset.tip; tt.style.display='block'; pos(e); });
+    el.addEventListener('mousemove', pos);
+    el.addEventListener('mouseleave', () => tt.style.display='none');
+  });
+}
+function pos(e) {
+  const pad=14, w=260, h=tt.offsetHeight||60;
+  let x=e.clientX+pad, y=e.clientY-h/2;
+  if(x+w>window.innerWidth-pad) x=e.clientX-w-pad;
+  if(y<pad) y=pad;
+  if(y+h>window.innerHeight-pad) y=window.innerHeight-h-pad;
+  tt.style.left=x+'px'; tt.style.top=y+'px';
+}
+
+// ── Skeleton ────────────────────────────────────────────
+function showSkeleton(id, rows=5) {
+  const c = document.getElementById(id);
+  if(!c) return;
+  c.innerHTML = Array(rows).fill(0).map(()=>`
+    <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border2)">
+      <div class="skeleton" style="width:30%;height:14px;border-radius:4px"></div>
+      <div class="skeleton" style="width:15%;height:14px;border-radius:4px"></div>
+      <div class="skeleton" style="width:20%;height:14px;border-radius:4px"></div>
+    </div>`).join('');
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{ bindTips(); updateArrows(); });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrightPath — Prototipo Wireframes</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Reddit+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --brand:#091540; --brand2:#3D518C;
+  --accent:#4C9BFD; --accent2:#3a8ae8; --accent-lt:#EBF4FF; --accent-md:#4C9BFD;
+  --teal:#46BAB5; --teal-bg:#E6F7F7;
+  --coral:#FF6F61; --coral-bg:#FFF0EF;
+  --bg:#F2F6FD; --bg2:#E8EEF8;
+  --border:#C8D5EC; --border2:#DDE6F5;
+  --text:#091540; --text2:#3D518C; --text3:#7A8BB5;
+  --green:#059669; --green-bg:#D1FAE5;
+  --amber:#D97706; --amber-bg:#FEF3C7;
+  --sh:0 1px 3px rgba(9,21,64,.08),0 4px 12px rgba(9,21,64,.04);
+  --sh-md:0 4px 16px rgba(9,21,64,.12),0 1px 4px rgba(9,21,64,.06);
+  --r:10px; --r-sm:6px; --r-lg:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:13px;line-height:1.5;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px}
+
+.logo{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.logo svg{filter:drop-shadow(0 2px 6px rgba(76,155,253,.3))}
+.logo span{font-size:28px;font-weight:700;color:var(--brand)}
+.subtitle{font-size:14px;color:var(--text2);margin-bottom:6px;text-align:center}
+.version{font-size:11px;color:var(--text3);margin-bottom:32px;text-align:center;display:flex;align-items:center;gap:6px;justify-content:center}
+.version span{background:var(--amber-bg);color:var(--amber);font-size:10px;font-weight:700;padding:2px 8px;border-radius:12px;text-transform:uppercase;letter-spacing:.5px}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:720px;width:100%}
+.tab-card{background:#fff;border:2px solid var(--border2);border-radius:var(--r-lg);padding:24px 20px;text-align:center;text-decoration:none;color:var(--text);cursor:pointer;transition:all .18s;box-shadow:var(--sh);position:relative;overflow:hidden}
+.tab-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:var(--sh-md)}
+.tab-card:hover .tab-num{background:var(--accent);color:#fff}
+.tab-card.disabled{opacity:.45;cursor:not-allowed;pointer-events:none}
+.tab-num{width:32px;height:32px;border-radius:50%;background:var(--accent-lt);color:var(--accent);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;transition:all .18s}
+.tab-icon{font-size:32px;margin-bottom:8px}
+.tab-name{font-size:14px;font-weight:700;color:var(--brand);margin-bottom:4px}
+.tab-desc{font-size:11.5px;color:var(--text3);line-height:1.4}
+.tab-screens{font-size:10px;color:var(--text3);margin-top:8px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.tab-badge{display:inline-block;margin-top:8px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:12px}
+.tab-badge.ready{background:var(--green-bg);color:var(--green)}
+.tab-badge.pending{background:var(--bg2);color:var(--text3);border:1px solid var(--border2)}
+
+.footer{margin-top:32px;text-align:center;font-size:11px;color:var(--text3)}
+.footer a{color:var(--accent);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<div class="logo">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+    <path d="M12 2L14 9L21 7L16 12L21 17L14 15L12 22L10 15L3 17L8 12L3 7L10 9Z" fill="#4C9BFD" opacity="0.9"/>
+    <path d="M12 5L13.5 10L19 8.5L15 12L19 15.5L13.5 14L12 19L10.5 14L5 15.5L9 12L5 8.5L10.5 10Z" fill="#FF6F61" opacity="0.6"/>
+  </svg>
+  <span>BrightPath</span>
+</div>
+<div class="subtitle">Prototipo Interactivo — Wireframes v1.0</div>
+<div class="version"><span>Wireframes</span> Abre cada tab para explorar el flujo completo</div>
+
+<div class="grid">
+
+  <a class="tab-card" href="tab1-auth.html">
+    <div class="tab-num">1</div>
+    <div class="tab-icon">🔐</div>
+    <div class="tab-name">Auth</div>
+    <div class="tab-desc">Login, registro y selector de rol del prototipo</div>
+    <div class="tab-screens">3 pantallas · s1 — s3</div>
+    <div class="tab-badge ready">Listo</div>
+  </a>
+
+  <a class="tab-card" href="tab2-docente.html">
+    <div class="tab-num">2</div>
+    <div class="tab-icon">👩‍🏫</div>
+    <div class="tab-name">Docente</div>
+    <div class="tab-desc">Onboarding, dashboard, diagnóstico, resultados, ruta y portafolio</div>
+    <div class="tab-screens">11 pantallas · s4, s5, s5b, s6, s6b, s6c, s7, s7b, s8, s9, s9b</div>
+    <div class="tab-badge ready">Listo</div>
+  </a>
+
+  <a class="tab-card" href="tab3-director.html">
+    <div class="tab-num">3</div>
+    <div class="tab-icon">🏫</div>
+    <div class="tab-name">Director</div>
+    <div class="tab-desc">Dashboard institucional, docentes, re-diagnóstico y reportes</div>
+    <div class="tab-screens">7 pantallas · s10, s11, s11b, s11c, s12, s13, s14</div>
+    <div class="tab-badge ready">Listo</div>
+  </a>
+
+  <a class="tab-card" href="tab4-consultor.html">
+    <div class="tab-num">4</div>
+    <div class="tab-icon">👨‍💼</div>
+    <div class="tab-name">Consultor</div>
+    <div class="tab-desc">Colegios asignados, health scores, manager y tickets</div>
+    <div class="tab-screens">5 pantallas · s15, s15b, s16, s17, s18</div>
+    <div class="tab-badge ready">Listo</div>
+  </a>
+
+  <a class="tab-card" href="tab5-reactivos.html">
+    <div class="tab-num">5</div>
+    <div class="tab-icon">📝</div>
+    <div class="tab-name">Banco de Reactivos</div>
+    <div class="tab-desc">Gestión de preguntas, cola RESISTANT y estado del banco</div>
+    <div class="tab-screens">5 pantallas · s19, s20, s21, s21b, s22</div>
+    <div class="tab-badge ready">Listo</div>
+  </a>
+
+  <a class="tab-card" href="tab6-admin.html">
+    <div class="tab-num">6</div>
+    <div class="tab-icon">⚙️</div>
+    <div class="tab-name">Admin</div>
+    <div class="tab-desc">Tenants, usuarios, tickets y configuración global</div>
+    <div class="tab-screens">5 pantallas · s23, s23b, s24, s25, s26</div>
+    <div class="tab-badge ready">Listo</div>
+  </a>
+
+</div>
+
+<div class="footer">
+  BrightPath Prototipo · 36 pantallas en 6 tabs · <a href="tab1-auth.html">Comenzar desde Auth →</a>
+</div>
+
+</body>
+</html>

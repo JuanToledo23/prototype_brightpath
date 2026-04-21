@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrightPath — Tab 4 · Consultor</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Reddit+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════
+   TOKENS BRIGHTPATH
+═══════════════════════ */
+:root {
+  --brand:#091540; --brand2:#3D518C;
+  --accent:#4C9BFD; --accent2:#3a8ae8; --accent-lt:#EBF4FF; --accent-md:#4C9BFD;
+  --teal:#46BAB5; --teal-bg:#E6F7F7;
+  --coral:#FF6F61; --coral-bg:#FFF0EF;
+  --bg:#F2F6FD; --bg2:#E8EEF8;
+  --border:#C8D5EC; --border2:#DDE6F5;
+  --text:#091540; --text2:#3D518C; --text3:#7A8BB5;
+  --green:#059669; --green-bg:#D1FAE5;
+  --amber:#D97706; --amber-bg:#FEF3C7;
+  --red:#DC2626; --red-bg:#FEE2E2;
+  --blue:#4C9BFD; --blue-bg:#EBF4FF;
+  --sh:0 1px 3px rgba(9,21,64,.08),0 4px 12px rgba(9,21,64,.04);
+  --sh-md:0 4px 16px rgba(9,21,64,.12),0 1px 4px rgba(9,21,64,.06);
+  --r:10px; --r-sm:6px; --r-lg:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:13px;line-height:1.5}
+
+/* ═══════════════════════
+   TOP NAV
+═══════════════════════ */
+.topnav{background:var(--brand);padding:0 20px;display:flex;align-items:center;height:48px;position:sticky;top:0;z-index:100}
+.brand{color:#fff;font-weight:700;font-size:14px;margin-right:24px;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.brand-accent{color:var(--accent-md)}
+.mtab{background:none;border:none;color:rgba(255,255,255,.55);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:0 14px;height:48px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s;text-decoration:none;display:inline-flex;align-items:center}
+.mtab:hover{color:#fff;background:rgba(255,255,255,.06)}
+.mtab.active{color:#fff;border-bottom-color:var(--accent-md)}
+.nav-badge{margin-left:auto;background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);font-size:11px;padding:3px 10px;border-radius:20px;white-space:nowrap}
+@media(max-width:768px){.topnav .mtab{display:none}.topnav .mob-select{display:block}}
+.mob-select{display:none;background:var(--brand2);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:12px;padding:4px 8px;margin-right:auto}
+/* ═══════════════════════
+   SUB-NAV
+═══════════════════════ */
+.subnav{background:var(--brand2);display:flex;align-items:center;height:38px;position:sticky;top:48px;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.2);padding:0}
+.subnav-track{display:flex;align-items:center;overflow-x:auto;flex:1;height:38px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:2px;padding:0 6px}
+.subnav-track::-webkit-scrollbar{display:none}
+.subnav-arrow{background:none;border:none;color:rgba(255,255,255,.4);font-size:20px;font-weight:700;cursor:pointer;padding:0 8px;height:38px;flex-shrink:0;transition:all .15s;display:flex;align-items:center}
+.subnav-arrow:hover{color:#fff}
+.subnav-arrow.hide{opacity:0;pointer-events:none;width:0;padding:0;overflow:hidden}
+.stab{background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.6);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:0 12px;height:28px;cursor:pointer;border-radius:14px;white-space:nowrap;transition:all .15s;flex-shrink:0}
+.stab:hover{color:#fff;background:rgba(255,255,255,.15)}
+.stab.active{background:var(--accent);color:#fff;font-weight:600}
+
+/* ═══════════════════════
+   SCREENS
+═══════════════════════ */
+.screen{display:none;padding:20px;min-height:calc(100vh - 86px)}
+.screen.active{display:block}
+.scr-label{display:inline-flex;align-items:center;gap:5px;background:var(--border2);color:var(--text3);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;padding:3px 10px;border-radius:20px;margin-bottom:6px}
+.pg-title{font-size:19px;font-weight:700;color:var(--brand);margin-bottom:3px}
+.pg-sub{color:var(--text2);font-size:12.5px;margin-bottom:16px}
+
+/* ═══════════════════════
+   ANOTACIONES
+═══════════════════════ */
+.ann-panel{background:#FFFBEB;border:2.5px solid #F59E0B;border-radius:var(--r-lg);overflow:hidden;margin-bottom:18px;box-shadow:0 4px 14px rgba(245,158,11,.15)}
+.ann-head{background:#F59E0B;padding:9px 14px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#fff}
+.ann-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;padding:12px}
+.ann-item{display:flex;gap:9px;align-items:flex-start;background:#fff;border-radius:6px;border:1px solid #FDE68A;padding:8px 10px}
+.ann-num{width:22px;height:22px;border-radius:50%;background:#F59E0B;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ann-txt{font-size:11.5px;color:#78350F;line-height:1.45}
+.ann-txt strong{color:#451A03}
+.ann-mk{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#F59E0B;color:#fff;font-size:10px;font-weight:800;border:2px solid #fff;box-shadow:0 2px 6px rgba(245,158,11,.4);position:absolute;z-index:5;cursor:help}
+
+/* ═══════════════════════
+   BROWSER CHROME
+═══════════════════════ */
+.browser{background:#fff;border:2px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.bbar{background:#E5E7EB;padding:7px 14px;display:flex;align-items:center;gap:7px;border-bottom:2px solid var(--border)}
+.bdot{width:11px;height:11px;border-radius:50%;display:inline-block;flex-shrink:0}
+.burl{flex:1;background:#fff;border-radius:20px;padding:3px 14px;font-size:11px;color:var(--text3);font-weight:500;max-width:320px;margin:0 auto;text-align:center;border:1px solid var(--border2)}
+.wf-badge{font-size:9.5px;color:#92400E;font-weight:800;text-transform:uppercase;letter-spacing:.6px;background:#FEF3C7;border:1px solid #FDE68A;padding:2px 8px;border-radius:4px;margin-left:auto}
+.bbody{padding:18px;background:var(--bg)}
+
+/* ═══════════════════════
+   CARDS
+═══════════════════════ */
+.card{background:#fff;border-radius:var(--r);border:1px solid var(--border2);box-shadow:var(--sh)}
+.card-head{padding:13px 15px 11px;border-bottom:1px solid var(--border2);display:flex;align-items:center;gap:8px}
+.card-head h3{font-size:13px;font-weight:600;color:var(--brand)}
+.card-body{padding:15px}
+
+/* ═══════════════════════
+   TABLA
+═══════════════════════ */
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl th{background:var(--bg2);color:var(--text2);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:9px 11px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer}
+.tbl th:hover{background:var(--border2)}
+.tbl td{padding:9px 11px;border-bottom:1px solid var(--border2);color:var(--text);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr.sel td{background:var(--accent-lt)}
+.tbl tr:hover td{background:var(--bg);cursor:pointer}
+
+/* ═══════════════════════
+   BADGES Y CHIPS
+═══════════════════════ */
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
+.bdg-brand{background:var(--accent-lt);color:var(--accent2)}
+.bdg-green{background:var(--green-bg);color:var(--green)}
+.bdg-amber{background:var(--amber-bg);color:var(--amber)}
+.bdg-red{background:var(--red-bg);color:var(--red)}
+.bdg-blue{background:var(--blue-bg);color:var(--blue)}
+.bdg-gray{background:var(--bg2);color:var(--text2);border:1px solid var(--border2)}
+.chip{display:inline-flex;align-items:center;gap:5px;background:var(--accent-lt);color:var(--accent2);padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:600}
+.ind-hi{background:var(--green-bg);color:var(--green);padding:2px 8px;border-radius:20px;font-size:10.5px;font-weight:700}
+.ind-md{background:var(--amber-bg);color:var(--amber);padding:2px 8px;border-radius:20px;font-size:10.5px;font-weight:700}
+.ind-lo{background:var(--red-bg);color:var(--red);padding:2px 8px;border-radius:20px;font-size:10.5px;font-weight:700}
+
+/* ═══════════════════════
+   BOTONES
+═══════════════════════ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:7px 13px;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;border:none;white-space:nowrap;transition:all .15s}
+.btn-p{background:var(--accent);color:#fff}.btn-p:hover{background:var(--accent2)}
+.btn-s{background:#fff;color:var(--text);border:1px solid var(--border)}.btn-s:hover{background:var(--bg)}
+.btn-g{background:none;color:var(--text2);border:1px solid var(--border2)}.btn-g:hover{background:var(--bg)}
+.btn-b{background:var(--brand);color:#fff;font-size:13px;padding:9px 18px}.btn-b:hover{background:var(--brand2)}
+.btn-d{background:var(--red-bg);color:var(--red);border:1px solid #FECACA}
+.btn-dis{background:var(--bg2);color:var(--text3);border:1px solid var(--border2);cursor:not-allowed;opacity:.7}
+
+/* ═══════════════════════
+   FORMULARIOS
+═══════════════════════ */
+.flbl{display:block;font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
+.finput,.fsel,.ftxt{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:12.5px;color:var(--text);background:#fff;transition:border-color .15s,box-shadow .15s}
+.finput:focus,.fsel:focus,.ftxt:focus{outline:none;border-color:var(--accent-md);box-shadow:0 0 0 3px rgba(76,155,253,.15)}
+.ftxt{resize:vertical;min-height:60px}
+
+/* ═══════════════════════
+   SLIDER
+═══════════════════════ */
+.sl-labels{display:flex;justify-content:space-between;font-size:10.5px;color:var(--text3);margin-bottom:3px}
+.sl-track{width:100%;height:4px;background:var(--border);border-radius:2px;position:relative;margin:5px 0;cursor:pointer}
+.sl-fill{position:absolute;height:100%;background:var(--accent);border-radius:2px}
+.sl-thumb{position:absolute;width:14px;height:14px;background:#fff;border:2px solid var(--accent);border-radius:50%;top:-5px;transform:translateX(-50%);box-shadow:0 1px 4px rgba(0,0,0,.15)}
+.sl-val{text-align:center;font-size:11px;font-weight:700;color:var(--accent);margin-top:1px}
+
+/* ═══════════════════════
+   METRICAS
+═══════════════════════ */
+.mrow{display:flex;gap:11px;margin-bottom:14px}
+.mc{flex:1;background:var(--accent-lt);border-radius:var(--r-sm);padding:10px 13px;border:1px solid var(--border2)}
+.mc-lbl{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
+.mc-val{font-size:18px;font-weight:700;color:var(--brand)}
+.mc-sub{font-size:10px;color:var(--text3);margin-top:1px}
+
+/* ═══════════════════════
+   SIDEBAR LAYOUT
+═══════════════════════ */
+.sb-layout{display:grid;grid-template-columns:276px 1fr;gap:14px}
+.sidebar{background:#fff;border-radius:var(--r);border:1px solid var(--border2);box-shadow:var(--sh);display:flex;flex-direction:column}
+.sb-head{padding:13px 15px;background:var(--brand);border-radius:var(--r) var(--r) 0 0;color:#fff}
+.sb-head h3{font-size:13px;font-weight:700}
+.sb-head p{font-size:11px;opacity:.65;margin-top:2px}
+.sb-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:13px}
+.sb-foot{padding:11px 14px;border-top:1px solid var(--border2);background:var(--bg);border-radius:0 0 var(--r) var(--r);display:flex;flex-direction:column;gap:7px}
+.main-col{display:flex;flex-direction:column;gap:14px}
+
+/* ═══════════════════════
+   MODAL
+═══════════════════════ */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1000;align-items:center;justify-content:center}
+.modal-ov.open{display:flex}
+.modal{background:#fff;border-radius:var(--r-lg);box-shadow:var(--sh-md);padding:24px;width:480px;max-width:95vw;max-height:88vh;overflow-y:auto}
+.modal-title{font-size:16px;font-weight:700;color:var(--brand);margin-bottom:4px}
+.modal-sub{font-size:12.5px;color:var(--text2);margin-bottom:20px}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px}
+
+/* ═══════════════════════
+   TOAST / TOOLTIP
+═══════════════════════ */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--brand);color:#fff;padding:12px 18px;border-radius:var(--r);font-size:13px;font-weight:500;box-shadow:var(--sh-md);z-index:2000;transform:translateY(80px);opacity:0;transition:all .3s ease;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-ok{background:var(--green)}
+.toast-err{background:var(--red)}
+#tooltip{display:none;position:fixed;background:#091540;color:#fff;padding:9px 13px;border-radius:7px;font-size:12px;line-height:1.5;width:260px;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:9999;pointer-events:none}
+
+/* ═══════════════════════
+   SKELETON
+═══════════════════════ */
+@keyframes shimmer{0%{background-position:-600px 0}100%{background-position:600px 0}}
+.skeleton{background:linear-gradient(90deg,var(--bg2) 25%,var(--border2) 50%,var(--bg2) 75%);background-size:600px 100%;animation:shimmer 1.4s infinite;border-radius:var(--r-sm)}
+
+/* ═══════════════════════
+   UTILES
+═══════════════════════ */
+.callout{padding:10px 13px;border-radius:var(--r-sm);font-size:12px;line-height:1.5;border-left:3px solid}
+.callout-ok{background:var(--green-bg);border-color:var(--green);color:#065F46}
+.callout-warn{background:var(--amber-bg);border-color:var(--amber);color:#78350F}
+.callout-info{background:var(--blue-bg);border-color:var(--blue);color:#1E3A5F}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;color:var(--text3);font-size:12.5px;line-height:1.5;background:var(--bg2);border-radius:var(--r-sm);border:1px dashed var(--border);padding:24px 16px}
+.slbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:7px}
+.divider{height:1px;background:var(--border2);margin:2px 0}
+.tag{display:inline-flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);padding:2px 7px;border-radius:4px;font-size:11px;font-weight:500}
+.flex{display:flex}.fxc{display:flex;align-items:center}.fxb{display:flex;align-items:center;justify-content:space-between}
+.g8{gap:8px}.g12{gap:12px}.mt8{margin-top:8px}.mt12{margin-top:12px}.mb8{margin-bottom:8px}.mb12{margin-bottom:12px}.wf{width:100%}
+.tmuted{color:var(--text3)}.tsm{font-size:11px}.tbold{font-weight:700}
+
+/* ═══════════════════════
+   TWO COLUMN LAYOUT
+═══════════════════════ */
+.two-col{display:grid;grid-template-columns:7fr 3fr;gap:14px}
+
+/* ═══════════════════════
+   DOCENTE SIDEBAR NAV
+═══════════════════════ */
+.sb-nav{list-style:none;padding:0;margin:0}
+.sb-nav li{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--r-sm);font-size:12.5px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .12s;margin-bottom:2px}
+.sb-nav li:hover{background:var(--accent-lt);color:var(--accent)}
+.sb-nav li.active{background:var(--accent-lt);color:var(--accent);font-weight:700}
+.sb-nav li.nav-sep{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);padding:12px 12px 4px;cursor:default;margin-bottom:0}
+.sb-nav li.nav-sep:hover{background:none;color:var(--text3)}
+.sb-nav li .nav-icon{width:18px;text-align:center;flex-shrink:0}
+
+/* ═══════════════════════
+   STEPPER
+═══════════════════════ */
+.stepper{display:flex;align-items:center;gap:0;margin-bottom:18px}
+.step{display:flex;align-items:center;gap:8px;flex:1}
+.step-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;border:2px solid var(--border);color:var(--text3);background:#fff;flex-shrink:0}
+.step.active .step-num{background:var(--accent);color:#fff;border-color:var(--accent)}
+.step.done .step-num{background:var(--green);color:#fff;border-color:var(--green)}
+.step-label{font-size:11px;color:var(--text3);font-weight:500;white-space:nowrap}
+.step.active .step-label{color:var(--accent);font-weight:700}
+.step.done .step-label{color:var(--green);font-weight:600}
+.step-line{flex:1;height:2px;background:var(--border2);margin:0 8px}
+.step-line.done{background:var(--green)}
+
+/* ═══════════════════════
+   PROGRESS BAR
+═══════════════════════ */
+.progress-bar{width:100%;height:8px;background:var(--border2);border-radius:4px;overflow:hidden;margin:6px 0}
+.progress-fill{height:100%;border-radius:4px;transition:width .4s ease}
+
+/* ═══════════════════════
+   LIKERT
+═══════════════════════ */
+.likert-row{display:flex;align-items:center;gap:8px;justify-content:center;margin:10px 0}
+.likert-opt{width:44px;height:44px;border-radius:50%;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text3);cursor:pointer;transition:all .15s}
+.likert-opt:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-lt)}
+.likert-opt.selected{border-color:var(--accent);background:var(--accent);color:#fff}
+.likert-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:2px}
+
+/* ═══════════════════════
+   TIMELINE
+═══════════════════════ */
+.timeline{position:relative;padding-left:20px}
+.timeline::before{content:'';position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--border2)}
+.tl-item{position:relative;padding:0 0 14px 12px}
+.tl-item::before{content:'';position:absolute;left:-17px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid #fff;box-shadow:0 0 0 2px var(--accent-lt)}
+.tl-item.tl-green::before{background:var(--green)}
+.tl-item.tl-amber::before{background:var(--amber)}
+.tl-item.tl-teal::before{background:var(--teal)}
+
+/* HEALTH SCORE DOT */
+.hs-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px}
+.hs-green{background:var(--green)}
+.hs-amber{background:var(--amber)}
+.hs-red{background:var(--red)}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════
+     TOP NAV
+═══════════════════════ -->
+<nav class="topnav">
+  <div class="brand">
+    <img src="logo_h.svg" alt="BrightPath" style="height:22px;filter:brightness(0) invert(1)">
+    <span style="font-size:10px;font-weight:400;opacity:.5;margin-left:2px">· Prototipo</span>
+  </div>
+  <a class="mtab" href="tab1-auth.html">1 · Auth</a>
+  <a class="mtab" href="tab2-docente.html">2 · Docente</a>
+  <a class="mtab" href="tab3-director.html">3 · Director</a>
+  <a class="mtab active" href="tab4-consultor.html">4 · Consultor</a>
+  <a class="mtab" href="tab5-reactivos.html">5 · Banco</a>
+  <a class="mtab" href="tab6-admin.html">6 · Admin</a>
+  <select class="mob-select" onchange="if(this.value)location.href=this.value">
+    <option value="">Navegar...</option>
+    <option value="tab1-auth.html">1 · Auth</option>
+    <option value="tab2-docente.html">2 · Docente</option>
+    <option value="tab3-director.html">3 · Director</option>
+    <option value="tab4-consultor.html" selected>4 · Consultor</option>
+    <option value="tab5-reactivos.html">5 · Banco</option>
+    <option value="tab6-admin.html">6 · Admin</option>
+  </select>
+  <span class="nav-badge">v1.0 · 5 pantallas</span>
+</nav>
+<nav class="subnav">
+  <button class="subnav-arrow subnav-left" onclick="scrollSubnav(-1)">&#8249;</button>
+  <div class="subnav-track">
+    <button class="stab active" onclick="go('s15')">4a · Mis Colegios</button>
+    <button class="stab" onclick="go('s15b')">4b · Colegios (Juárez selec.)</button>
+    <button class="stab" onclick="go('s16')">4c · Detalle Colegio</button>
+    <button class="stab" onclick="go('s17')">4d · Manager</button>
+    <button class="stab" onclick="go('s18')">4e · Tickets</button>
+  </div>
+  <button class="subnav-arrow subnav-right" onclick="scrollSubnav(1)">&#8250;</button>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s15 — DASHBOARD CONSULTOR
+════════════════════════════════════════════════════════ -->
+<div id="s15" class="screen active">
+  <div class="scr-label">👨‍💼 1/4 · Consultor</div>
+  <div class="pg-title">Mis Colegios Asignados</div>
+  <div class="pg-sub">Lucía Torres · 8 colegios activos</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Health Score automático</strong> — no subjetivo, calculado por el sistema.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Colegios en riesgo al tope</strong> — lo más urgente primero.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Next Actions</strong> sin revisar cada cuenta manualmente.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>Click en fila</strong> va al detalle del colegio.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/consultor</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <!-- Sidebar consultor -->
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">LT</div>
+              <div><h3>Lucía Torres</h3><p style="margin:0;opacity:.65;font-size:10px">Consultora BrightPath</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li class="active" onclick="go('s15')"><span class="nav-icon">🏫</span> Mis Colegios</li>
+              <li onclick="go('s16')"><span class="nav-icon">💚</span> Health Scores</li>
+              <li onclick="go('s17')"><span class="nav-icon">📊</span> Seguimiento</li>
+              <li onclick="go('s18')"><span class="nav-icon">💬</span> Tickets</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-col">
+          <!-- Callout warning -->
+          <div class="callout callout-warn mb12" style="position:relative">
+            <div class="ann-mk" data-tip="Colegios en riesgo al tope — lo más urgente primero. Next Actions sin revisar cada cuenta manualmente." style="top:-8px;right:-8px">2</div>
+            <div class="ann-mk" data-tip="Next Actions sin revisar cada cuenta manualmente." style="top:-8px;right:20px">3</div>
+            <strong>⚡ Atención requerida:</strong><br>
+            (1) Colegio Juárez — 18 días sin actividad de docentes.<br>
+            (2) Instituto Progreso — 3 diagnósticos vencidos sin completar.
+          </div>
+
+          <!-- Metrics -->
+          <div class="mrow">
+            <div class="mc" style="position:relative">
+              <div class="ann-mk" data-tip="Health Score automático — no subjetivo, calculado por el sistema." style="top:-8px;right:-8px">1</div>
+              <div class="mc-lbl">Colegios</div>
+              <div class="mc-val">8</div>
+              <div class="mc-sub">activos</div>
+            </div>
+            <div class="mc">
+              <div class="mc-lbl">En riesgo</div>
+              <div class="mc-val">2</div>
+              <div class="mc-sub">requieren atención</div>
+            </div>
+            <div class="mc">
+              <div class="mc-lbl">Docentes</div>
+              <div class="mc-val">142/180</div>
+              <div class="mc-sub">registrados</div>
+            </div>
+            <div class="mc">
+              <div class="mc-lbl">NPS</div>
+              <div class="mc-val">8.1</div>
+              <div class="mc-sub">promedio</div>
+            </div>
+          </div>
+
+          <!-- Mis Colegios table -->
+          <div class="card">
+            <div class="card-head" style="position:relative">
+              <div class="ann-mk" data-tip="Click en fila va al detalle del colegio." style="top:-8px;right:-8px">4</div>
+              <h3>Mis Colegios</h3>
+            </div>
+            <div class="card-body" style="padding:0">
+              <table class="tbl">
+                <thead>
+                  <tr>
+                    <th>Colegio</th>
+                    <th>Director</th>
+                    <th>Docentes</th>
+                    <th>Completados</th>
+                    <th>Health Score</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr onclick="selRow(this);go('s16')"><td>Colegio Montessori Vallarta</td><td>Dir. Ramírez</td><td>22</td><td>16/22</td><td><span class="hs-dot hs-green"></span> 8.4</td><td><span class="badge bdg-green">Saludable</span></td></tr>
+                  <tr onclick="selRow(this);go('s16')"><td>Escuela Primaria Reforma</td><td>Dir. Mendoza</td><td>18</td><td>14/18</td><td><span class="hs-dot hs-green"></span> 8.1</td><td><span class="badge bdg-green">Saludable</span></td></tr>
+                  <tr onclick="selRow(this);go('s16')"><td>Instituto Tecnológico Sur</td><td>Dir. Castillo</td><td>30</td><td>25/30</td><td><span class="hs-dot hs-green"></span> 7.9</td><td><span class="badge bdg-green">Saludable</span></td></tr>
+                  <tr onclick="selRow(this);go('s16')"><td>Colegio del Valle</td><td>Dir. Ortega</td><td>15</td><td>12/15</td><td><span class="hs-dot hs-amber"></span> 7.2</td><td><span class="badge bdg-amber">Atención</span></td></tr>
+                  <tr onclick="selRow(this);go('s16')"><td>Centro Educativo Lomas</td><td>Dir. Vargas</td><td>20</td><td>18/20</td><td><span class="hs-dot hs-green"></span> 8.6</td><td><span class="badge bdg-green">Saludable</span></td></tr>
+                  <tr onclick="selRow(this);go('s16')"><td>Escuela Bilingüe Norte</td><td>Dir. Herrera</td><td>25</td><td>20/25</td><td><span class="hs-dot hs-amber"></span> 6.8</td><td><span class="badge bdg-amber">Atención</span></td></tr>
+                  <tr onclick="selRow(this);go('s16')"><td>Colegio Juárez</td><td>Dir. Soto</td><td>28</td><td>19/28</td><td><span class="hs-dot hs-red"></span> 4.2</td><td><span class="badge bdg-red">Riesgo</span></td></tr>
+                  <tr onclick="selRow(this);go('s16')"><td>Instituto Progreso</td><td>Dir. Luna</td><td>22</td><td>18/22</td><td><span class="hs-dot hs-red"></span> 5.1</td><td><span class="badge bdg-red">Riesgo</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s15b — DASHBOARD CONSULTOR (JUÁREZ SELECCIONADO)
+════════════════════════════════════════════════════════ -->
+<div id="s15b" class="screen">
+  <div class="scr-label">👨‍💼 4b/5 · Consultor</div>
+  <div class="pg-title">Mis Colegios Asignados</div>
+  <div class="pg-sub">Lucía Torres · 8 colegios activos</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — estado: Colegio Juárez seleccionado</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Fila seleccionada:</strong> Colegio Juárez resaltado con fondo accent-lt.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Panel lateral:</strong> Health score 28 en rojo con alerta de riesgo expandido.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Detalle inline:</strong> Sin navegar a otra pantalla, el contexto aparece al costado.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/consultor</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">LT</div>
+              <div><h3>Lucía Torres</h3><p style="margin:0;opacity:.65;font-size:10px">Consultora BrightPath</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li class="active" onclick="go('s15')"><span class="nav-icon">🏫</span> Mis Colegios</li>
+              <li onclick="go('s16')"><span class="nav-icon">💚</span> Health Scores</li>
+              <li onclick="go('s17')"><span class="nav-icon">📊</span> Seguimiento</li>
+              <li onclick="go('s18')"><span class="nav-icon">💬</span> Tickets</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="main-col">
+          <!-- Callout warning -->
+          <div class="callout callout-warn mb12">
+            <strong>⚡ Atención requerida:</strong><br>
+            (1) Colegio Juárez — 18 días sin actividad de docentes.<br>
+            (2) Instituto Progreso — 3 diagnósticos vencidos sin completar.
+          </div>
+
+          <!-- Metrics -->
+          <div class="mrow">
+            <div class="mc"><div class="mc-lbl">Colegios</div><div class="mc-val">8</div><div class="mc-sub">activos</div></div>
+            <div class="mc"><div class="mc-lbl">En riesgo</div><div class="mc-val">2</div><div class="mc-sub">requieren atención</div></div>
+            <div class="mc"><div class="mc-lbl">Docentes</div><div class="mc-val">142/180</div><div class="mc-sub">registrados</div></div>
+            <div class="mc"><div class="mc-lbl">NPS</div><div class="mc-val">8.1</div><div class="mc-sub">promedio</div></div>
+          </div>
+
+          <!-- Two column: table + panel -->
+          <div style="display:grid;grid-template-columns:1fr 320px;gap:14px">
+            <!-- Table with Juárez selected -->
+            <div class="card" style="position:relative">
+              <div class="ann-mk" data-tip="Fila Colegio Juárez resaltada con fondo accent-lt." style="top:-5px;right:-5px">1</div>
+              <div class="card-head"><h3>Mis Colegios</h3></div>
+              <div class="card-body" style="padding:0">
+                <table class="tbl">
+                  <thead>
+                    <tr><th>Colegio</th><th>Docentes</th><th>Health</th><th>Estado</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Montessori Vallarta</td><td>22</td><td><span class="hs-dot hs-green"></span> 8.4</td><td><span class="badge bdg-green">Saludable</span></td></tr>
+                    <tr><td>Primaria Reforma</td><td>18</td><td><span class="hs-dot hs-green"></span> 8.1</td><td><span class="badge bdg-green">Saludable</span></td></tr>
+                    <tr><td>Tecnológico Sur</td><td>30</td><td><span class="hs-dot hs-green"></span> 7.9</td><td><span class="badge bdg-green">Saludable</span></td></tr>
+                    <tr><td>Colegio del Valle</td><td>15</td><td><span class="hs-dot hs-amber"></span> 7.2</td><td><span class="badge bdg-amber">Atención</span></td></tr>
+                    <tr><td>C. Educativo Lomas</td><td>20</td><td><span class="hs-dot hs-green"></span> 8.6</td><td><span class="badge bdg-green">Saludable</span></td></tr>
+                    <tr><td>Bilingüe Norte</td><td>25</td><td><span class="hs-dot hs-amber"></span> 6.8</td><td><span class="badge bdg-amber">Atención</span></td></tr>
+                    <tr class="sel"><td><strong>Colegio Juárez</strong></td><td>28</td><td><span class="hs-dot hs-red"></span> <strong>4.2</strong></td><td><span class="badge bdg-red">Riesgo</span></td></tr>
+                    <tr><td>Instituto Progreso</td><td>22</td><td><span class="hs-dot hs-red"></span> 5.1</td><td><span class="badge bdg-red">Riesgo</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Side panel: Juárez detail -->
+            <div class="card" style="border-left:3px solid var(--red);position:relative">
+              <div class="ann-mk" data-tip="Panel lateral expandido con health score 28 en rojo y alerta de riesgo." style="top:-5px;right:-5px">2</div>
+              <div class="card-head" style="background:var(--red-bg)"><h3 style="color:var(--red)">Colegio Juárez</h3></div>
+              <div class="card-body">
+                <!-- Health score grande -->
+                <div style="text-align:center;margin-bottom:14px">
+                  <div style="font-size:48px;font-weight:700;color:var(--red)">28</div>
+                  <div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.5px">Health Score · Riesgo Crítico</div>
+                </div>
+
+                <div class="callout" style="background:var(--red-bg);border-color:var(--red);color:var(--red);margin-bottom:12px">
+                  <strong>⚠ Alerta de riesgo:</strong> 18 días sin actividad. 9 docentes no han iniciado diagnóstico.
+                </div>
+
+                <!-- Desglose -->
+                <div style="font-size:12px;display:flex;flex-direction:column;gap:8px;margin-bottom:14px">
+                  <div class="fxb"><span>Completion</span><strong style="color:var(--red)">2.1</strong></div>
+                  <div class="fxb"><span>Engagement</span><strong style="color:var(--red)">1.8</strong></div>
+                  <div class="fxb"><span>Actividad</span><strong style="color:var(--red)">3.2</strong></div>
+                  <div class="fxb"><span>NPS</span><strong style="color:var(--amber)">5.5</strong></div>
+                </div>
+
+                <div class="divider mb8"></div>
+
+                <div style="font-size:11px;color:var(--text3);margin-bottom:12px">
+                  <div>Director: Soto</div>
+                  <div>28 docentes · 19/28 registrados</div>
+                  <div>Última actividad: hace 18 días</div>
+                </div>
+
+                <!-- Actions -->
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <button class="btn btn-p wf" onclick="showToast('📱 Abriendo WhatsApp...','ok')">📱 Contactar por WhatsApp</button>
+                  <button class="btn btn-s wf" onclick="go('s16')">Ver detalle completo →</button>
+                  <button class="btn btn-d wf" onclick="showToast('⚠ Ticket de escalación creado','ok')">⚠ Escalar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s16 — DETALLE DE COLEGIO
+════════════════════════════════════════════════════════ -->
+<div id="s16" class="screen">
+  <div class="scr-label">🏫 2/4 · Consultor</div>
+  <div class="pg-title">Colegio Montessori Vallarta</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Health Score desglosado</strong> en componentes.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Timeline de notas</strong> como CRM básico del consultor.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>4 acciones rápidas</strong> en primera línea.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>Agregar nota inline</strong> sin salir de la pantalla.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/consultor/colegios/montessori-vallarta</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <!-- Sidebar consultor -->
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">LT</div>
+              <div><h3>Lucía Torres</h3><p style="margin:0;opacity:.65;font-size:10px">Consultora BrightPath</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li onclick="go('s15')"><span class="nav-icon">🏫</span> Mis Colegios</li>
+              <li class="active" onclick="go('s16')"><span class="nav-icon">💚</span> Health Scores</li>
+              <li onclick="go('s17')"><span class="nav-icon">📊</span> Seguimiento</li>
+              <li onclick="go('s18')"><span class="nav-icon">💬</span> Tickets</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-col">
+          <!-- Breadcrumb -->
+          <div style="font-size:12px;color:var(--text3);margin-bottom:8px">
+            <a href="#" onclick="go('s15');return false" style="color:var(--accent);text-decoration:none">Mis Colegios</a> → Colegio Montessori Vallarta
+          </div>
+
+          <!-- Header card -->
+          <div style="background:var(--brand);color:#fff;border-radius:var(--r);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+            <div>
+              <div style="font-size:16px;font-weight:700">Colegio Montessori Vallarta</div>
+              <div style="font-size:12px;opacity:.7;margin-top:3px">Director: Ramírez · 22 docentes · Plan: GUÍA</div>
+            </div>
+            <span class="badge bdg-green" style="font-size:12px;padding:4px 12px">Health Score: 8.4</span>
+          </div>
+
+          <!-- Health Score desglosado -->
+          <div class="mrow" style="position:relative">
+            <div class="ann-mk" data-tip="Health Score desglosado en componentes." style="top:-8px;right:-8px">1</div>
+            <div class="mc">
+              <div class="mc-lbl">Completion</div>
+              <div class="mc-val">8.8</div>
+              <div class="mc-sub">16/22 diagnósticos</div>
+            </div>
+            <div class="mc">
+              <div class="mc-lbl">Engagement</div>
+              <div class="mc-val">8.2</div>
+              <div class="mc-sub">login última semana</div>
+            </div>
+            <div class="mc">
+              <div class="mc-lbl">Actividad</div>
+              <div class="mc-val">7.9</div>
+              <div class="mc-sub">cursos activos</div>
+            </div>
+            <div class="mc">
+              <div class="mc-lbl">NPS</div>
+              <div class="mc-val">8.4</div>
+              <div class="mc-sub">satisfacción docentes</div>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div style="display:flex;gap:8px;flex-wrap:wrap;position:relative">
+            <div class="ann-mk" data-tip="4 acciones rápidas en primera línea." style="top:-8px;right:-8px">3</div>
+            <button class="btn btn-s" onclick="showToast('📱 Abriendo WhatsApp...','ok')">📱 WhatsApp</button>
+            <button class="btn btn-s" onclick="document.getElementById('note-area').style.display='block';document.getElementById('note-area').scrollIntoView({behavior:'smooth'})">📝 Registrar nota</button>
+            <button class="btn btn-s" onclick="showToast('📅 Abriendo calendario...','ok')">📅 Agendar reunión</button>
+            <button class="btn btn-d" onclick="showToast('⚠ Ticket de escalación creado','ok')">⚠ Escalar</button>
+          </div>
+
+          <!-- Timeline -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Timeline de notas como CRM básico del consultor." style="top:-8px;right:-8px">2</div>
+            <div class="card-head"><h3>Timeline de seguimiento</h3></div>
+            <div class="card-body">
+              <div class="timeline">
+                <div class="tl-item tl-green">
+                  <div style="font-size:12.5px;font-weight:500">Reunión de seguimiento completada — 16 docentes han completado diagnóstico, se definió plan de formación TIC.</div>
+                  <div style="font-size:11px;color:var(--text3);margin-top:3px">Lucía Torres · 10 Abr 2026</div>
+                </div>
+                <div class="tl-item tl-teal">
+                  <div style="font-size:12.5px;font-weight:500">Director confirmó disponibilidad para re-diagnóstico en junio.</div>
+                  <div style="font-size:11px;color:var(--text3);margin-top:3px">Lucía Torres · 28 Mar 2026</div>
+                </div>
+                <div class="tl-item tl-amber">
+                  <div style="font-size:12.5px;font-weight:500">Primer contacto — onboarding completado, 22 docentes invitados.</div>
+                  <div style="font-size:11px;color:var(--text3);margin-top:3px">Lucía Torres · 15 Mar 2026</div>
+                </div>
+              </div>
+              <div style="margin-top:10px;position:relative">
+                <div class="ann-mk" data-tip="Agregar nota inline sin salir de la pantalla." style="top:-8px;right:-8px">4</div>
+                <button class="btn btn-s" onclick="var na=document.getElementById('note-area');na.style.display=na.style.display==='none'?'block':'none'">📝 Agregar nota</button>
+              </div>
+              <div id="note-area" style="display:none;margin-top:10px;padding:10px;background:var(--bg);border-radius:var(--r-sm);border:1px solid var(--border2)">
+                <textarea class="ftxt" placeholder="Escribe una nota de seguimiento..." style="margin-bottom:8px"></textarea>
+                <button class="btn btn-p" onclick="document.getElementById('note-area').style.display='none';showToast('✓ Nota guardada','ok')">Guardar nota</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Docentes del colegio -->
+          <div class="card">
+            <div class="card-head"><h3>Docentes del colegio</h3></div>
+            <div class="card-body" style="padding:0">
+              <table class="tbl">
+                <thead>
+                  <tr>
+                    <th>Docente</th>
+                    <th>Nivel</th>
+                    <th>Diagnóstico</th>
+                    <th>MA</th>
+                    <th>TEC</th>
+                    <th>GSE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Ana Martínez</td><td>Secundaria</td><td><span class="badge bdg-green">Completado</span></td><td>72%</td><td>48%</td><td>85%</td></tr>
+                  <tr><td>Carlos López</td><td>Secundaria</td><td><span class="badge bdg-green">Completado</span></td><td>68%</td><td>55%</td><td>79%</td></tr>
+                  <tr><td>María González</td><td>Primaria</td><td><span class="badge bdg-green">Completado</span></td><td>75%</td><td>62%</td><td>81%</td></tr>
+                  <tr><td>Pedro Sánchez</td><td>Secundaria</td><td><span class="badge bdg-amber">En progreso</span></td><td>—</td><td>—</td><td>—</td></tr>
+                  <tr><td>Laura Torres</td><td>Primaria</td><td><span class="badge bdg-red">Pendiente</span></td><td>—</td><td>—</td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Back button -->
+          <button class="btn btn-g" onclick="go('s15')">← Volver a mis colegios</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s17 — VISTA MANAGER
+════════════════════════════════════════════════════════ -->
+<div id="s17" class="screen">
+  <div class="scr-label">📊 3/4 · Manager</div>
+  <div class="pg-title">Dashboard Manager</div>
+  <div class="pg-sub">Roberto Villanueva · 3 consultores</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Vista agregada</strong> de todos los consultores en un lugar.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Comparativa de desempeño</strong> sin micro-gestionar.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Colegios en riesgo</strong> global.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>Sin datos individuales</strong> de docentes — solo métricas institucionales.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/manager</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <!-- Sidebar manager (Roberto Villanueva) -->
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--brand2);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">RV</div>
+              <div><h3>Roberto Villanueva</h3><p style="margin:0;opacity:.65;font-size:10px">Manager BrightPath</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li onclick="go('s15')"><span class="nav-icon">🏫</span> Mis Colegios</li>
+              <li onclick="go('s16')"><span class="nav-icon">💚</span> Health Scores</li>
+              <li class="active" onclick="go('s17')"><span class="nav-icon">📊</span> Seguimiento</li>
+              <li onclick="go('s18')"><span class="nav-icon">💬</span> Tickets</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-col">
+          <!-- Global metrics -->
+          <div class="mrow" style="position:relative">
+            <div class="ann-mk" data-tip="Vista agregada de todos los consultores en un lugar." style="top:-8px;right:-8px">1</div>
+            <div class="mc">
+              <div class="mc-lbl">Colegios</div>
+              <div class="mc-val">24</div>
+            </div>
+            <div class="mc">
+              <div class="mc-lbl">En riesgo</div>
+              <div class="mc-val">5</div>
+            </div>
+            <div class="mc">
+              <div class="mc-lbl">Docentes</div>
+              <div class="mc-val">387/450</div>
+            </div>
+            <div class="mc">
+              <div class="mc-lbl">NPS</div>
+              <div class="mc-val">8.0</div>
+            </div>
+          </div>
+
+          <!-- Desempeño por Consultor -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Comparativa de desempeño sin micro-gestionar." style="top:-8px;right:-8px">2</div>
+            <div class="card-head"><h3>Desempeño por Consultor</h3></div>
+            <div class="card-body" style="padding:0">
+              <table class="tbl">
+                <thead>
+                  <tr>
+                    <th>Consultor</th>
+                    <th>Colegios</th>
+                    <th>Docentes</th>
+                    <th>Health Avg</th>
+                    <th>NPS</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Lucía Torres</td><td>8</td><td>142/180</td><td>8.4</td><td>8.1</td><td><span class="badge bdg-green">Óptimo</span></td></tr>
+                  <tr><td>Marco Rivera</td><td>9</td><td>128/150</td><td>7.8</td><td>7.6</td><td><span class="badge bdg-amber">Atención</span></td></tr>
+                  <tr><td>Sofía Delgado</td><td>7</td><td>117/120</td><td>8.6</td><td>8.3</td><td><span class="badge bdg-green">Óptimo</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Colegios en Riesgo -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Colegios en riesgo global." style="top:-8px;right:-8px">3</div>
+            <div class="card-head"><h3>Colegios en Riesgo</h3></div>
+            <div class="card-body" style="padding:0">
+              <table class="tbl">
+                <thead>
+                  <tr>
+                    <th>Colegio</th>
+                    <th>Consultor</th>
+                    <th>Health</th>
+                    <th>Problema</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Colegio Juárez</td><td>Lucía</td><td><span class="hs-dot hs-red"></span> 4.2</td><td>18 días sin actividad</td><td><button class="btn btn-s" onclick="showToast('📩 Notificación enviada a Lucía','ok')">Notificar</button></td></tr>
+                  <tr><td>Instituto Progreso</td><td>Lucía</td><td><span class="hs-dot hs-red"></span> 5.1</td><td>3 diagnósticos vencidos</td><td><button class="btn btn-s" onclick="showToast('📩 Notificación enviada a Lucía','ok')">Notificar</button></td></tr>
+                  <tr><td>Escuela Sur</td><td>Marco</td><td><span class="hs-dot hs-red"></span> 4.8</td><td>Director no responde</td><td><button class="btn btn-s" onclick="showToast('📩 Notificación enviada a Marco','ok')">Notificar</button></td></tr>
+                  <tr><td>Centro Valle</td><td>Marco</td><td><span class="hs-dot hs-red"></span> 5.5</td><td>8 docentes sin invitar</td><td><button class="btn btn-s" onclick="showToast('📩 Notificación enviada a Marco','ok')">Notificar</button></td></tr>
+                  <tr><td>Colegio Sierra</td><td>Sofía</td><td><span class="hs-dot hs-red"></span> 5.9</td><td>Baja tasa completación</td><td><button class="btn btn-s" onclick="showToast('📩 Notificación enviada a Sofía','ok')">Notificar</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Callout -->
+          <div class="callout callout-info" style="position:relative">
+            <div class="ann-mk" data-tip="Sin datos individuales de docentes — solo métricas institucionales." style="top:-8px;right:-8px">4</div>
+            📊 Este dashboard muestra solo métricas institucionales agregadas. Los datos individuales de docentes son visibles únicamente para el director de cada colegio.
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s18 — MIS TICKETS
+════════════════════════════════════════════════════════ -->
+<div id="s18" class="screen">
+  <div class="scr-label">💬 4/4 · Consultor</div>
+  <div class="pg-title">Mis Reportes y Feedback</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Comunicación bidireccional</strong> — el usuario ve la respuesta del equipo BrightPath.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Estados con colores:</strong> azul=recibido, amarillo=revisión, verde=resuelto, gris=cerrado.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Botón flotante 💬</strong> como entrada principal al feedback.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>Metadatos de contexto</strong> automáticos en cada ticket.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span><span class="bdot" style="background:#FBB040"></span><span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/consultor/tickets</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="sb-layout">
+        <!-- Sidebar consultor -->
+        <div class="sidebar">
+          <div class="sb-head">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">LT</div>
+              <div><h3>Lucía Torres</h3><p style="margin:0;opacity:.65;font-size:10px">Consultora BrightPath</p></div>
+            </div>
+          </div>
+          <div class="sb-body" style="padding:8px">
+            <ul class="sb-nav">
+              <li onclick="go('s15')"><span class="nav-icon">🏫</span> Mis Colegios</li>
+              <li onclick="go('s16')"><span class="nav-icon">💚</span> Health Scores</li>
+              <li onclick="go('s17')"><span class="nav-icon">📊</span> Seguimiento</li>
+              <li class="active" onclick="go('s18')"><span class="nav-icon">💬</span> Tickets</li>
+              <li class="nav-sep">—</li>
+              <li><span class="nav-icon">🔔</span> Notificaciones</li>
+              <li><span class="nav-icon">⚙️</span> Configuración</li>
+              <li onclick="location.href='tab1-auth.html'" style="color:var(--coral)"><span class="nav-icon">🚪</span> Cerrar sesión</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-col">
+          <!-- Callout -->
+          <div class="callout callout-info mb12" style="position:relative">
+            <div class="ann-mk" data-tip="Botón flotante 💬 como entrada principal al feedback." style="top:-8px;right:-8px">3</div>
+            <div class="ann-mk" data-tip="Metadatos de contexto automáticos en cada ticket." style="top:-8px;right:20px">4</div>
+            Tus reportes y feedback son revisados por el equipo BrightPath. Los metadatos de contexto (rol, página, hora) se adjuntan automáticamente.
+          </div>
+
+          <!-- Tickets table -->
+          <div class="card" style="position:relative">
+            <div class="ann-mk" data-tip="Comunicación bidireccional — el usuario ve la respuesta del equipo BrightPath." style="top:-8px;left:-8px">1</div>
+            <div class="ann-mk" data-tip="Estados con colores: azul=recibido, amarillo=revisión, verde=resuelto, gris=cerrado." style="top:-8px;right:-8px">2</div>
+            <div class="card-head"><h3>Mis Tickets</h3></div>
+            <div class="card-body" style="padding:0">
+              <table class="tbl" id="tickets-tbl">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Asunto</th>
+                    <th>Tipo</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>#042</td><td>El heatmap no muestra datos de primaria</td><td><span class="badge bdg-amber">🔧 Bug</span></td><td>15 Abr 2026</td><td><span class="badge bdg-blue">Recibido</span></td><td>—</td></tr>
+                  <tr><td>#038</td><td>Sugerencia: exportar heatmap a PDF</td><td><span class="badge bdg-blue">💬 Sugerencia</span></td><td>10 Abr 2026</td><td><span class="badge bdg-amber">En revisión</span></td><td>—</td></tr>
+                  <tr><td>#031</td><td>Error al cargar listado de más de 50 docentes</td><td><span class="badge bdg-amber">🔧 Bug</span></td><td>02 Abr 2026</td><td><span class="badge bdg-green">Resuelto</span></td><td><a href="#" onclick="toggleResponse('resp-031');return false" style="color:var(--accent);font-size:12px;text-decoration:none;font-weight:600">Ver respuesta →</a></td></tr>
+                  <tr id="resp-031" style="display:none"><td colspan="6" style="background:var(--green-bg);padding:12px 16px;border-left:3px solid var(--green)"><strong>Respuesta del equipo:</strong><br>Corregido en la actualización del 5 de abril. El listado ahora soporta hasta 200 docentes con paginación automática. — Equipo BrightPath</td></tr>
+                  <tr><td>#025</td><td>¿Cómo configuro recordatorios WhatsApp?</td><td><span class="badge bdg-blue">❓ Pregunta</span></td><td>25 Mar 2026</td><td><span class="badge bdg-gray">Cerrado</span></td><td><a href="#" onclick="toggleResponse('resp-025');return false" style="color:var(--accent);font-size:12px;text-decoration:none;font-weight:600">Ver respuesta →</a></td></tr>
+                  <tr id="resp-025" style="display:none"><td colspan="6" style="background:var(--bg2);padding:12px 16px;border-left:3px solid var(--text3)"><strong>Respuesta del equipo:</strong><br>Los recordatorios WhatsApp se configuran desde el panel del Director en Re-diagnóstico → Configuración → Recordatorios. Actualmente soportamos intervalos de 3, 7 y 14 días. — Equipo BrightPath</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     MODAL FEEDBACK
+════════════════════════════════════════════════════════ -->
+<div id="modal-feedback" class="modal-ov">
+  <div class="modal">
+    <div class="modal-title">Enviar Feedback</div>
+    <div class="modal-sub">Tu opinión nos ayuda a mejorar BrightPath</div>
+    <div style="margin:12px 0"><label class="flbl">Tipo</label>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px">
+      <label><input type="radio" name="fbt" checked> 💡 Feedback</label>
+      <label><input type="radio" name="fbt"> 🔧 Bug</label>
+      <label><input type="radio" name="fbt"> 💬 Sugerencia</label>
+      <label><input type="radio" name="fbt"> ❓ Pregunta</label>
+    </div></div>
+    <textarea class="ftxt" placeholder="Cuéntanos qué encontraste..." style="margin-bottom:10px"></textarea>
+    <div class="callout callout-info" style="font-size:11px;margin-bottom:12px">Se adjuntarán: tu rol, página actual y hora.</div>
+    <div class="modal-actions">
+      <button class="btn btn-g" onclick="closeModal('modal-feedback')">Cancelar</button>
+      <button class="btn btn-p" onclick="closeModal('modal-feedback');showToast('✓ Reporte enviado. Te responderemos pronto.','ok')">Enviar</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- FAB -->
+<button id="fab-feedback" onclick="openModal('modal-feedback')" style="position:fixed;bottom:20px;right:20px;width:48px;height:48px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;box-shadow:var(--sh-md);z-index:200">💬</button>
+
+
+<!-- Toast y tooltip globales -->
+<div id="toast" class="toast"></div>
+<div id="tooltip"></div>
+
+
+<script>
+// ── Navegación ──────────────────────────────────────────
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById(id);
+  if(el) el.classList.add('active');
+  const tabMap = {s15:0, s15b:1, s16:2, s17:3, s18:4};
+  const pills = document.querySelectorAll('.subnav-track .stab');
+  pills.forEach(b=>b.classList.remove('active'));
+  const idx = tabMap[id];
+  if(idx!==undefined && pills[idx]) {
+    pills[idx].classList.add('active');
+    pills[idx].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  }
+  window.scrollTo(0,0);
+  bindTips();
+}
+function scrollSubnav(dir) {
+  document.querySelector('.subnav-track')?.scrollBy({left:dir*200,behavior:'smooth'});
+}
+function updateArrows() {
+  const t=document.querySelector('.subnav-track');if(!t)return;
+  const l=document.querySelector('.subnav-left'),r=document.querySelector('.subnav-right');
+  if(l) l.classList.toggle('hide',t.scrollLeft<=0);
+  if(r) r.classList.toggle('hide',t.scrollLeft+t.clientWidth>=t.scrollWidth-1);
+}
+document.querySelector('.subnav-track')?.addEventListener('scroll',updateArrows);
+window.addEventListener('resize',updateArrows);
+
+// ── Modal ───────────────────────────────────────────────
+function openModal(id) { document.getElementById(id)?.classList.add('open'); bindTips(); }
+function closeModal(id) { document.getElementById(id)?.classList.remove('open'); }
+document.addEventListener('click', e => { if(e.target.classList.contains('modal-ov')) e.target.classList.remove('open'); });
+
+// ── Toast ───────────────────────────────────────────────
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (type ? ' toast-'+type : '');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── Selección de fila ───────────────────────────────────
+function selRow(row, cb) {
+  row.closest('table').querySelectorAll('tr').forEach(r => r.classList.remove('sel'));
+  row.classList.add('sel');
+  document.querySelectorAll('.btn-dis[id]').forEach(b => {
+    b.classList.remove('btn-dis');
+    b.classList.add('btn-s');
+  });
+  if (typeof cb === 'function') cb(row);
+}
+
+// ── Toggle ticket response ──────────────────────────────
+function toggleResponse(id) {
+  const el = document.getElementById(id);
+  if(el) el.style.display = el.style.display === 'none' ? 'table-row' : 'none';
+}
+
+// ── Tooltips ────────────────────────────────────────────
+const tt = document.getElementById('tooltip');
+function bindTips() {
+  document.querySelectorAll('.ann-mk[data-tip]').forEach(el => {
+    if (el._tip) return;
+    el._tip = true;
+    el.addEventListener('mouseenter', e => { tt.textContent = el.dataset.tip; tt.style.display='block'; pos(e); });
+    el.addEventListener('mousemove', pos);
+    el.addEventListener('mouseleave', () => tt.style.display='none');
+  });
+}
+function pos(e) {
+  const pad=14, w=260, h=tt.offsetHeight||60;
+  let x=e.clientX+pad, y=e.clientY-h/2;
+  if(x+w>window.innerWidth-pad) x=e.clientX-w-pad;
+  if(y<pad) y=pad;
+  if(y+h>window.innerHeight-pad) y=window.innerHeight-h-pad;
+  tt.style.left=x+'px'; tt.style.top=y+'px';
+}
+
+// ── Skeleton ────────────────────────────────────────────
+function showSkeleton(id, rows=5) {
+  const c = document.getElementById(id);
+  if(!c) return;
+  c.innerHTML = Array(rows).fill(0).map(()=>`
+    <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border2)">
+      <div class="skeleton" style="width:30%;height:14px;border-radius:4px"></div>
+      <div class="skeleton" style="width:15%;height:14px;border-radius:4px"></div>
+      <div class="skeleton" style="width:20%;height:14px;border-radius:4px"></div>
+    </div>`).join('');
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{ bindTips(); updateArrows(); });
+</script>
+
+</body>
+</html>

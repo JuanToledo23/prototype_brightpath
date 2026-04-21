@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrightPath — Tab 1 · Auth</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Reddit+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════
+   TOKENS BRIGHTPATH
+═══════════════════════ */
+:root {
+  --brand:#091540; --brand2:#3D518C;
+  --accent:#4C9BFD; --accent2:#3a8ae8; --accent-lt:#EBF4FF; --accent-md:#4C9BFD;
+  --teal:#46BAB5; --teal-bg:#E6F7F7;
+  --coral:#FF6F61; --coral-bg:#FFF0EF;
+  --bg:#F2F6FD; --bg2:#E8EEF8;
+  --border:#C8D5EC; --border2:#DDE6F5;
+  --text:#091540; --text2:#3D518C; --text3:#7A8BB5;
+  --green:#059669; --green-bg:#D1FAE5;
+  --amber:#D97706; --amber-bg:#FEF3C7;
+  --red:#DC2626; --red-bg:#FEE2E2;
+  --blue:#4C9BFD; --blue-bg:#EBF4FF;
+  --sh:0 1px 3px rgba(9,21,64,.08),0 4px 12px rgba(9,21,64,.04);
+  --sh-md:0 4px 16px rgba(9,21,64,.12),0 1px 4px rgba(9,21,64,.06);
+  --r:10px; --r-sm:6px; --r-lg:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:13px;line-height:1.5}
+
+/* TOP NAV */
+.topnav{background:var(--brand);padding:0 20px;display:flex;align-items:center;height:48px;position:sticky;top:0;z-index:100}
+.brand{color:#fff;font-weight:700;font-size:14px;margin-right:24px;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.mtab{background:none;border:none;color:rgba(255,255,255,.55);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:0 14px;height:48px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s;text-decoration:none;display:inline-flex;align-items:center}
+.mtab:hover{color:#fff;background:rgba(255,255,255,.06)}
+.mtab.active{color:#fff;border-bottom-color:var(--accent-md)}
+.nav-badge{margin-left:auto;background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);font-size:11px;padding:3px 10px;border-radius:20px;white-space:nowrap}
+@media(max-width:768px){.topnav .mtab{display:none}.topnav .mob-select{display:block}}
+.mob-select{display:none;background:var(--brand2);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:12px;padding:4px 8px;margin-right:auto}
+/* SUB-NAV */
+.subnav{background:var(--brand2);display:flex;align-items:center;height:38px;position:sticky;top:48px;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,.2);padding:0}
+.subnav-track{display:flex;align-items:center;overflow-x:auto;flex:1;height:38px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:2px;padding:0 6px}
+.subnav-track::-webkit-scrollbar{display:none}
+.subnav-arrow{background:none;border:none;color:rgba(255,255,255,.4);font-size:20px;font-weight:700;cursor:pointer;padding:0 8px;height:38px;flex-shrink:0;transition:all .15s;display:flex;align-items:center}
+.subnav-arrow:hover{color:#fff}
+.subnav-arrow.hide{opacity:0;pointer-events:none;width:0;padding:0;overflow:hidden}
+.stab{background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.6);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:0 12px;height:28px;cursor:pointer;border-radius:14px;white-space:nowrap;transition:all .15s;flex-shrink:0}
+.stab:hover{color:#fff;background:rgba(255,255,255,.15)}
+.stab.active{background:var(--accent);color:#fff;font-weight:600}
+
+/* SCREENS */
+.screen{display:none;padding:20px;min-height:calc(100vh - 86px)}
+.screen.active{display:block}
+.scr-label{display:inline-flex;align-items:center;gap:5px;background:var(--border2);color:var(--text3);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;padding:3px 10px;border-radius:20px;margin-bottom:6px}
+.pg-title{font-size:19px;font-weight:700;color:var(--brand);margin-bottom:3px}
+.pg-sub{color:var(--text2);font-size:12.5px;margin-bottom:16px}
+
+/* ANOTACIONES */
+.ann-panel{background:#FFFBEB;border:2.5px solid #F59E0B;border-radius:var(--r-lg);overflow:hidden;margin-bottom:18px;box-shadow:0 4px 14px rgba(245,158,11,.15)}
+.ann-head{background:#F59E0B;padding:9px 14px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#fff}
+.ann-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;padding:12px}
+.ann-item{display:flex;gap:9px;align-items:flex-start;background:#fff;border-radius:6px;border:1px solid #FDE68A;padding:8px 10px}
+.ann-num{width:22px;height:22px;border-radius:50%;background:#F59E0B;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ann-txt{font-size:11.5px;color:#78350F;line-height:1.45}
+.ann-txt strong{color:#451A03}
+.ann-mk{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#F59E0B;color:#fff;font-size:10px;font-weight:800;border:2px solid #fff;box-shadow:0 2px 6px rgba(245,158,11,.4);position:absolute;z-index:5;cursor:help}
+
+/* BROWSER CHROME */
+.browser{background:#fff;border:2px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.bbar{background:#E5E7EB;padding:7px 14px;display:flex;align-items:center;gap:7px;border-bottom:2px solid var(--border)}
+.bdot{width:11px;height:11px;border-radius:50%;display:inline-block;flex-shrink:0}
+.burl{flex:1;background:#fff;border-radius:20px;padding:3px 14px;font-size:11px;color:var(--text3);font-weight:500;max-width:320px;margin:0 auto;text-align:center;border:1px solid var(--border2)}
+.wf-badge{font-size:9.5px;color:#92400E;font-weight:800;text-transform:uppercase;letter-spacing:.6px;background:#FEF3C7;border:1px solid #FDE68A;padding:2px 8px;border-radius:4px;margin-left:auto}
+.bbody{padding:18px;background:var(--bg)}
+
+/* CARDS */
+.card{background:#fff;border-radius:var(--r);border:1px solid var(--border2);box-shadow:var(--sh)}
+.card-head{padding:13px 15px 11px;border-bottom:1px solid var(--border2);display:flex;align-items:center;gap:8px}
+.card-head h3{font-size:13px;font-weight:600;color:var(--brand)}
+.card-body{padding:15px}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
+.bdg-gray{background:var(--bg2);color:var(--text2);border:1px solid var(--border2)}
+
+/* BOTONES */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:7px 13px;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;border:none;white-space:nowrap;transition:all .15s}
+.btn-p{background:var(--accent);color:#fff}.btn-p:hover{background:var(--accent2)}
+.btn-s{background:#fff;color:var(--text);border:1px solid var(--border)}.btn-s:hover{background:var(--bg)}
+.btn-g{background:none;color:var(--text2);border:1px solid var(--border2)}.btn-g:hover{background:var(--bg)}
+.btn-b{background:var(--brand);color:#fff;font-size:13px;padding:9px 18px}.btn-b:hover{background:var(--brand2)}
+.btn-dis{background:var(--bg2);color:var(--text3);border:1px solid var(--border2);cursor:not-allowed;opacity:.7}
+
+/* FORMULARIOS */
+.flbl{display:block;font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
+.finput,.fsel,.ftxt{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:12.5px;color:var(--text);background:#fff;transition:border-color .15s,box-shadow .15s}
+.finput:focus,.fsel:focus,.ftxt:focus{outline:none;border-color:var(--accent-md);box-shadow:0 0 0 3px rgba(76,155,253,.15)}
+.ftxt{resize:vertical;min-height:60px}
+
+/* MODAL */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1000;align-items:center;justify-content:center}
+.modal-ov.open{display:flex}
+.modal{background:#fff;border-radius:var(--r-lg);box-shadow:var(--sh-md);padding:24px;width:480px;max-width:95vw;max-height:88vh;overflow-y:auto}
+.modal-title{font-size:16px;font-weight:700;color:var(--brand);margin-bottom:4px}
+.modal-sub{font-size:12.5px;color:var(--text2);margin-bottom:20px}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px}
+
+/* TOAST / TOOLTIP */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--brand);color:#fff;padding:12px 18px;border-radius:var(--r);font-size:13px;font-weight:500;box-shadow:var(--sh-md);z-index:2000;transform:translateY(80px);opacity:0;transition:all .3s ease;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-ok{background:var(--green)}
+.toast-err{background:var(--red)}
+#tooltip{display:none;position:fixed;background:#091540;color:#fff;padding:9px 13px;border-radius:7px;font-size:12px;line-height:1.5;width:260px;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:9999;pointer-events:none}
+
+/* UTILES */
+.callout{padding:10px 13px;border-radius:var(--r-sm);font-size:12px;line-height:1.5;border-left:3px solid}
+.callout-ok{background:var(--green-bg);border-color:var(--green);color:#065F46}
+.callout-warn{background:var(--amber-bg);border-color:var(--amber);color:#78350F}
+.callout-info{background:var(--blue-bg);border-color:var(--blue);color:#1E3A5F}
+.divider{height:1px;background:var(--border2);margin:2px 0}
+.flex{display:flex}.fxc{display:flex;align-items:center}.fxb{display:flex;align-items:center;justify-content:space-between}
+.g8{gap:8px}.g12{gap:12px}.mt8{margin-top:8px}.mt12{margin-top:12px}.mb8{margin-bottom:8px}.mb12{margin-bottom:12px}.wf{width:100%}
+.tmuted{color:var(--text3)}.tsm{font-size:11px}.tbold{font-weight:700}
+
+/* AUTH CUSTOM */
+.auth-bg{background:linear-gradient(135deg, #FF6F61 0%, #4C9BFD 50%, #091540 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.auth-card{background:#fff;border-radius:14px;padding:32px;max-width:420px;width:100%;box-shadow:var(--sh-md)}
+.auth-logo{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:20px}
+.auth-logo span{font-size:18px;font-weight:700;color:var(--brand)}
+.auth-divider{display:flex;align-items:center;gap:12px;margin:16px 0;color:var(--text3);font-size:12px}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border2)}
+.eye-toggle{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px}
+.role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.role-card{background:#fff;border:2px solid var(--border2);border-radius:var(--r);padding:16px;text-align:center;cursor:pointer;transition:all .15s}
+.role-card:hover{border-color:var(--accent);background:var(--accent-lt);transform:translateY(-2px);box-shadow:var(--sh)}
+.role-card .role-icon{font-size:28px;margin-bottom:8px}
+.role-card .role-name{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:4px}
+.role-card .role-desc{font-size:11px;color:var(--text3);line-height:1.4}
+.role-card.disabled{opacity:.5;cursor:not-allowed;pointer-events:none}
+.role-card.disabled:hover{border-color:var(--border2);background:#fff;transform:none;box-shadow:none}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="brand">
+    <img src="logo_h.svg" alt="BrightPath" style="height:22px;filter:brightness(0) invert(1)">
+    <span style="font-size:10px;font-weight:400;opacity:.5;margin-left:2px">· Prototipo</span>
+  </div>
+  <a class="mtab active" href="tab1-auth.html">1 · Auth</a>
+  <a class="mtab" href="tab2-docente.html">2 · Docente</a>
+  <a class="mtab" href="tab3-director.html">3 · Director</a>
+  <a class="mtab" href="tab4-consultor.html">4 · Consultor</a>
+  <a class="mtab" href="tab5-reactivos.html">5 · Banco</a>
+  <a class="mtab" href="tab6-admin.html">6 · Admin</a>
+  <select class="mob-select" onchange="if(this.value)location.href=this.value">
+    <option value="">Navegar...</option>
+    <option value="tab1-auth.html" selected>1 · Auth</option>
+    <option value="tab2-docente.html">2 · Docente</option>
+    <option value="tab3-director.html">3 · Director</option>
+    <option value="tab4-consultor.html">4 · Consultor</option>
+    <option value="tab5-reactivos.html">5 · Banco</option>
+    <option value="tab6-admin.html">6 · Admin</option>
+  </select>
+  <span class="nav-badge">v1.0 · 3 pantallas</span>
+</nav>
+<nav class="subnav">
+  <button class="subnav-arrow subnav-left" onclick="scrollSubnav(-1)">&#8249;</button>
+  <div class="subnav-track">
+    <button class="stab active" onclick="go('s1')">1a · Login</button>
+    <button class="stab" onclick="go('s2')">1b · Selector de Rol</button>
+    <button class="stab" onclick="go('s3')">1c · Registro</button>
+  </div>
+  <button class="subnav-arrow subnav-right" onclick="scrollSubnav(1)">&#8250;</button>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s1 — LOGIN
+════════════════════════════════════════════════════════ -->
+<div id="s1" class="screen active">
+
+  <div class="scr-label">🔐 1/3 · Auth</div>
+  <div class="pg-title">Inicio de sesión</div>
+  <div class="pg-sub">El usuario accede a BrightPath con Google SSO o credenciales.</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Fondo degradado:</strong> Coral → Sky → Deep Horizon comunica transformación y energía de marca BrightPath.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Google SSO:</strong> Opción principal — un click, sin fricción para docentes con cuenta Google.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Framing positivo:</strong> "Tu camino de crecimiento te espera" — nunca lenguaje de examen ni evaluación.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>Mantener sesión:</strong> Checkbox para docentes en móvil que no quieren hacer login cada vez.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span>
+      <span class="bdot" style="background:#FBB040"></span>
+      <span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/login</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody" style="padding:0">
+      <div class="auth-bg" style="position:relative">
+        <div class="ann-mk" data-tip="Fondo degradado Coral → Sky → Deep Horizon comunica transformación y energía de marca BrightPath." style="top:16px;left:16px">1</div>
+        <div class="auth-card">
+          <div class="auth-logo">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L14 9L21 7L16 12L21 17L14 15L12 22L10 15L3 17L8 12L3 7L10 9Z" fill="#4C9BFD" opacity="0.9"/>
+              <path d="M12 5L13.5 10L19 8.5L15 12L19 15.5L13.5 14L12 19L10.5 14L5 15.5L9 12L5 8.5L10.5 10Z" fill="#FF6F61" opacity="0.6"/>
+            </svg>
+            <span>BrightPath</span>
+          </div>
+          <h2 style="font-size:20px;font-weight:700;color:var(--brand);text-align:center;margin-bottom:4px">¡Bienvenido de nuevo!</h2>
+          <p style="text-align:center;color:var(--text2);font-size:13px;margin-bottom:16px;position:relative">
+            Tu camino de crecimiento te espera
+            <span style="position:relative;display:inline-block"><span class="ann-mk" data-tip="Framing positivo: 'Tu camino de crecimiento te espera' — nunca lenguaje de examen ni evaluación." style="top:-12px;right:-22px">3</span></span>
+          </p>
+          <div class="divider" style="margin-bottom:16px"></div>
+          <div style="position:relative;margin-bottom:12px">
+            <div class="ann-mk" data-tip="Google SSO como opción principal — un click, sin fricción para docentes con cuenta Google." style="top:-9px;right:-9px">2</div>
+            <button class="btn btn-p wf" style="padding:10px 18px;font-size:13px;border-radius:var(--r);gap:8px" onclick="go('s2');showToast('✓ Autenticando con Google...','ok')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8" fill="#fff" opacity="0.3"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#fff" opacity="0.15"/></svg>
+              🔵 Continuar con Google
+            </button>
+          </div>
+          <div class="auth-divider">— o —</div>
+          <div style="margin-bottom:12px">
+            <label class="flbl">Correo electrónico</label>
+            <input class="finput" type="email" placeholder="ejemplo@colegio.edu.mx">
+          </div>
+          <div style="margin-bottom:12px">
+            <label class="flbl">Contraseña</label>
+            <div style="position:relative">
+              <input class="finput" type="password" placeholder="••••••••" id="pwd-login">
+              <button class="eye-toggle" onclick="togglePwd('pwd-login',this)" type="button">👁</button>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;position:relative">
+            <label style="font-size:12px;color:var(--text2);display:flex;align-items:center;gap:6px;cursor:pointer">
+              <input type="checkbox"> Mantener mi sesión abierta
+            </label>
+            <a href="#" style="font-size:12px;color:var(--coral);text-decoration:none;font-weight:500" onclick="event.preventDefault();showToast('📧 Revisa tu correo para restablecer tu contraseña','ok')">Olvidé mi contraseña</a>
+            <div class="ann-mk" data-tip="Checkbox 'Mantener sesión' para docentes en móvil que no quieren hacer login cada vez." style="top:-12px;left:-12px">4</div>
+          </div>
+          <button class="btn btn-b wf" style="border-radius:var(--r);margin-bottom:16px" onclick="go('s2')">Iniciar sesión</button>
+          <p style="text-align:center;font-size:12.5px;color:var(--text3)">
+            ¿No tienes cuenta?
+            <a href="#" style="color:var(--accent);font-weight:600;text-decoration:none" onclick="event.preventDefault();go('s3')">Crear cuenta</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s2 — SELECTOR DE ROL
+════════════════════════════════════════════════════════ -->
+<div id="s2" class="screen">
+
+  <div class="scr-label">👋 2/3 · Auth</div>
+  <div class="pg-title">¡Bienvenido a BrightPath!</div>
+  <div class="pg-sub">Selecciona un rol para explorar el prototipo.</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Solo en prototipo:</strong> Este selector SOLO existe en el prototipo — en producción el sistema detecta el rol automáticamente al iniciar sesión.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>6 roles:</strong> Cada uno con descripción de una línea y CTA directo a la primera pantalla de cada flujo.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Coordinador:</strong> Marcado "Próximamente" — rol definido pero no construido en este prototipo.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>Exploración libre:</strong> Permite a cualquier validador explorar todas las experiencias sin cuentas separadas.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span>
+      <span class="bdot" style="background:#FBB040"></span>
+      <span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/bienvenida</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody">
+      <div class="callout callout-info mb12" style="position:relative">
+        <div class="ann-mk" data-tip="Este selector es exclusivo del prototipo. En la app real el sistema detecta tu rol automáticamente." style="top:-9px;right:-9px">1</div>
+        <strong>🔧 Modo Prototipo:</strong> Este selector es exclusivo del prototipo. En la app real el sistema detecta tu rol automáticamente al iniciar sesión.
+      </div>
+      <div style="max-width:720px;margin:0 auto;position:relative">
+        <div class="ann-mk" data-tip="6 roles con descripción de una línea y CTA directo a la primera pantalla de cada flujo." style="top:-9px;right:-9px">2</div>
+        <h3 style="font-size:15px;font-weight:700;color:var(--brand);margin-bottom:4px;text-align:center">Selecciona tu rol</h3>
+        <p style="text-align:center;color:var(--text3);font-size:12px;margin-bottom:20px">Elige un perfil para explorar su experiencia completa</p>
+        <div class="role-grid" style="position:relative">
+          <div class="role-card" onclick="location.href='tab2-docente.html'">
+            <div class="role-icon">👩‍🏫</div>
+            <div class="role-name">Docente</div>
+            <div class="role-desc">Diagnóstico de fortalezas, ruta de formación y portafolio profesional</div>
+          </div>
+          <div class="role-card" onclick="location.href='tab3-director.html'">
+            <div class="role-icon">🏫</div>
+            <div class="role-name">Director</div>
+            <div class="role-desc">Dashboard institucional, gestión de docentes y reportes</div>
+          </div>
+          <div class="role-card disabled" style="position:relative">
+            <div class="ann-mk" data-tip="Coordinador marcado 'Próximamente' — rol definido pero no construido en este prototipo." style="top:-5px;right:-5px">3</div>
+            <div class="role-icon">📐</div>
+            <div class="role-name">Coordinador</div>
+            <div class="role-desc">Seguimiento académico por área</div>
+            <span class="badge bdg-gray" style="margin-top:8px">Próximamente</span>
+          </div>
+          <div class="role-card" onclick="location.href='tab4-consultor.html'">
+            <div class="role-icon">👨‍💼</div>
+            <div class="role-name">Consultor</div>
+            <div class="role-desc">Gestión de colegios asignados, health scores y seguimiento</div>
+          </div>
+          <div class="role-card" onclick="location.href='tab5-banco.html'">
+            <div class="role-icon">📝</div>
+            <div class="role-name">Experto Reactivos</div>
+            <div class="role-desc">Banco de preguntas, cola RESISTANT y estado del banco</div>
+          </div>
+          <div class="role-card" onclick="location.href='tab6-admin.html'" style="position:relative">
+            <div class="ann-mk" data-tip="Permite a cualquier validador explorar todas las experiencias sin cuentas separadas." style="top:-5px;right:-5px">4</div>
+            <div class="role-icon">⚙️</div>
+            <div class="role-name">Admin</div>
+            <div class="role-desc">Panel de tenants, usuarios, tickets y configuración global</div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:20px">
+        <button class="btn btn-g" onclick="go('s1')">← Volver al login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     s3 — REGISTRO
+════════════════════════════════════════════════════════ -->
+<div id="s3" class="screen">
+
+  <div class="scr-label">📝 3/3 · Auth</div>
+  <div class="pg-title">Crea tu cuenta</div>
+  <div class="pg-sub">Registro de nuevo usuario con Google SSO o formulario manual.</div>
+
+  <div class="ann-panel">
+    <div class="ann-head">📋 Anotaciones — pasa el cursor sobre los números</div>
+    <div class="ann-grid">
+      <div class="ann-item"><div class="ann-num">1</div><div class="ann-txt"><strong>Google SSO primero:</strong> Un click para crear cuenta, máxima reducción de fricción.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div class="ann-txt"><strong>Solo 4 campos:</strong> Si no usa Google — sin formularios que aburren.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div class="ann-txt"><strong>Tooltip email:</strong> Explicando beneficio del correo personal sobre el institucional.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div class="ann-txt"><strong>Consentimiento:</strong> Checkbox obligatorio — cumplimiento LFPDPPP México.</div></div>
+    </div>
+  </div>
+
+  <div class="browser">
+    <div class="bbar">
+      <span class="bdot" style="background:#FC5858"></span>
+      <span class="bdot" style="background:#FBB040"></span>
+      <span class="bdot" style="background:#2DC653"></span>
+      <div class="burl">app.brightpath.mx/registro</div>
+      <span class="wf-badge">WIREFRAME</span>
+    </div>
+    <div class="bbody" style="padding:0">
+      <div class="auth-bg" style="position:relative">
+        <div class="auth-card">
+          <div class="auth-logo">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L14 9L21 7L16 12L21 17L14 15L12 22L10 15L3 17L8 12L3 7L10 9Z" fill="#4C9BFD" opacity="0.9"/>
+              <path d="M12 5L13.5 10L19 8.5L15 12L19 15.5L13.5 14L12 19L10.5 14L5 15.5L9 12L5 8.5L10.5 10Z" fill="#FF6F61" opacity="0.6"/>
+            </svg>
+            <span>BrightPath</span>
+          </div>
+          <h2 style="font-size:20px;font-weight:700;color:var(--brand);text-align:center;margin-bottom:4px">Crea tu cuenta</h2>
+          <p style="text-align:center;color:var(--text2);font-size:13px;margin-bottom:16px">Tu historial profesional comienza aquí</p>
+          <div class="divider" style="margin-bottom:16px"></div>
+          <div style="position:relative;margin-bottom:12px">
+            <div class="ann-mk" data-tip="Google SSO primero — un click para crear cuenta, máxima reducción de fricción." style="top:-9px;right:-9px">1</div>
+            <button class="btn btn-p wf" style="padding:10px 18px;font-size:13px;border-radius:var(--r);gap:8px" onclick="go('s2');showToast('✓ Cuenta creada con Google. ¡Bienvenida!','ok')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8" fill="#fff" opacity="0.3"/></svg>
+              🔵 Registrarme con Google
+            </button>
+          </div>
+          <div class="auth-divider">— o —</div>
+          <div style="position:relative">
+            <div class="ann-mk" data-tip="Solo 4 campos si no usa Google — sin formularios que aburren." style="top:-9px;right:-9px">2</div>
+            <div style="margin-bottom:12px">
+              <label class="flbl">Nombre completo</label>
+              <input class="finput" type="text" placeholder="Tu nombre completo">
+            </div>
+            <div style="margin-bottom:12px;position:relative">
+              <label class="flbl" style="display:flex;align-items:center;gap:4px">
+                Correo electrónico
+                <span style="cursor:help;position:relative" title="Usa tu correo personal. Si cambias de colegio tu cuenta te sigue.">ℹ️
+                  <span class="ann-mk" data-tip="Tooltip en email explicando beneficio del correo personal sobre el institucional." style="top:-14px;right:-22px">3</span>
+                </span>
+              </label>
+              <input class="finput" type="email" placeholder="tu.correo@personal.com">
+              <p style="font-size:10px;color:var(--text3);margin-top:3px">💡 Usa tu correo personal. Si cambias de colegio tu cuenta te sigue.</p>
+            </div>
+            <div style="margin-bottom:12px">
+              <label class="flbl">Contraseña</label>
+              <div style="position:relative">
+                <input class="finput" type="password" placeholder="Mínimo 8 caracteres" id="pwd-reg1">
+                <button class="eye-toggle" onclick="togglePwd('pwd-reg1',this)" type="button">👁</button>
+              </div>
+            </div>
+            <div style="margin-bottom:14px">
+              <label class="flbl">Confirmar contraseña</label>
+              <div style="position:relative">
+                <input class="finput" type="password" placeholder="Repite tu contraseña" id="pwd-reg2">
+                <button class="eye-toggle" onclick="togglePwd('pwd-reg2',this)" type="button">👁</button>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom:16px;position:relative">
+            <div class="ann-mk" data-tip="Checkbox de consentimiento obligatorio — cumplimiento LFPDPPP México." style="top:-9px;right:-9px">4</div>
+            <label style="font-size:11.5px;color:var(--text2);display:flex;align-items:flex-start;gap:6px;cursor:pointer;line-height:1.5">
+              <input type="checkbox" style="margin-top:3px">
+              Acepto los <a href="#" style="color:var(--accent);text-decoration:none;font-weight:500" onclick="event.preventDefault()">Términos de Servicio</a> y la <a href="#" style="color:var(--accent);text-decoration:none;font-weight:500" onclick="event.preventDefault()">Política de Privacidad</a> (LFPDPPP)
+            </label>
+          </div>
+          <button class="btn btn-b wf" style="border-radius:var(--r);margin-bottom:16px" onclick="go('s2');showToast('✓ Cuenta creada. ¡Bienvenida!','ok')">Crear cuenta</button>
+          <p style="text-align:center;font-size:12.5px;color:var(--text3)">
+            ¿Ya tienes cuenta?
+            <a href="#" style="color:var(--accent);font-weight:600;text-decoration:none" onclick="event.preventDefault();go('s1')">Iniciar sesión</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL FEEDBACK -->
+<div id="modal-feedback" class="modal-ov">
+  <div class="modal">
+    <div class="modal-title">Enviar Feedback</div>
+    <div class="modal-sub">Tu opinión nos ayuda a mejorar BrightPath</div>
+    <div style="margin:12px 0"><label class="flbl">Tipo</label>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px">
+      <label><input type="radio" name="fbt" checked> 💡 Feedback</label>
+      <label><input type="radio" name="fbt"> 🔧 Bug</label>
+      <label><input type="radio" name="fbt"> 💬 Sugerencia</label>
+      <label><input type="radio" name="fbt"> ❓ Pregunta</label>
+    </div></div>
+    <textarea class="ftxt" placeholder="Cuéntanos qué encontraste..." style="margin-bottom:10px"></textarea>
+    <div class="callout callout-info" style="font-size:11px;margin-bottom:12px">Se adjuntarán: tu rol, página actual y hora.</div>
+    <div class="modal-actions">
+      <button class="btn btn-g" onclick="closeModal('modal-feedback')">Cancelar</button>
+      <button class="btn btn-p" onclick="closeModal('modal-feedback');showToast('✓ Reporte enviado. Te responderemos pronto.','ok')">Enviar</button>
+    </div>
+  </div>
+</div>
+
+<button onclick="openModal('modal-feedback')" style="position:fixed;bottom:20px;right:20px;width:48px;height:48px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;box-shadow:var(--sh-md);z-index:200">💬</button>
+
+<div id="toast" class="toast"></div>
+<div id="tooltip"></div>
+
+<script>
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById(id);
+  if(el) el.classList.add('active');
+  const tabMap = {s1:0, s2:1, s3:2};
+  const pills = document.querySelectorAll('.subnav-track .stab');
+  pills.forEach(b=>b.classList.remove('active'));
+  const idx = tabMap[id];
+  if(idx!==undefined && pills[idx]) {
+    pills[idx].classList.add('active');
+    pills[idx].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  }
+  window.scrollTo(0,0);
+}
+function scrollSubnav(dir) {
+  document.querySelector('.subnav-track')?.scrollBy({left:dir*200,behavior:'smooth'});
+}
+function updateArrows() {
+  const t=document.querySelector('.subnav-track');if(!t)return;
+  const l=document.querySelector('.subnav-left'),r=document.querySelector('.subnav-right');
+  if(l) l.classList.toggle('hide',t.scrollLeft<=0);
+  if(r) r.classList.toggle('hide',t.scrollLeft+t.clientWidth>=t.scrollWidth-1);
+}
+document.querySelector('.subnav-track')?.addEventListener('scroll',updateArrows);
+window.addEventListener('resize',updateArrows);
+function openModal(id) { document.getElementById(id)?.classList.add('open'); bindTips(); }
+function closeModal(id) { document.getElementById(id)?.classList.remove('open'); }
+document.addEventListener('click', e => { if(e.target.classList.contains('modal-ov')) e.target.classList.remove('open'); });
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (type ? ' toast-'+type : '');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+function togglePwd(id, btn) {
+  const input = document.getElementById(id);
+  if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
+  else { input.type = 'password'; btn.textContent = '👁'; }
+}
+const tt = document.getElementById('tooltip');
+function bindTips() {
+  document.querySelectorAll('.ann-mk[data-tip]').forEach(el => {
+    if (el._tip) return;
+    el._tip = true;
+    el.addEventListener('mouseenter', e => { tt.textContent = el.dataset.tip; tt.style.display='block'; pos(e); });
+    el.addEventListener('mousemove', pos);
+    el.addEventListener('mouseleave', () => tt.style.display='none');
+  });
+}
+function pos(e) {
+  const pad=14, w=260, h=tt.offsetHeight||60;
+  let x=e.clientX+pad, y=e.clientY-h/2;
+  if(x+w>window.innerWidth-pad) x=e.clientX-w-pad;
+  if(y<pad) y=pad;
+  if(y+h>window.innerHeight-pad) y=window.innerHeight-h-pad;
+  tt.style.left=x+'px'; tt.style.top=y+'px';
+}
+document.addEventListener('DOMContentLoaded', ()=>{ bindTips(); updateArrows(); });
+</script>
+</body>
+</html>
